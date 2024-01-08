@@ -2,15 +2,6 @@ local M = {}
 
 M = {
     "rcarriga/nvim-notify",
-    keys = {
-        {
-            "<leader>un",
-            function()
-                require("notify").dismiss({ silent = true, pending = true })
-            end,
-            desc = "Dismiss all Notifications",
-        },
-    },
 
     opts = {
         background_colour = "#2f2f2f00";

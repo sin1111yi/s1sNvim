@@ -5,7 +5,7 @@ local icons = require("core.utils").icons
 M = {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
-    evnet = "VeryLazy",
+    event = "VeryLazy",
     dependencies = {
         "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons",
@@ -144,7 +144,7 @@ M = {
                     nowait = true,
                 },
                 mappings = {
-                    ["<space>"] = {
+                    ["<c-t>"] = {
                         "toggle_node",
                         nowait = false, -- disable `nowait` if you have existing combos starting with this char that you want to use
                     },

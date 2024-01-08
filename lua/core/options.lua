@@ -1,5 +1,6 @@
 local M = {}
 
+-- something must be set before everyhthing
 M.set_prefix_opts = function()
     vim.g.mapleader = " "
     vim.g.maplocalleader = " "
@@ -74,6 +75,7 @@ M.set_prefix_opts = function()
     vim.g.markdown_recommended_style = 0
 end
 
+-- something can be set later
 M.set_suffix_opts = function()
     vim.cmd.colorscheme({ "catppuccin" })
 end

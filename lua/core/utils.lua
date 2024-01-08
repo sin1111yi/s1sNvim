@@ -88,7 +88,7 @@ M.fold_text = function()
     return ret
 end
 
-function M.safe_keymap_set(mode, lhs, rhs, opts)
+M.safe_keymap_set = function(mode, lhs, rhs, opts)
     local keys = require("lazy.core.handler").handlers.keys
     ---@cast keys LazyKeysHandler
     local modes = type(mode) == "string" and { mode } or mode
@@ -108,6 +108,10 @@ function M.safe_keymap_set(mode, lhs, rhs, opts)
         end
         vim.keymap.set(modes, lhs, rhs, opts)
     end
+end
+
+M.plugin_exits = function(plugin)
+    return require("lazy.core.config").spec.plugins[plugin] ~= nil
 end
 
 return M
