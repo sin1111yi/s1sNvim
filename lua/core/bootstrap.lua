@@ -22,7 +22,7 @@ local plugins = require("plugins.necessary").setup({
 
 require("lazy").setup(plugins, {
     defaults = {
-        lazy = false,
+        lazy = true,
         version = "*" -- always use the latest git commit
     },
 

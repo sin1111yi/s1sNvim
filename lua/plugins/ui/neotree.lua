@@ -4,11 +4,11 @@ local icons = require("core.utils").icons
 
 M = {
     "nvim-neo-tree/neo-tree.nvim",
+    lazy = true,
     branch = "v3.x",
     event = "VeryLazy",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
         {
             "s1n7ax/nvim-window-picker",

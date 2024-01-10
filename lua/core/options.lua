@@ -1,5 +1,7 @@
 local M = {}
 
+local utils = require("core.utils")
+
 -- something must be set before everyhthing
 M.set_prefix_opts = function()
     vim.g.mapleader = " "
@@ -78,6 +80,7 @@ end
 -- something can be set later
 M.set_suffix_opts = function()
     vim.cmd.colorscheme({ "catppuccin" })
+    utils.lazy_notify()
 end
 
 return M

@@ -19,10 +19,12 @@ wk.register({
 
     x = {
         name = "+Extra",
-        n = {
-            function()
-                require("core.utils").say_hi()
-            end, "Notify Test" }
+        l = { "<cmd>Lazy<cr>", "Lazy" },
+    },
+
+    s = {
+        name = "+Search",
+        l = { "<cmd>Legendary<cr>", "Legendary" }
     }
 }, { prefix = "<leader>" })
 

@@ -37,7 +37,14 @@ M = {
         },
         color_overrides = {},
         custom_highlights = {},
-    },
+        integrations = {
+            cmp = true,
+            noice = true,
+            notify = true,
+            neotree = true,
+            telescope = true,
+            which_key = true,
+        },
+    }
 }
-
 return M
