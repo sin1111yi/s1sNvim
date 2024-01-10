@@ -11,21 +11,37 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local plugins = require("plugins.necessary").plugins
+require("core.options").set_prefix_opts()
 
-local opts = {
+local plugins = require("plugins.necessary").setup({
+    load_plugins = {
+        extra = false,
+        custom = false,
+    }
+})
+
+require("lazy").setup(plugins, {
     defaults = {
         lazy = false,
         version = "*" -- always use the latest git commit
     },
-    checker = {
-        enabled = true
-    }, -- automatically check for plugin updates
-}
 
-require("core.options").set_prefix_opts()
+    checker = { enabled = true }, -- automatically check for plugin updates
 
-require("lazy").setup(plugins, opts)
+    performance = {
+        -- disable some rtp plugins like LazyVim
+        disbaled_plugins = {
+            "gzip",
+            "matchit",
+            "matchparen",
+            "netrwPlugin",
+            "tarPlugin",
+            "tohtml",
+            "tutor",
+            "zipPlugin",
+        }
+    }
+})
 
 require("core.keymaps")
 require("core.autocmds")
