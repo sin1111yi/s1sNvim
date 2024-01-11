@@ -211,7 +211,7 @@ M.lazy_file = function()
 
         vim.api.nvim_exec_autocmds("User", { pattern = "LazyFile", modeline = false })
         for _, event in ipairs(events) do
-            event_handler.triffer({
+            event_handler.trigger({
                 event = event.event,
                 exclude = skips[event.event],
                 data = event.data,
