@@ -1,6 +1,6 @@
 local M = {}
 
-local utils = require("core.utils")
+local util = require("core.util")
 
 -- something must be set before everyhthing
 M.set_prefix_opts = function()
@@ -71,17 +71,17 @@ M.set_prefix_opts = function()
 
     -- Folding
     vim.opt.foldlevel = 99
-    vim.opt.foldtext = "v:lua.require'core.utils'.fold_text()"
+    vim.opt.foldtext = "v:lua.require'core.util'.fold_text()"
 
     -- Fix markdown indentation settings
     vim.g.markdown_recommended_style = 0
-    utils.lazy_file()
+    util.lazy_file()
 end
 
 -- something can be set later
 M.set_suffix_opts = function()
     vim.cmd.colorscheme({ "catppuccin" })
-    utils.lazy_notify()
+    util.lazy_notify()
 end
 
 return M

@@ -7,7 +7,7 @@ M = {
         "nvim-lua/plenary.nvim",
         {
             "ahmedkhalf/project.nvim",
-
+            event = "VeryLazy",
             opts = {
                 manual_mode = false,
                 detection_methods = {
@@ -22,7 +22,9 @@ M = {
                     ".bzr",
                     ".svn",
                     "Makefile",
-                    "package.json"
+                    "CMakeLists.txt",
+                    "init.lua",
+                    "package.json",
                 },
 
                 ignore_lsp = {},
@@ -35,6 +37,9 @@ M = {
 
             config = function(_, opts)
                 require("project_nvim").setup()
+                require("core.util").on_load("telescope.nvim", function()
+                    require("telescope").load_extension("projects")
+                end)
             end
         }
     }

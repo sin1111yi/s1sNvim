@@ -1,10 +1,10 @@
 local M = {}
 
-local utils = require("core.utils")
+local util = require("core.util")
 local wk = require("which-key")
 
 local vmap = vim.keymap.set
-local smap = utils.safe_keymap_set
+local smap = util.safe_keymap_set
 
 local keyopts = { remap = true, silent = true }
 
