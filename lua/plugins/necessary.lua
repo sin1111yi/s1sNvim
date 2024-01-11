@@ -9,7 +9,8 @@ M.setup = function(opts)
     table.insert(M.plugins_table, {
         { import = "plugins.support" },
         { import = "plugins.colorscheme" },
-        { import = "plugins.ui" }
+        { import = "plugins.ui" },
+        { import = "plugins.coding" }
     })
 
     if opts.load_plugins.extra == true then

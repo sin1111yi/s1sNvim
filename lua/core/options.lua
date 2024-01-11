@@ -75,6 +75,7 @@ M.set_prefix_opts = function()
 
     -- Fix markdown indentation settings
     vim.g.markdown_recommended_style = 0
+    utils.lazy_file()
 end
 
 -- something can be set later
