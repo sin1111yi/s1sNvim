@@ -12,7 +12,8 @@ M = {
                 manual_mode = false,
                 detection_methods = {
                     "lsp",
-                    "pattern" },
+                    "pattern"
+                },
 
                 patterns = {
                     ".git",
@@ -23,7 +24,7 @@ M = {
                     "Makefile",
                     "package.json"
                 },
-                
+
                 ignore_lsp = {},
                 exclude_dirs = {},
                 show_hidden = false,
