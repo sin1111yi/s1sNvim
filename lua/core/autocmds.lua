@@ -96,4 +96,11 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     end,
 })
 
+-- Auto save buffer when leaving buffer or text changed
+vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+    pattern = { "*" },
+    command = "silent! wall",
+    nested = true,
+})
+
 return M
