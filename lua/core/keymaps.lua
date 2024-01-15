@@ -25,7 +25,15 @@ wk.register({
     s = {
         name = "+Search",
         l = { "<cmd>Legendary<cr>", "Legendary" }
+    },
+
+    b = {
+        name = "+Buffer",
+        d = {function ()
+            util.better_buffer_delete()
+        end, "Delete Current"}
     }
+
 }, { prefix = "<leader>" })
 
 return M

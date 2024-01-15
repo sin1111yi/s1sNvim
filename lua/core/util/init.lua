@@ -1,6 +1,7 @@
 local LazyUtil = require("lazy.core.util")
 
 ---@class core.util
+---@field ui core.util.ui
 
 local M = {}
 
@@ -56,87 +57,17 @@ M.icons = {
     },
 }
 
----@type table<string, string|string[]>
-local deprecated = {
-    get_clients = "lsp",
-    on_attach = "lsp",
-    on_rename = "lsp",
-    root_patterns = { "root", "patterns" },
-    get_root = { "root", "get" },
-    float_term = { "terminal", "open" },
-    toggle_diagnostics = { "toggle", "diagnostics" },
-    toggle_number = { "toggle", "number" },
-    fg = "ui",
-}
-
 setmetatable(M, {
     __index = function(t, k)
         if LazyUtil[k] then
             return LazyUtil[k]
         end
-        local dep = deprecated[k]
-        if dep then
-            local mod = type(dep) == "table" and dep[1] or dep
-            local key = type(dep) == "table" and dep[2] or k
-            M.deprecated([[require("core.util").]] .. k, [[require("core.util").]] .. mod .. "." .. key)
-            ---@diagnostic disable-next-line: no-unknown
-            t[mod] = require("core.util." .. mod) -- load here to prevent loops
-            return t[mod][key]
-        end
+
         ---@diagnostic disable-next-line: no-unknown
         t[k] = require("core.util." .. k)
         return t[k]
-    end
+    end,
 })
-
-M.set_colorscheme = function(colorscheme)
-    vim.cmd.colorscheme { colorscheme }
-end
-
-M.fold_text = function()
-    local ok = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
-    local ret = ok and vim.treesitter.foldtext and vim.treesitter.foldtext()
-    if not ret or type(ret) == "string" then
-        ret = { { vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, false)[1], {} } }
-    end
-    table.insert(ret, { " " .. M.icons.misc.dots })
-
-    if not vim.treesitter.foldtext then
-        return table.concat(
-            vim.tbl_map(function(line)
-                return line[1]
-            end, ret),
-            " "
-        )
-    end
-    return ret
-end
-
-M.safe_keymap_set = function(mode, lhs, rhs, opts)
-    local keys = require("lazy.core.handler").handlers.keys
-    ---@cast keys LazyKeysHandler
-    local modes = type(mode) == "string" and { mode } or mode
-
-    ---@param m string
-    modes = vim.tbl_filter(function(m)
-        return not (keys.have and keys:have(lhs, m))
-    end, modes)
-
-    -- do not create the keymap if a lazy keys handler exists
-    if #modes > 0 then
-        opts = opts or {}
-        opts.silent = opts.silent ~= false
-        if opts.remap and not vim.g.vscode then
-            ---@diagnostic disable-next-line: no-unknown
-            opts.remap = nil
-        end
-        vim.keymap.set(modes, lhs, rhs, opts)
-    end
-end
-
-M.plugin_exits = function(plugin)
-    return require("lazy.core.config").spec.plugins[plugin] ~= nil
-end
 
 ---@param plugin string
 function M.has(plugin)
@@ -151,25 +82,6 @@ function M.on_very_lazy(fn)
             fn()
         end,
     })
-end
-
----@param name string
----@param fn fun(name:string)
-function M.on_load(name, fn)
-    local Config = require("lazy.core.config")
-    if Config.plugins[name] and Config.plugins[name]._.loaded then
-        fn(name)
-    else
-        vim.api.nvim_create_autocmd("User", {
-            pattern = "LazyLoad",
-            callback = function(event)
-                if event.data == name then
-                    fn(name)
-                    return true
-                end
-            end,
-        })
-    end
 end
 
 -- delay notifications till vim.notify was replaced or after 500ms
@@ -207,6 +119,50 @@ function M.lazy_notify()
     end)
     -- or if it took more than 500ms, then something went wrong
     timer:start(500, 0, replay)
+end
+
+---@param name string
+---@param fn fun(name:string)
+function M.on_load(name, fn)
+    local Config = require("lazy.core.config")
+    if Config.plugins[name] and Config.plugins[name]._.loaded then
+        fn(name)
+    else
+        vim.api.nvim_create_autocmd("User", {
+            pattern = "LazyLoad",
+            callback = function(event)
+                if event.data == name then
+                    fn(name)
+                    return true
+                end
+            end,
+        })
+    end
+end
+
+-- Wrapper around vim.keymap.set that will
+-- not create a keymap if a lazy key handler exists.
+-- It will also set `silent` to true by default.
+function M.safe_keymap_set(mode, lhs, rhs, opts)
+    local keys = require("lazy.core.handler").handlers.keys
+    ---@cast keys LazyKeysHandler
+    local modes = type(mode) == "string" and { mode } or mode
+
+    ---@param m string
+    modes = vim.tbl_filter(function(m)
+        return not (keys.have and keys:have(lhs, m))
+    end, modes)
+
+    -- do not create the keymap if a lazy keys handler exists
+    if #modes > 0 then
+        opts = opts or {}
+        opts.silent = opts.silent ~= false
+        if opts.remap and not vim.g.vscode then
+            ---@diagnostic disable-next-line: no-unknown
+            opts.remap = nil
+        end
+        vim.keymap.set(modes, lhs, rhs, opts)
+    end
 end
 
 M.lazy_file_events = { "BufReadPost", "BufNewFile", "BufWritePre" }
