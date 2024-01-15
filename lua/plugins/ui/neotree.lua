@@ -15,6 +15,22 @@ M = {
             version = "2.*",
             config = function()
                 require "window-picker".setup({
+                    hint = "floating-big-letter",
+                    selection_chars = "FJDKSLA;CMRUEIWOQP",
+                    picker_config = {
+                        selection_display = function(char, windowid)
+                            return "%=" .. char .. "%="
+                        end,
+
+                        use_winbar = "never",
+                    },
+
+                    floating_big_letter = {
+                        font = "ansi-shadow",
+                    },
+
+                    show_prompt = false,
+
                     filter_rules = {
                         include_current_win = false,
                         autoselect_one = true,
