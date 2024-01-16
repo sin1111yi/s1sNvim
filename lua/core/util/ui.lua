@@ -6,6 +6,110 @@ M.set_colorscheme = function(colorscheme)
     vim.cmd.colorscheme { colorscheme }
 end
 
+---@alias Sign {name:string, text:string, texthl:string, priority:number}
+
+-- Returns a list of regular and extmark signs sorted by priority (low to high)
+---@return Sign[]
+---@param buf number
+---@param lnum number
+M.get_signs = function(buf, lnum)
+    -- Get regular signs
+    ---@type Sign[]
+    local signs = vim.tbl_map(function(sign)
+        ---@type Sign
+        local ret = vim.fn.sign_getdefined(sign.name)[1]
+        ret.priority = sign.priority
+        return ret
+    end, vim.fn.sign_getplaced(buf, { group = "*", lnum = lnum })[1].signs)
+
+    -- Get extmark signs
+    local extmarks = vim.api.nvim_buf_get_extmarks(
+        buf,
+        -1,
+        { lnum - 1, 0 },
+        { lnum - 1, -1 },
+        { details = true, type = "sign" }
+    )
+    for _, extmark in pairs(extmarks) do
+        signs[#signs + 1] = {
+            name = extmark[4].sign_hl_group or "",
+            text = extmark[4].sign_text,
+            texthl = extmark[4].sign_hl_group,
+            priority = extmark[4].priority,
+        }
+    end
+
+    -- Sort by priority
+    table.sort(signs, function(a, b)
+        return (a.priority or 0) < (b.priority or 0)
+    end)
+
+    return signs
+end
+
+---@return Sign?
+---@param buf number
+---@param lnum number
+M.get_mark = function(buf, lnum)
+    local marks = vim.fn.getmarklist(buf)
+    vim.list_extend(marks, vim.fn.getmarklist())
+    for _, mark in ipairs(marks) do
+        if mark.pos[1] == buf and mark.pos[2] == lnum and mark.mark:match("[a-zA-Z]") then
+            return { text = mark.mark:sub(2), texthl = "DiagnosticHint" }
+        end
+    end
+end
+
+---@param sign? Sign
+---@param len? number
+function M.icon(sign, len)
+    sign = sign or {}
+    len = len or 2
+    local text = vim.fn.strcharpart(sign.text or "", 0, len) ---@type string
+    text = text .. string.rep(" ", len - vim.fn.strchars(text))
+    return sign.texthl and ("%#" .. sign.texthl .. "#" .. text .. "%*") or text
+end
+
+M.statuscolumn = function()
+    local win = vim.g.statusline_winid
+    if vim.wo[win].signcolumn == "no" then
+        return ""
+    end
+    local buf = vim.api.nvim_win_get_buf(win)
+
+    ---@type Sign?,Sign?,Sign?
+    local left, right, fold
+    for _, s in ipairs(M.get_signs(buf, vim.v.lnum)) do
+        if s.name and s.name:find("GitSign") then
+            right = s
+        else
+            left = s
+        end
+    end
+
+    if vim.v.virtnum ~= 0 then
+        left = nil
+    end
+
+    vim.api.nvim_win_call(win, function()
+        if vim.fn.foldclosed(vim.v.lnum) >= 0 then
+            fold = { text = vim.opt.fillchars:get().foldclose or "", texthl = "Folded" }
+        end
+    end)
+
+    local nu = ""
+    if vim.wo[win].number and vim.v.virtnum == 0 then
+        nu = vim.wo[win].relativenumber and vim.v.relnum ~= 0 and vim.v.relnum or vim.v.lnum
+    end
+
+    return table.concat({
+        M.icon(M.get_mark(buf, vim.v.lnum) or left),
+        [[%=]],
+        nu .. " ",
+        M.icon(fold or right),
+    }, "")
+end
+
 M.fold_text = function()
     local ok = pcall(vim.treesitter.get_parser, vim.api.nvim_get_current_buf())
     local ret = ok and vim.treesitter.foldtext and vim.treesitter.foldtext()
@@ -23,74 +127,6 @@ M.fold_text = function()
         )
     end
     return ret
-end
-
--- Common kill function for bdelete and bwipeout
--- credits: based on bbye and nvim-bufdel
--- based on https://github.com/LunarVim/LunarVim/blob/master/lua/lvim/core/bufferline.lua
----@param cmd string defaults to "bd"
----@param bufnr number defaults to the current buffer
----@param force boolean defaults to false
-M.better_buffer_delete = function(cmd, bufnr, force)
-    cmd = cmd or "bd"
-
-    if bufnr == 0 or bufnr == nil then
-        bufnr = vim.api.nvim_get_current_buf()
-    end
-
-    local bufname = vim.api.nvim_buf_get_name(bufnr)
-
-    if not force then
-        if vim.bo[bufnr].modified then
-            local choice = vim.fn.confirm(fmt([[Save changes to "%s"?]], bufname), "&Yes\n&No\n&Cancel")
-            if choice == 1 then
-                vim.api.nvim_buf_call(bufnr, function()
-                    vim.cmd("w")
-                end)
-            elseif choice == 2 then
-                force = true
-            else
-                return
-            end
-        elseif vim.api.nvim_buf_get_option(bufnr, "buftype") == "terminal" then
-            force = true
-        end
-    end
-
-    -- Get list of windows IDs with the buffer to close
-    local windows = vim.tbl_filter(function(window)
-        return vim.api.nvim_win_get_buf(window) == bufnr
-    end, vim.api.nvim_lists_wins())
-
-    if force then
-        cmd = cmd .. "!"
-    end
-
-    -- Get list of active buffers
-    local buffers = vim.tbl_filter(function(buf)
-        return vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted
-    end, vim.api.nvim_list_bufs())
-
-    -- If there is only one buffer (which has to be the current one), vim will
-    -- create a new buffer on :bd.
-    -- For more than one buffer, pick the previous buffer (wrapping around if necessary)
-    if #buffers > 1 and #windows > 0 then
-        for i, v in ipairs(buffers) do
-            if v == bufnr then
-                local prev_buf_idx = i == 1 and #buffers or (i - 1)
-                local prev_buffer = buffers[prev_buf_idx]
-                for _, win in ipairs(windows) do
-                    vim.api.nvim_win_set_buf(win, prev_buffer)
-                end
-            end
-        end
-    end
-
-    -- Check if buffer still exists, to ensure the target buffer wasn't killed
-    -- due to options like bufhidden=wipe.
-    if vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted then
-        vim.cmd(string.format("%s %d", cmd, bufnr))
-    end
 end
 
 return M

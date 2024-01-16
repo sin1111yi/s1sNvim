@@ -77,6 +77,17 @@ M.set_prefix_opts = function()
     vim.opt.foldlevel = 99
     vim.opt.foldtext = "v:lua.require'core.util'.fold_text()"
 
+    if vim.fn.has("nvim-0.9.0") == 1 then
+        vim.opt.statuscolumn = [[%!v:lua.require'core.util.ui'.statuscolumn()]]
+    end
+
+    if vim.fn.has("nvim-0.10") == 1 then
+        vim.opt.foldmethod = "expr"
+        vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    else
+        vim.opt.foldmethod = "indent"
+    end
+
     -- Fix markdown indentation settings
     vim.g.markdown_recommended_style = 0
     util.lazy_file()

@@ -6,6 +6,9 @@ M = {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
     version = "*",
+    dependencies = {
+        "famiu/bufdelete.nvim"
+    },
     opts = {
         options = {
             mode = "buffers",
