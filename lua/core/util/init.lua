@@ -220,8 +220,4 @@ M.lazy_file = function()
     })
 end
 
-M.ftest = function()
-    print("This is a test function!")
-end
-
 return M

@@ -7,10 +7,6 @@ wk.register({
     x = {
         name = "+Extra",
         l = { "<cmd>Lazy<cr>", "Lazy" },
-        t = {
-            function()
-                util.ftest()
-            end, "Test" }
     },
 
     s = {
@@ -20,7 +16,8 @@ wk.register({
 
     b = {
         name = "+Buffer",
-        d = { "<cmd>bd<cr>", "Delete Current" }
+        d = { "<cmd>lua require('core.plugins.exapi').bufdel.del_current()<cr>", "Delete Current" },
+        o = { "<cmd>lua require('core.plugins.exapi').bufdel.del_others()<cr>", "Delete Others" }
     }
 
 }, { prefix = "<leader>" })
