@@ -11,6 +11,10 @@ M.set_prefix_opts = function()
 
     vim.g.root_spec = { "lsp", { ".git", "lua" }, "cwd" }
 
+    -- set loaded flags to 1 to disable netrw
+    vim.g.loaded_netrw = 1
+    vim.g.loaded_netrwPlugin = 1
+
     local opt = vim.opt
 
     opt.autowrite = true           -- Enable auto write

@@ -10,7 +10,7 @@ end
 -- Check if we need to reload the file when it changed
 vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
     group = augroup("checktime"),
-    command = "checktime",
+    command = "checktime"
 })
 
 -- Highlight on yank
@@ -18,7 +18,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     group = augroup("highlight_yank"),
     callback = function()
         vim.highlight.on_yank()
-    end,
+    end
 })
 
 -- resize splits if window got resized
@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
         local current_tab = vim.fn.tabpagenr()
         vim.cmd("tabdo wincmd =")
         vim.cmd("tabnext " .. current_tab)
-    end,
+    end
 })
 
 -- go to last loc when opening a buffer
@@ -46,7 +46,7 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         if mark[1] > 0 and mark[1] <= lcount then
             pcall(vim.api.nvim_win_set_cursor, 0, mark)
         end
-    end,
+    end
 })
 
 -- close some filetypes with <q>
@@ -81,7 +81,7 @@ vim.api.nvim_create_autocmd("FileType", {
     callback = function()
         vim.opt_local.wrap = true
         vim.opt_local.spell = true
-    end,
+    end
 })
 
 -- Auto create dir when saving a file, in case some intermediate directory does not exist
@@ -93,14 +93,15 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
         end
         local file = vim.loop.fs_realpath(event.match) or event.match
         vim.fn.mkdir(vim.fn.fnamemodify(file, ":p:h"), "p")
-    end,
+    end
 })
 
 -- Auto save buffer when leaving buffer or text changed
 vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
+    group = augroup("autosave"),
     pattern = { "*" },
     command = "silent! wall",
-    nested = true,
+    nested = true
 })
 
 return M

@@ -28,9 +28,9 @@ end
 -- Common kill function for bdelete and bwipeout
 -- credits: based on bbye and nvim-bufdel
 -- based on https://github.com/LunarVim/LunarVim/blob/master/lua/lvim/core/bufferline.lua
----@param cmd? string defaults to "bd"
----@param bufnr? number defaults to the current buffer
----@param force? boolean defaults to false
+---@param cmd string defaults to "bd"
+---@param bufnr number defaults to the current buffer
+---@param force boolean defaults to false
 M.better_buffer_delete = function(cmd, bufnr, force)
     cmd = cmd or "bd"
 

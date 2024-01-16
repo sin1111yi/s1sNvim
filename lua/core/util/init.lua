@@ -57,18 +57,6 @@ M.icons = {
     },
 }
 
-setmetatable(M, {
-    __index = function(t, k)
-        if LazyUtil[k] then
-            return LazyUtil[k]
-        end
-
-        ---@diagnostic disable-next-line: no-unknown
-        t[k] = require("core.util." .. k)
-        return t[k]
-    end,
-})
-
 ---@param plugin string
 function M.has(plugin)
     return require("lazy.core.config").spec.plugins[plugin] ~= nil
