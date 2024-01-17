@@ -14,6 +14,12 @@ wk.register({
 
     e = { "<cmd>Neotree toggle<cr>", "Neo-Tree toggle" },
 
+    p = {
+        name = "+Plugins",
+        l = { "<cmd>Lazy<cr>", "Lazy" },
+        m = { "<cmd>Mason<cr>", "Mason" }
+    },
+
     s = {
         name = "+Search",
         l = { "<cmd>Legendary<cr>", "Legendary" }
@@ -24,8 +30,7 @@ wk.register({
     },
 
     q = {
-        name = "+Extra",
-        l = { "<cmd>Lazy<cr>", "Lazy" },
+        name = "+Quit",
     },
 
 }, { prefix = "<leader>" })
