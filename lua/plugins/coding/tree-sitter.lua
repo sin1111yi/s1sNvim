@@ -37,6 +37,14 @@ M = {
                     end
                 end,
             },
+
+            {
+                "altermo/ultimate-autopair.nvim",
+                event = { "InsertEnter", "CmdlineEnter" },
+                config = function()
+                    require("ultimate-autopair").setup({})
+                end
+            }
         },
         cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
         keys = {
