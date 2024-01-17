@@ -16,7 +16,7 @@ wk.register({
 
     b = {
         name = "+Buffer",
-        d = { "<cmd>lua require('core.plugins.exapi').bufdel.del_current()<cr>", "Delete Current" },
+        c = { "<cmd>lua require('core.plugins.exapi').bufdel.del_current()<cr>", "Delete Current" },
         o = { "<cmd>lua require('core.plugins.exapi').bufdel.del_others()<cr>", "Delete Others" }
     }
 

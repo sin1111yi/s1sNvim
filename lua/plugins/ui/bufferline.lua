@@ -19,8 +19,9 @@ M = {
             name_formatter = function(buf) -- buf contains a "name", "path" and "bufnr"
                 -- remove extension from markdown files for example
                 if buf.name:match "%.md" then
-                    return vim.fn.fnamemodify(buf.name, ":t:r")
+                    return string.format("[%d] %s", buf.bufnr, vim.fn.fnamemodify(buf.name, ":t:r"))
                 end
+                return string.format("[%d] %s", buf.bufnr, buf.name)
             end,
 
             diagnostics = "nvim_lsp",
@@ -33,11 +34,14 @@ M = {
                     separator = true
                 },
             },
+            indicator = {
+                style = "hint",
+            },
             always_show_bufferline = false,
             hover = {
-              enabled = false, -- requires nvim 0.8+
-              delay = 200,
-              reveal = { "close" },
+                enabled = false, -- requires nvim 0.8+
+                delay = 200,
+                reveal = { "close" },
             },
             sort_by = "id",
         }
