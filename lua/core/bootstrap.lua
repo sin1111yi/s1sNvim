@@ -1,3 +1,5 @@
+local util = require("core.util")
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -11,7 +13,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("core.options").set_prefix_opts()
+require("core.options")
+util.lazy_file()
 
 local plugins = require("plugins.necessary").setup({
     load_plugins = {
@@ -46,4 +49,5 @@ require("lazy").setup(plugins, {
 require("core.keymaps")
 require("core.autocmds")
 
-require("core.options").set_suffix_opts()
+util.set_colorscheme("catppuccin")
+util.lazy_notify()
