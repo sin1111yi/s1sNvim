@@ -1,8 +1,3 @@
-local LazyUtil = require("lazy.core.util")
-
----@class core.util
----@field ui core.util.ui
-
 -- this util class highly based on https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util
 
 local M = {}
@@ -57,10 +52,6 @@ M.icons = {
         close = "",
         code  = ""
     },
-}
-
-M.module = {
-    ui = require("core.util.ui")
 }
 
 ---@param plugin string

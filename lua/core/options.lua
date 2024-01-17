@@ -95,7 +95,7 @@ end
 
 -- something can be set later
 M.set_suffix_opts = function()
-    vim.cmd.colorscheme({ "catppuccin" })
+    util.ui.set_colorscheme("catppuccin")
     util.lazy_notify()
 end
 

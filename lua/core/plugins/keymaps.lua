@@ -2,22 +2,30 @@ local util = require("core.util")
 local wk = require("which-key")
 
 wk.register({
-    e = { "<cmd>Neotree toggle<cr>", "Neo Tree Toggle" },
 
-    x = {
-        name = "+Extra",
-        l = { "<cmd>Lazy<cr>", "Lazy" },
+    b = {
+        name = "+Buffer",
+        d = { "<cmd>lua require('core.plugins.exapi').buf_del.del_current()<cr>", "Delete current" },
+        o = { "<cmd>lua require('core.plugins.exapi').buf_del.del_others()<cr>", "Delete others" },
+        l = { "<cmd>lua require('core.plugins.exapi').buf_del.del_matches('left')<cr>", "Delete left" },
+        h = { "<cmd>lua require('core.plugins.exapi').buf_del.del_matches('right')<cr>", "Delete right" },
+        b = { "<cmd>lua require('core.plugins.exapi').buf_del.del_matches('all')<cr>", "Delete all" }
     },
+
+    e = { "<cmd>Neotree toggle<cr>", "Neo-Tree toggle" },
 
     s = {
         name = "+Search",
         l = { "<cmd>Legendary<cr>", "Legendary" }
     },
 
-    b = {
-        name = "+Buffer",
-        c = { "<cmd>lua require('core.plugins.exapi').bufdel.del_current()<cr>", "Delete Current" },
-        o = { "<cmd>lua require('core.plugins.exapi').bufdel.del_others()<cr>", "Delete Others" }
-    }
+    w = {
+        name = "+Window",
+    },
+
+    q = {
+        name = "+Extra",
+        l = { "<cmd>Lazy<cr>", "Lazy" },
+    },
 
 }, { prefix = "<leader>" })
