@@ -1,7 +1,6 @@
-local util = require("core.util")
-local wk = require("which-key")
+local Util = require("core.util")
 
-wk.register({
+require("which-key").register({
 
     b = {
         name = "+Buffer",

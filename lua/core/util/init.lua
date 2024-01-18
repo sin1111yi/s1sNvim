@@ -1,11 +1,13 @@
 -- this util class highly based on https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util
 
+local LazyUtil = require("lazy.core.util")
+
 ---@class core.util: LazyUtilCore
 ---@field ui core.util.ui
 ---@field lsp core.util.lsp
+---@field inject core.util.inject
 ---@field plugin core.util.plugin
 ---@field format core.util.format
-
 local M = {}
 
 M.icons = {
@@ -48,9 +50,9 @@ M.icons = {
     },
 
     diagnostic = {
-        error = " ",
-        warn  = " ",
-        info  = " ",
+        error = "",
+        warn  = "",
+        info  = "",
         hint  = "󰌵",
     },
 
@@ -66,6 +68,17 @@ M.icons = {
         star_4_fill = "󰫢",
     },
 }
+
+setmetatable(M, {
+    __index = function(t, k)
+        if LazyUtil[k] then
+            return LazyUtil[k]
+        end
+        ---@diagnostic disable-next-line: no-unknown
+        t[k] = require("core.util." .. k)
+        return t[k]
+    end
+})
 
 ---@param plugin string
 M.has = function(plugin)

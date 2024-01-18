@@ -28,7 +28,7 @@ M = {
                 config = false,
                 dependencies = { "nvim-lspconfig" }
             },
-            "mason.nvim",
+            "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
         },
         opts = {

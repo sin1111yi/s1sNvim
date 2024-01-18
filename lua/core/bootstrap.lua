@@ -1,5 +1,3 @@
-local util = require("core.util")
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -14,12 +12,20 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("core.options")
-util.plugin.setup()
+
+local Util = require("core.util")
+
+Util.plugin.setup()
 
 local plugins = require("plugins.necessary").setup({
-    load_plugins = {
-        extra = false,
-        custom = false,
+    load_modules = {
+        ["extra"] = true,
+        ["custom"] = false,
+    },
+
+    disbaled_plugins = {
+        "neovim/nvim-lspconfig",
+        "williamboman/mason.nvim",
     }
 })
 
@@ -50,4 +56,4 @@ require("core.keymaps")
 require("core.autocmds")
 
 vim.cmd.colorscheme "catppuccin"
-util.lazy_notify()
+Util.lazy_notify()

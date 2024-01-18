@@ -1,4 +1,4 @@
-local util = require("core.util")
+local Util = require("core.util")
 
 ---@class core.util.plugin
 local M = {}
