@@ -1,9 +1,25 @@
+local Util = require("core.util")
+
 ---@class core.util.ui
 local M = {}
 
----@param colorscheme string
+---@param colorscheme string | fun()
 M.set_colorscheme = function(colorscheme)
-    vim.cmd.colorscheme { colorscheme }
+    Util.track("colorscheme")
+    Util.try(function()
+        if type(colorscheme) == "function" then
+            colorscheme()
+        elseif type(colorscheme) == "string" then
+            vim.cmd.colorscheme(colorscheme)
+        end
+    end, {
+        msg = "Could not load colorscheme",
+        on_error = function(msg)
+            Util.error(msg)
+            vim.cmd.colorscheme("catppuccin")
+        end,
+    })
+    Util.track()
 end
 
 ---@alias Sign {name:string, text:string, texthl:string, priority:number}
