@@ -1,1 +1,1 @@
-require("core.bootstrap")
+require("core.bootstrap").setup()

@@ -2,24 +2,19 @@ local M = {}
 
 M.plugins_table = {}
 
----@class opts PluginsLoadOpts
----@field load_modules table<string, boolean>
----@field disbaled_plugins table<integer, string>
+---@param opts PluginsLoadOpts
 M.setup = function(opts)
-    M.plugins_table = {}
-
-    table.insert(M.plugins_table, {
-        { import = "plugins.support" },
-        { import = "plugins.colorscheme" },
-        { import = "plugins.ui" },
-        { import = "plugins.coding" }
-    })
+    local mod_path = vim.fn.stdpath("config") .. "/lua/plugins/"
 
     if opts.load_modules ~= nil and next(opts.load_modules) ~= nil then
         for k, v in pairs(opts.load_modules) do
-            if v then
+            local mod_exist = vim.loop.fs_stat(mod_path .. k) ~= nil
+
+            if v and mod_exist then
                 table.insert(M.plugins_table,
                     { import = "plugins." .. k })
+            elseif not mod_exist then
+                vim.notify("Module \"" .. k .. "\" is not existed!\n")
             end
         end
     end
