@@ -124,7 +124,7 @@ M = {
                         deleted   = icons.git_status.deleted,
                         renamed   = icons.git_status.renamed,
                         -- Status type
-                        untracked = icons.git_status.added,
+                        untracked = icons.git_status.untracked,
                         ignored   = icons.git_status.ignored,
                         unstaged  = icons.git_status.unstaged,
                         staged    = icons.git_status.staged,

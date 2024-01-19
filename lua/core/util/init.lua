@@ -36,9 +36,9 @@ M.icons = {
 
     git_status = {
         -- Change type
-        added     = "✚",
-        modified  = "",
-        deleted   = "✖",
+        added     = "",
+        modified  = "",
+        deleted   = "",
         renamed   = "󰁕",
 
         -- Status type
