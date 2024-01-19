@@ -49,11 +49,11 @@ M.icons = {
         conflict  = "",
     },
 
-    diagnostic = {
-        error = "",
-        warn  = "",
-        info  = "",
-        hint  = "󰌵",
+    diagnostics = {
+        Error = "",
+        Warn  = "",
+        Hint  = "",
+        Info  = "",
     },
 
     other = {

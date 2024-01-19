@@ -56,13 +56,13 @@ M = {
 
     config = function()
         vim.fn.sign_define("DiagnosticSignError",
-            { text = icons.diagnostic.error .. " ", texthl = "DiagnosticSignError" })
+            { text = icons.diagnostics.Error .. " ", texthl = "DiagnosticSignError" })
         vim.fn.sign_define("DiagnosticSignWarn",
-            { text = icons.diagnostic.warn .. " ", texthl = "DiagnosticSignWarn" })
+            { text = icons.diagnostics.Warn .. " ", texthl = "DiagnosticSignWarn" })
         vim.fn.sign_define("DiagnosticSignInfo",
-            { text = icons.diagnostic.info .. " ", texthl = "DiagnosticSignInfo" })
+            { text = icons.diagnostics.Info .. " ", texthl = "DiagnosticSignInfo" })
         vim.fn.sign_define("DiagnosticSignHint",
-            { text = icons.diagnostic.hint .. " ", texthl = "DiagnosticSignHint" })
+            { text = icons.diagnostics.Hint .. " ", texthl = "DiagnosticSignHint" })
     end,
 
     opts = function()
