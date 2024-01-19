@@ -52,7 +52,7 @@ local pluginsConf = {
     ---@type string[]
     disbaled_plugins = {
         -- for example, uncomment this line to let lazy ignore neodev
-        "folke/neodev.nvim",
+        -- "folke/neodev.nvim",
     }
 }
 

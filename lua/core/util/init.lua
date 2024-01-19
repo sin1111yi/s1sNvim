@@ -95,6 +95,16 @@ M.on_very_lazy = function(fn)
     })
 end
 
+---@param name string
+function M.opts(name)
+    local plugin = require("lazy.core.config").plugins[name]
+    if not plugin then
+        return {}
+    end
+    local Plugin = require("lazy.core.plugin")
+    return Plugin.values(plugin, "opts", false)
+end
+
 -- delay notifications till vim.notify was replaced or after 500ms
 M.lazy_notify = function()
     local notifs = {}
