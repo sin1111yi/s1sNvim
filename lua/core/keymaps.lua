@@ -57,6 +57,10 @@ smap("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search resul
 
 require("which-key").register({
     q = {
+        name = "+Quit",
+        c = { "<cmd>q<cr>", "Quit" },
+        w = { "<cmd>wq<cr>", "Save & Quit" },
+        a = { "<cmd>qa<cr>", "Quit all" },
         q = { "<cmd>wqa<cr>", "Save & Quit all" },
     }
 }, { prefix = "<leader>" })

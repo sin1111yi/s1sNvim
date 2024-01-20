@@ -8,7 +8,8 @@ require("which-key").register({
         o = { "<cmd>lua require('core.plugins.exapi').buf_del.del_others()<cr>", "Delete others" },
         l = { "<cmd>lua require('core.plugins.exapi').buf_del.del_matches('left')<cr>", "Delete left" },
         h = { "<cmd>lua require('core.plugins.exapi').buf_del.del_matches('right')<cr>", "Delete right" },
-        b = { "<cmd>lua require('core.plugins.exapi').buf_del.del_matches('all')<cr>", "Delete all" }
+        b = { "<cmd>lua require('core.plugins.exapi').buf_del.del_matches('all')<cr>", "Delete all" },
+        s = { "<cmd>ls<cr>", "List all" }
     },
 
     e = { "<cmd>Neotree toggle<cr>", "Neo-Tree toggle" },
@@ -26,10 +27,6 @@ require("which-key").register({
 
     w = {
         name = "+Window",
-    },
-
-    q = {
-        name = "+Quit",
     },
 
 }, { prefix = "<leader>" })
