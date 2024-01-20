@@ -60,8 +60,8 @@ require("which-key").register({
         name = "+Quit",
         c = { "<cmd>q<cr>", "Quit" },
         w = { "<cmd>wq<cr>", "Save & Quit" },
-        a = { "<cmd>qa<cr>", "Quit all" },
-        q = { "<cmd>wqa<cr>", "Save & Quit all" },
+        q = { "<cmd>qa<cr>", "Quit all" },
+        a = { "<cmd>wqa<cr>", "Save & Quit all" },
     }
 }, { prefix = "<leader>" })
 
