@@ -19,7 +19,7 @@ M = {
                     selection_chars = "FJDKSLA;CMRUEIWOQP",
                     picker_config = {
                         selection_display = function(char, windowid)
-                            return "%=" .. char .. "%="
+                            return "%=" .. char .. "%=" .. windowid
                         end,
 
                         use_winbar = "never",
@@ -227,7 +227,7 @@ M = {
                         --"*/src/*/tsconfig.json",
                     },
                     always_show = { -- remains visible even if other settings would normally hide it
-                        --".gitignored",
+                        ".gitignore",
                     },
                     never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
                         --".DS_Store",
@@ -329,26 +329,5 @@ M = {
         }
     end
 }
-
-
----@param basis string
----@param files table
-M.config_hidden = function(basis, files)
-    require("neo-tree").setup({
-        config = function()
-            if basis == "hide_by_name" then
-
-            elseif basis == "hide_by_pattern" then
-
-            elseif basis == "always_show" then
-
-            elseif basis == "never_show" then
-
-            elseif basis == "never_show_by_pattern" then
-
-            end
-        end
-    })
-end
 
 return M

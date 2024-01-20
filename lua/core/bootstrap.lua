@@ -44,8 +44,9 @@ local pluginsConf = {
         ["colorscheme"] = true,
         ["ui"] = true,
         ["coding"] = true,
+        ["coding.support"] = true,
 
-        ["extra"] = true,
+        ["extra"] = false,
         ["custom"] = false,
     },
 
@@ -53,7 +54,8 @@ local pluginsConf = {
     disbaled_plugins = {
         -- for example, uncomment this line to let lazy ignore neodev
         -- "folke/neodev.nvim",
-    }
+        "nvim-neo-tree/neo-tree.nvim",
+    },
 }
 
 

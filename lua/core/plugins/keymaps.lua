@@ -12,6 +12,10 @@ require("which-key").register({
         s = { "<cmd>ls<cr>", "List all" }
     },
 
+    c = {
+        name = "+Code"
+    },
+
     e = { "<cmd>Neotree toggle<cr>", "Neo-Tree toggle" },
 
     p = {
