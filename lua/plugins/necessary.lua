@@ -6,7 +6,7 @@ M.plugins_table = {}
 M.setup = function(opts)
     if opts.load_modules ~= nil and next(opts.load_modules) ~= nil then
         for k, v in pairs(opts.load_modules) do
-            
+
             ---@param module string
             ---@return boolean
             local function mod_exist(module)
