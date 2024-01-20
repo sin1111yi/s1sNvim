@@ -5,6 +5,7 @@ local LazyUtil = require("lazy.core.util")
 ---@class core.util: LazyUtilCore
 ---@field ui core.util.ui
 ---@field lsp core.util.lsp
+---@field root core.util.root
 ---@field inject core.util.inject
 ---@field plugin core.util.plugin
 ---@field format core.util.format
@@ -21,6 +22,12 @@ setmetatable(M, {
         return t[k]
     end
 })
+
+---@return boolean
+---@param os "Windows" | "Linux"
+M.os_is = function(os)
+    return vim.loop.os_uname().sysname:find(os) ~= nil
+end
 
 ---@param plugin string
 M.has = function(plugin)
