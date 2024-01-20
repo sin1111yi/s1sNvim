@@ -1,4 +1,4 @@
-local util = require("core.util")
+local Util = require("core.util")
 
 ---@class core.util.format
 ---@overload fun(opts?: {force?:boolean})
@@ -79,18 +79,24 @@ function M.format(opts)
     for _, formatter in ipairs(M.resolve(buf)) do
         if formatter.active then
             done = true
-            util.try(function()
+            Util.try(function()
                 return formatter.format(buf)
             end, { msg = "Formatter `" .. formatter.name .. "` failed" })
         end
     end
 
     if not done and opts and opts.force then
-        util.warn("No formatter available")
+        Util.warn("No formatter available")
     end
 end
 
+function M.health()
+    return true
+end
+
 function M.setup()
+    M.health()
+
     -- Autoformat autocmd
     vim.api.nvim_create_autocmd("BufWritePre", {
         group = vim.api.nvim_create_augroup("Formatter", {}),

@@ -1,6 +1,6 @@
 local M = {}
 
-local util = require("core.util")
+local Util = require("core.util")
 
 M = {
     "nvim-telescope/telescope.nvim",
@@ -39,17 +39,18 @@ M = {
 
             config = function(_, opts)
                 require("project_nvim").setup()
-                require("core.util").on_load("telescope.nvim", function()
+                Util.on_load("telescope.nvim", function()
                     require("telescope").load_extension("projects")
                 end)
             end
         },
+
         {
             "nvim-telescope/telescope-fzf-native.nvim",
             build = "make",
             enabled = vim.fn.executable("make") == 1,
             config = function()
-                util.on_load("telescope.nvim", function()
+                Util.on_load("telescope.nvim", function()
                     require("telescope").load_extension("fzf")
                 end)
             end,

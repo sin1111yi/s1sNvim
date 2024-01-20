@@ -1,4 +1,4 @@
-local util = require("core.util")
+local M = {}
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -13,17 +13,53 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("core.options")
-util.plugin.setup()
 
-local plugins = require("plugins.necessary").setup({
-    load_plugins = {
-        extra = false,
-        custom = false,
-    }
-})
+local Util = require("core.util")
 
-require("lazy").setup(plugins, {
+---@param name "autocmds" | "options" | "keymaps"
+local load = function(name)
+    local function _load(mod)
+        if require("lazy.core.cache").find(mod)[1] then
+            Util.try(function()
+                require(mod)
+            end, { msg = "Failed loading " .. mod })
+        end
+    end
+
+    _load("core." .. name)
+    if vim.bo.filetype == "lazy" then
+        -- HACK: LazyVim may have overwritten options of the Lazy ui, so reset this here
+        vim.cmd([[do VimResized]])
+    end
+    local pattern = "s1sVim" .. name:sub(1, 1):upper() .. name:sub(2)
+    vim.api.nvim_exec_autocmds("User", { pattern = pattern, modeline = false })
+end
+
+
+---@class PluginsLoadOpts
+local pluginsConf = {
+    ---@type table<string, boolean>
+    load_modules = {
+        ["support"] = true,
+        ["colorscheme"] = true,
+        ["ui"] = true,
+        ["coding"] = true,
+        ["coding.support"] = true,
+
+        ["extra"] = false,
+        ["custom"] = false,
+    },
+
+    ---@type string[]
+    disbaled_plugins = {
+        -- for example, uncomment this line to let lazy ignore neodev
+        -- "folke/neodev.nvim",
+        "nvim-neo-tree/neo-tree.nvim",
+    },
+}
+
+
+local opts = {
     defaults = {
         lazy = true,
         version = "*" -- always use the latest git commit
@@ -32,7 +68,6 @@ require("lazy").setup(plugins, {
     checker = { enabled = true }, -- automatically check for plugin updates
 
     performance = {
-        -- disable some rtp plugins like LazyVim
         disbaled_plugins = {
             "gzip",
             "matchit",
@@ -44,10 +79,19 @@ require("lazy").setup(plugins, {
             "zipPlugin",
         }
     }
-})
+}
 
-require("core.keymaps")
-require("core.autocmds")
+M.setup = function()
+    load("options")
+    Util.lazy_notify()
+    Util.plugin.setup()
 
-vim.cmd.colorscheme "catppuccin"
-util.lazy_notify()
+    require("lazy").setup(require("plugins.necessary").setup(pluginsConf), opts)
+
+    load("keymaps")
+    load("autocmds")
+
+    Util.ui.set_colorscheme("catppuccin")
+end
+
+return M

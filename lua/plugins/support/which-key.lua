@@ -1,6 +1,6 @@
 local M = {}
 
-local icons = require("core.util").icons
+local icons = require("core.util").ui.icons
 
 M = {
     "folke/which-key.nvim",

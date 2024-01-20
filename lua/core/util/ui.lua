@@ -1,9 +1,84 @@
+local Util = require("core.util")
+
 ---@class core.util.ui
 local M = {}
 
----@param colorscheme string
+M.icons = {
+    misc = {
+        -- arrows
+        dots              = "󰇘",
+        uparrow_bold      = "",
+        downarrow_bold    = "",
+        leftarrow_bold    = "",
+        rightarrow_bold   = "",
+        uparrow           = "",
+        downarrow         = "",
+        leftarrow         = "",
+        rightarrow        = "",
+        uparrow_double    = "",
+        downarrow_double  = "",
+        leftarrow_double  = "",
+        rightarrow_double = "",
+
+        plus              = "",
+        minus             = "",
+
+        oct_dot           = "",
+        oct_dot_fill      = "",
+    },
+
+    git_status = {
+        -- Change type
+        added     = "",
+        modified  = "",
+        deleted   = "",
+        renamed   = "󰁕",
+
+        -- Status type
+        untracked = "",
+        ignored   = "",
+        unstaged  = "󰄱",
+        staged    = "",
+        conflict  = "",
+    },
+
+    diagnostics = {
+        Error = "",
+        Warn  = "",
+        Hint  = "",
+        Info  = "",
+    },
+
+    other = {
+        gear        = "",
+        flash       = "",
+        check       = "",
+        close       = "",
+        code        = "",
+        star_3      = "󰫥",
+        star_4      = "󰫣",
+        star_3_fill = "󰫤",
+        star_4_fill = "󰫢",
+    },
+}
+
+---@param colorscheme string | fun()
 M.set_colorscheme = function(colorscheme)
-    vim.cmd.colorscheme { colorscheme }
+    Util.track("colorscheme")
+    Util.try(function()
+        if type(colorscheme) == "function" then
+            colorscheme()
+        elseif type(colorscheme) == "string" then
+            vim.cmd.colorscheme(colorscheme)
+        end
+    end, {
+        msg = "Could not load colorscheme",
+        on_error = function(msg)
+            Util.error(msg)
+            vim.cmd.colorscheme("catppuccin")
+        end,
+    })
+    Util.track()
 end
 
 ---@alias Sign {name:string, text:string, texthl:string, priority:number}

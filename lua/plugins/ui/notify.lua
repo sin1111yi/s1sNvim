@@ -1,6 +1,6 @@
 local M = {}
 
-local util = require("core.util")
+local Util = require("core.util")
 
 M = {
     "rcarriga/nvim-notify",
@@ -21,8 +21,8 @@ M = {
 
     init = function()
         -- when noice is not enabled, install notify on VeryLazy
-        if not util.has("noice.nvim") then
-            util.on_very_lazy(function()
+        if not Util.has("noice.nvim") then
+            Util.on_very_lazy(function()
                 -- replace notify with nvim-notify
                 vim.notify = require("notify")
             end)

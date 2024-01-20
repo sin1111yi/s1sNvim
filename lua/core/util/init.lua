@@ -1,71 +1,26 @@
 -- this util class highly based on https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/util
 
+local LazyUtil = require("lazy.core.util")
+
 ---@class core.util: LazyUtilCore
 ---@field ui core.util.ui
 ---@field lsp core.util.lsp
+---@field inject core.util.inject
 ---@field plugin core.util.plugin
 ---@field format core.util.format
-
+---@field toggle core.util.toggle
 local M = {}
 
-M.icons = {
-    misc = {
-        -- arrows
-        dots              = "󰇘",
-        uparrow_bold      = "",
-        downarrow_bold    = "",
-        leftarrow_bold    = "",
-        rightarrow_bold   = "",
-        uparrow           = "",
-        downarrow         = "",
-        leftarrow         = "",
-        rightarrow        = "",
-        uparrow_double    = "",
-        downarrow_double  = "",
-        leftarrow_double  = "",
-        rightarrow_double = "",
-
-        plus              = "",
-        minus             = "",
-
-        oct_dot           = "",
-        oct_dot_fill      = "",
-    },
-
-    git_status = {
-        -- Change type
-        added     = "✚",
-        modified  = "",
-        deleted   = "✖",
-        renamed   = "󰁕",
-
-        -- Status type
-        untracked = "",
-        ignored   = "",
-        unstaged  = "󰄱",
-        staged    = "",
-        conflict  = "",
-    },
-
-    diagnostic = {
-        error = " ",
-        warn  = " ",
-        info  = " ",
-        hint  = "󰌵",
-    },
-
-    other = {
-        gear        = "",
-        flash       = "",
-        check       = "",
-        close       = "",
-        code        = "",
-        star_3      = "󰫥",
-        star_4      = "󰫣",
-        star_3_fill = "󰫤",
-        star_4_fill = "󰫢",
-    },
-}
+setmetatable(M, {
+    __index = function(t, k)
+        if LazyUtil[k] then
+            return LazyUtil[k]
+        end
+        ---@diagnostic disable-next-line: no-unknown
+        t[k] = require("core.util." .. k)
+        return t[k]
+    end
+})
 
 ---@param plugin string
 M.has = function(plugin)
@@ -80,6 +35,16 @@ M.on_very_lazy = function(fn)
             fn()
         end,
     })
+end
+
+---@param name string
+function M.opts(name)
+    local plugin = require("lazy.core.config").plugins[name]
+    if not plugin then
+        return {}
+    end
+    local Plugin = require("lazy.core.plugin")
+    return Plugin.values(plugin, "opts", false)
 end
 
 -- delay notifications till vim.notify was replaced or after 500ms

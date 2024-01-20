@@ -1,6 +1,6 @@
 local M = {}
 
-local icons = require("core.util").icons
+local icons = require("core.util").ui.icons
 
 M = {
     "nvim-neo-tree/neo-tree.nvim",
@@ -19,7 +19,7 @@ M = {
                     selection_chars = "FJDKSLA;CMRUEIWOQP",
                     picker_config = {
                         selection_display = function(char, windowid)
-                            return "%=" .. char .. "%="
+                            return "%=" .. char .. "%=" .. windowid
                         end,
 
                         use_winbar = "never",
@@ -56,13 +56,13 @@ M = {
 
     config = function()
         vim.fn.sign_define("DiagnosticSignError",
-            { text = icons.diagnostic.error, texthl = "DiagnosticSignError" })
+            { text = icons.diagnostics.Error .. " ", texthl = "DiagnosticSignError" })
         vim.fn.sign_define("DiagnosticSignWarn",
-            { text = icons.diagnostic.warn, texthl = "DiagnosticSignWarn" })
+            { text = icons.diagnostics.Warn .. " ", texthl = "DiagnosticSignWarn" })
         vim.fn.sign_define("DiagnosticSignInfo",
-            { text = icons.diagnostic.info, texthl = "DiagnosticSignInfo" })
+            { text = icons.diagnostics.Info .. " ", texthl = "DiagnosticSignInfo" })
         vim.fn.sign_define("DiagnosticSignHint",
-            { text = icons.diagnostic.hint, texthl = "DiagnosticSignHint" })
+            { text = icons.diagnostics.Hint .. " ", texthl = "DiagnosticSignHint" })
     end,
 
     opts = function()
@@ -124,7 +124,7 @@ M = {
                         deleted   = icons.git_status.deleted,
                         renamed   = icons.git_status.renamed,
                         -- Status type
-                        untracked = icons.git_status.added,
+                        untracked = icons.git_status.untracked,
                         ignored   = icons.git_status.ignored,
                         unstaged  = icons.git_status.unstaged,
                         staged    = icons.git_status.staged,
@@ -227,7 +227,7 @@ M = {
                         --"*/src/*/tsconfig.json",
                     },
                     always_show = { -- remains visible even if other settings would normally hide it
-                        --".gitignored",
+                        ".gitignore",
                     },
                     never_show = { -- remains hidden even if visible is toggled to true, this overrides always_show
                         --".DS_Store",
@@ -329,26 +329,5 @@ M = {
         }
     end
 }
-
-
----@param basis string
----@param files table
-M.config_hidden = function(basis, files)
-    require("neo-tree").setup({
-        config = function()
-            if basis == "hide_by_name" then
-
-            elseif basis == "hide_by_pattern" then
-
-            elseif basis == "always_show" then
-
-            elseif basis == "never_show" then
-
-            elseif basis == "never_show_by_pattern" then
-
-            end
-        end
-    })
-end
 
 return M

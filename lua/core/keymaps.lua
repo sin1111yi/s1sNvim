@@ -1,10 +1,9 @@
 local M = {}
 
-local util = require("core.util")
-local wk = require("which-key")
+local Util = require("core.util")
 
 local vmap = vim.keymap.set
-local smap = util.safe_keymap_set
+local smap = Util.safe_keymap_set
 
 local keyopts = { remap = true, silent = true }
 
@@ -33,7 +32,7 @@ smap("v", "<A-j>", ":m '>+1<cr>gv=gv", { desc = "Move down" })
 smap("v", "<A-k>", ":m '<-2<cr>gv=gv", { desc = "Move up" })
 
 -- buffers
-if util.has("bufferline.nvim") then
+if Util.has("bufferline.nvim") then
     smap("n", "<S-h>", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
     smap("n", "<S-l>", "<cmd>BufferLineCycleNext<cr>", { desc = "Next buffer" })
     smap("n", "[b", "<cmd>BufferLineCyclePrev<cr>", { desc = "Prev buffer" })
@@ -56,8 +55,12 @@ smap("n", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search resul
 smap("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
 smap("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
 
-wk.register({
+require("which-key").register({
     q = {
+        name = "+Quit",
+        c = { "<cmd>q<cr>", "Quit" },
+        w = { "<cmd>wq<cr>", "Save & Quit" },
+        a = { "<cmd>qa<cr>", "Quit all" },
         q = { "<cmd>wqa<cr>", "Save & Quit all" },
     }
 }, { prefix = "<leader>" })
