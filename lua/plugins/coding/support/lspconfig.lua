@@ -197,7 +197,7 @@ M = {
         ---@param opts MasonSettings | {ensure_installed: string[]}
         config = function(_, opts)
             -- when using linux, install some additional LSPs
-            if vim.fn.has("linux") == true then
+            if Util.os_is("Linux") then
                 local linux_sup_tb = {
                     "bash-language-server",
                     "checkmake"
