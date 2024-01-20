@@ -35,7 +35,6 @@ local load = function(name)
     vim.api.nvim_exec_autocmds("User", { pattern = pattern, modeline = false })
 end
 
-
 ---@class PluginsLoadOpts
 local pluginsConf = {
     ---@type table<string, boolean>
@@ -54,7 +53,6 @@ local pluginsConf = {
     disbaled_plugins = {
         -- for example, uncomment this line to let lazy ignore neodev
         -- "folke/neodev.nvim",
-        "nvim-neo-tree/neo-tree.nvim",
     },
 }
 
