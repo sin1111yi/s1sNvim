@@ -3,6 +3,65 @@ local Util = require("core.util")
 ---@class core.util.ui
 local M = {}
 
+M.icons = {
+    misc = {
+        -- arrows
+        dots              = "󰇘",
+        uparrow_bold      = "",
+        downarrow_bold    = "",
+        leftarrow_bold    = "",
+        rightarrow_bold   = "",
+        uparrow           = "",
+        downarrow         = "",
+        leftarrow         = "",
+        rightarrow        = "",
+        uparrow_double    = "",
+        downarrow_double  = "",
+        leftarrow_double  = "",
+        rightarrow_double = "",
+
+        plus              = "",
+        minus             = "",
+
+        oct_dot           = "",
+        oct_dot_fill      = "",
+    },
+
+    git_status = {
+        -- Change type
+        added     = "",
+        modified  = "",
+        deleted   = "",
+        renamed   = "󰁕",
+
+        -- Status type
+        untracked = "",
+        ignored   = "",
+        unstaged  = "󰄱",
+        staged    = "",
+        conflict  = "",
+    },
+
+    diagnostics = {
+        Error = "",
+        Warn  = "",
+        Hint  = "",
+        Info  = "",
+    },
+
+    other = {
+        gear        = "",
+        flash       = "",
+        check       = "",
+        close       = "",
+        code        = "",
+        star_3      = "󰫥",
+        star_4      = "󰫣",
+        star_3_fill = "󰫤",
+        star_4_fill = "󰫢",
+    },
+}
+
 ---@param colorscheme string | fun()
 M.set_colorscheme = function(colorscheme)
     Util.track("colorscheme")
