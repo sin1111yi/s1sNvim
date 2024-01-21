@@ -13,7 +13,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-
 local Util = require("core.util")
 
 ---@param name "autocmds" | "options" | "keymaps"
@@ -55,7 +54,6 @@ local pluginsConf = {
         -- "folke/neodev.nvim",
     },
 }
-
 
 local opts = {
     defaults = {

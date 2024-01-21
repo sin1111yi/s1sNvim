@@ -4,4 +4,7 @@
 
 👉 *Best regards for all the Neovim and Neovim plugins developers.*
 
+# Todo
 
+1. fix neodev and neo-tree
+2. considering use hlchunk to replace indent-blankline
