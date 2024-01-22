@@ -7,4 +7,3 @@
 # Todo
 
 1. fix neodev and neo-tree
-2. considering use hlchunk to replace indent-blankline
