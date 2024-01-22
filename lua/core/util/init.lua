@@ -135,4 +135,15 @@ M.safe_keymap_set = function(mode, lhs, rhs, opts)
     end
 end
 
+M.better_nvim_keymap_set = function(mode, lhs, rhs, opts)
+    local _opts = { remap = true, silent = true }
+    if type(opts) == "string" then
+        _opts.desc = opts
+    else
+        _opts = vim.tbl_deep_extend("force", _opts, opts)
+    end
+    vim.keymap.set(mode, lhs, rhs, _opts)
+end
+
+
 return M

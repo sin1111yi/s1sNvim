@@ -2,10 +2,7 @@ local M = {}
 
 local Util = require("core.util")
 
-local vmap = function(mode, lhs, rhs, opts)
-    opts = vim.tbl_deep_extend("force", { remap = true, silent = true }, opts)
-    vim.keymap.set(mode, lhs, rhs, opts)
-end
+local vmap = Util.better_nvim_keymap_set
 local smap = Util.safe_keymap_set
 
 local keyopts = { remap = true, silent = true }
