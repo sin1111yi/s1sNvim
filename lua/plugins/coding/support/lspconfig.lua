@@ -247,7 +247,6 @@ function _keymaps.get()
     if _keymaps._keys then
         return M._keys
     end
-    -- stylua: ignore
     _keymaps._keys = {
         { "<leader>cl", "<cmd>LspInfo<cr>",                                                                     desc = "Lsp Info" },
         { "gd",         function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end,      desc = "Goto Definition",       has = "definition" },
