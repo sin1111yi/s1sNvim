@@ -2,6 +2,9 @@ local Util = require("core.util")
 
 local _map = {}
 
+local vmap = Util.better_nvim_keymap_set
+local smap = Util.safe_keymap_set
+
 _map.tb = {
     ["leader"] = {
         b = {
@@ -39,7 +42,10 @@ _map.tb = {
             e = {
                 function()
                     require("neo-tree.command").execute({ source = "git_status", toggle = true })
-                end, "Git explorer" }
+                end, "Git explorer" },
+            h = {
+                name = "Gitsigns"
+            }
         },
 
         p = {
@@ -62,5 +68,8 @@ _map.tb = {
 _map.opts = {
     ["leader"] = { prefix = "<leader>" }
 }
+
+vmap("n", "<leader>e", "<leader>fe", { desc = "Explorer root dir" })
+vmap("n", "<leader>E", "<leader>fE", { desc = "Explorer cwd" })
 
 require("which-key").register(_map.tb["leader"], _map.opts["leader"])

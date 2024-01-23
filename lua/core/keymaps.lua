@@ -2,7 +2,7 @@ local M = {}
 
 local Util = require("core.util")
 
-local vmap = vim.keymap.set
+local vmap = Util.better_nvim_keymap_set
 local smap = Util.safe_keymap_set
 
 local keyopts = { remap = true, silent = true }

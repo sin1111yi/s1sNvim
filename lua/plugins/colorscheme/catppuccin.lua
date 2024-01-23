@@ -3,6 +3,7 @@ local M = {}
 M = {
     "catppuccin/nvim",
     name = "catppuccin",
+    lazy = false,
     priority = 1000,
     opts = {
         flavour = "macchiato", -- latte, frappe, macchiato, mocha
