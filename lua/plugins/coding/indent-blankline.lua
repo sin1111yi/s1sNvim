@@ -36,7 +36,7 @@ M = {
                         "terminal",
                         "prompt",
                     },
-                    config = function ()
+                    config = function()
                         require("guess-indent").setup()
                     end
                 }

@@ -77,6 +77,13 @@ local opts = {
     }
 }
 
+local create_usr_cmds = function()
+    vim.api.nvim_create_user_command("LazyHealth", function()
+        vim.cmd("Lazy! load all")
+        vim.cmd("checkhealth")
+    end, { desc = "Load all plugins and run :checkhealth" })
+end
+
 M.setup = function()
     load("options")
     Util.lazy_notify()
@@ -86,6 +93,8 @@ M.setup = function()
 
     load("keymaps")
     load("autocmds")
+
+    create_usr_cmds()
 
     Util.ui.set_colorscheme("catppuccin")
 end

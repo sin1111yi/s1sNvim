@@ -28,6 +28,35 @@ M = {
         config = function()
             require("fidget").setup()
         end
+    },
+
+    {
+        "brenoprata10/nvim-highlight-colors",
+        event = { "BufAdd", "BufEnter", "BufRead" },
+        enable_named_colors = true,
+        enable_tailwind = false,
+        config = function()
+            vim.api.nvim_create_user_command("ColorHighlight",
+                function(opts)
+                    local arg = string.lower(opts.fargs[1])
+                    if arg == "on" then
+                        require("nvim-highlight-colors").turnOn()
+                    elseif arg == "off" then
+                        require("nvim-highlight-colors").turnOff()
+                    elseif arg == "toggle" then
+                        require("nvim-highlight-colors").toggle()
+                    end
+                end,
+                {
+                    nargs = 1,
+                    complete = function()
+                        return { "On", "Off", "Toggle" }
+                    end,
+                    desc = "Config color highlight"
+                })
+
+            vim.cmd("ColorHighlight Off")
+        end
     }
 }
 
