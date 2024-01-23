@@ -4,7 +4,7 @@ local M = {}
 
 M = {
     "akinsho/bufferline.nvim",
-    event = { "BufAdd", "BufEnter", "BufRead" },
+    event = { "BufAdd", "BufEnter", "BufNew" },
     version = "*",
     dependencies = {
         "famiu/bufdelete.nvim"
