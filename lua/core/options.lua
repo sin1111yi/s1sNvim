@@ -55,12 +55,16 @@ opt.wildmode = "longest:full,full" -- Command-line completion mode
 opt.winminwidth = 5                -- Minimum window width
 opt.wrap = false                   -- Disable line wrap
 opt.fillchars = {
-    foldopen = "",
-    foldclose = "",
+    foldopen = "",
+    foldclose = "",
     fold = "⸱",
     foldsep = " ",
     diff = "/",
-    eob = " ",
+}
+opt.listchars = {
+    tab = " ~~ ",
+    eol = "󱞣",
+    trail = "-",
 }
 
 if vim.fn.has("nvim-0.10") == 1 then
