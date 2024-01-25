@@ -297,7 +297,8 @@ M = {
             if Util.os_is("Linux") then
                 local linux_sup_tb = {
                     "bash-language-server",
-                    "checkmake"
+                    "checkmake",
+                    "shellcheck",
                 }
                 for _, v in ipairs(linux_sup_tb) do
                     table.insert(opts.ensure_installed, v)
