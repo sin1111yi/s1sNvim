@@ -5,17 +5,11 @@ local Util = require("core.util")
 local vmap = Util.better_nvim_keymap_set
 local smap = Util.safe_keymap_set
 
-local keyopts = { remap = true, silent = true }
-
 -- Move to window using the <ctrl> hjkl keys
 smap("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
 smap("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
 smap("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
 smap("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
-
--- Scroll screen
-smap("n", "<C-u>", "8k", { desc = "Scroll up" })
-smap("n", "<C-d>", "8j", { desc = "Scroll down" })
 
 -- Resize window using <ctrl> arrow keys
 smap("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
