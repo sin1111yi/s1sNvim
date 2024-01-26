@@ -17,7 +17,6 @@ function lsp_keymaps.get()
     if lsp_keymaps._keys then
         return lsp_keymaps._keys
     end
-    -- stylua: ignore
     lsp_keymaps._keys = {
         { "<leader>cl", "<cmd>LspInfo<cr>",                                                                     desc = "Lsp Info" },
         { "<leader>cr", vim.lsp.buf.rename,                                                                     desc = "Rename",                has = "rename" },
