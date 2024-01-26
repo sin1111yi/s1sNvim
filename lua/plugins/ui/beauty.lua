@@ -2,6 +2,14 @@ local M = {}
 
 M = {
     {
+        "nvim-tree/nvim-web-devicons",
+        lazy = false,
+        config = function()
+            require("nvim-web-devicons").setup()
+        end
+    },
+
+    {
         "karb94/neoscroll.nvim",
         event = "VeryLazy",
         config = function()
