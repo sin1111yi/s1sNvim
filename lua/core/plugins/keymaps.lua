@@ -51,12 +51,14 @@ _map.tb = {
         p = {
             name = "+Plugins",
             l = { "<cmd>Lazy<cr>", "Lazy" },
-            m = { "<cmd>Mason<cr>", "Mason" }
+            m = { "<cmd>Mason<cr>", "Mason" },
+            u = { "<cmd>UpdateAll<cr>", "Update all" }
         },
 
         s = {
             name = "+Search",
-            l = { "<cmd>Legendary<cr>", "Legendary" }
+            l = { "<cmd>Legendary<cr>", "Legendary" },
+            r = { function() require("spectre").open() end, desc = "Replace in files" }
         },
 
         w = {

@@ -82,11 +82,17 @@ local create_usr_cmds = function()
         vim.cmd("Lazy! load all")
         vim.cmd("checkhealth")
     end, { desc = "Load all plugins and run :checkhealth" })
+
+    vim.api.nvim_create_user_command("UpdateAll", function()
+        vim.cmd("TSUpdate all")
+        vim.cmd("MasonUpdate")
+    end, { bang = true, nargs = 0, desc = "Update all" })
 end
 
 M.setup = function()
     load("options")
     Util.lazy_notify()
+    Util.format.setup()
     Util.plugin.setup()
 
     require("lazy").setup(require("plugins.necessary").setup(pluginsConf), opts)
