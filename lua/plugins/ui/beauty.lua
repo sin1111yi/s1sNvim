@@ -40,6 +40,19 @@ M = {
         config = function()
             require("nvim-highlight-colors").setup()
         end
+    },
+
+    {
+        "gen740/SmoothCursor.nvim",
+        lazy = false,
+        config = function()
+            require("smoothcursor").setup({
+                cursor = "󱞪",
+                fancy = {
+                    enable = false,
+                }
+            })
+        end
     }
 }
 
