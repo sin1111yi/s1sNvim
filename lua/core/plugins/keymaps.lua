@@ -58,7 +58,7 @@ _map.tb = {
         s = {
             name = "+Search",
             l = { "<cmd>Legendary<cr>", "Legendary" },
-            r = { function() require("spectre").open() end, desc = "Replace in files" }
+            r = { function() require("spectre").open() end, "Replace in files" }
         },
 
         w = {
