@@ -1,9 +1,14 @@
 local M = {}
 
+local Util = require("core.util")
+
 M = {
     {
         "lewis6991/gitsigns.nvim",
-        event = { "BufAdd", "BufNew", "BufEnter" },
+        event = { "LazyFile" },
+        dependencies = {
+            "petertriho/nvim-scrollbar",
+        },
         opts = {
             signs = {
                 add = { text = "▎" },
@@ -14,7 +19,7 @@ M = {
                 untracked = { text = "▎" },
             },
 
-            on_attach = function(bufnr)
+            on_attach = function()
                 local gs = package.loaded.gitsigns
 
                 local map = require("core.util").better_nvim_keymap_set
@@ -47,6 +52,12 @@ M = {
                 map({ 'o', 'x' }, 'ghi', ':<C-U>Gitsigns select_hunk<CR>', "GitSigns Select Hunk")
             end
         },
+        config = function()
+            Util.on_load("gitsigns", function()
+                require("scrollbar").setup()
+                require("scrollbar.handlers.gitsigns").setup()
+            end)
+        end
     }
 }
 
