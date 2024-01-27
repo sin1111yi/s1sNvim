@@ -275,7 +275,6 @@ M = {
         cmd = "Mason",
         build = ":MasonUpdate",
         opts = {
-            install_root_dir = path.concat { vim.fn.stdpath "data", "mason" },
             ---@type string[]
             ensure_installed = {
                 -- lua

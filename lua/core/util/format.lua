@@ -57,16 +57,6 @@ function M.enabled(buf)
     return gaf == nil or gaf
 end
 
----@param buf? boolean
-function M.toggle(buf)
-    if buf then
-        vim.b.autoformat = not M.enabled()
-    else
-        vim.g.autoformat = not M.enabled()
-        vim.b.autoformat = nil
-    end
-end
-
 ---@param opts? {force?:boolean, buf?:number}
 function M.format(opts)
     opts = opts or {}
