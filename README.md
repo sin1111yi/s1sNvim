@@ -51,7 +51,7 @@ In `plugins`, there are several folders which contains different `.lua` files.
 - Add or modify plugins and their options in `plugins/custom`. You can easily do that by follow the same method with LazyVim. See [here](https://www.lazyvim.org/configuration/plugins). 
 - You can edit `plugins/custom/custom.lua` in the way thet you edit `LazyVim/starter`, see [here](https://github.com/LazyVim/starter/blob/main/lua/plugins/example.lua).
 
-if you want to disable modules or plugins provided by s1sNvim, check `bootstrap.lua`, here's the code, each folder in `plugins` is a module.
+If you want to disable modules or plugins provided by s1sNvim, check `bootstrap.lua`. Here's the code, and each folder in `plugins` is a module.
  
 ```lua
 ---@class PluginsLoadOpts
