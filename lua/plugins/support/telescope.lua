@@ -15,7 +15,7 @@ M = {
                     manual_mode = false,
                     detection_methods = {
                         "lsp",
-                        "pattern"
+                        "pattern",
                     },
 
                     patterns = {
@@ -34,7 +34,7 @@ M = {
                     exclude_dirs = {},
                     show_hidden = false,
                     silent_chdir = true,
-                    scope_chdir = 'global',
+                    scope_chdir = "global",
                     datapath = vim.fn.stdpath("data"),
                 },
 
@@ -43,7 +43,7 @@ M = {
                     Util.on_load("telescope.nvim", function()
                         require("telescope").load_extension("projects")
                     end)
-                end
+                end,
             },
 
             {
@@ -56,7 +56,7 @@ M = {
                     end)
                 end,
             },
-        }
+        },
     },
 
     {

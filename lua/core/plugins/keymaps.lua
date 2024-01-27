@@ -22,7 +22,8 @@ _map.tb = {
         },
 
         c = {
-            name = "+Code"
+            name = "+Code",
+            f = { "<cmd>FormatWrite<cr>", "Format buffer" }
         },
 
         f = {
