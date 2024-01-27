@@ -38,6 +38,8 @@ else
     smap("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 end
 
+-- windows
+
 -- Clear search with <esc>
 smap({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
 
@@ -49,6 +51,22 @@ smap("n", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search resul
 smap("x", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
 smap("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev search result" })
 
+-- windows
+smap("n", "<leader>ww", "<C-W>p", { desc = "Other window", remap = true })
+smap("n", "<leader>wd", "<C-W>c", { desc = "Delete window", remap = true })
+smap("n", "<leader>w-", "<C-W>s", { desc = "Split window below", remap = true })
+smap("n", "<leader>w|", "<C-W>v", { desc = "Split window right", remap = true })
+smap("n", "<leader>-", "<C-W>s", { desc = "Split window below", remap = true })
+smap("n", "<leader>|", "<C-W>v", { desc = "Split window right", remap = true })
+
+-- tabs
+smap("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab" })
+smap("n", "<leader><tab>f", "<cmd>tabfirst<cr>", { desc = "First Tab" })
+smap("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", { desc = "New Tab" })
+smap("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
+smap("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
+smap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
+
 require("which-key").register({
     q = {
         name = "+Quit",
@@ -56,7 +74,7 @@ require("which-key").register({
         w = { "<cmd>wq<cr>", "Save & Quit" },
         a = { "<cmd>qa<cr>", "Quit all" },
         q = { "<cmd>wqa<cr>", "Save & Quit all" },
-    }
+    },
 }, { prefix = "<leader>" })
 
 require("core.plugins.keymaps")

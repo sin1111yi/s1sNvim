@@ -10,6 +10,7 @@ local LazyUtil = require("lazy.core.util")
 ---@field plugin core.util.plugin
 ---@field format core.util.format
 ---@field toggle core.util.toggle
+---@field telescope core.util.telescope
 local M = {}
 
 setmetatable(M, {
