@@ -17,13 +17,15 @@ _map.tb = {
             e = {
                 function()
                     require("neo-tree.command").execute({ source = "buffers", toggle = true })
-                end, "Explorer buffers" },
-            s = { "<cmd>ls<cr>", "List all" }
+                end,
+                "Explorer buffers",
+            },
+            s = { "<cmd>ls<cr>", "List all" },
         },
 
         c = {
             name = "+Code",
-            f = { "<cmd>FormatWrite<cr>", "Format buffer" }
+            f = { "<cmd>FormatWrite<cr>", "Format buffer" },
         },
 
         f = {
@@ -31,11 +33,15 @@ _map.tb = {
             e = {
                 function()
                     require("neo-tree.command").execute({ toggle = true, dir = Util.root() })
-                end, "Explorer root dir" },
+                end,
+                "Explorer root dir",
+            },
             E = {
                 function()
                     require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
-                end, "Explorer cwd" },
+                end,
+                "Explorer cwd",
+            },
         },
 
         g = {
@@ -43,33 +49,36 @@ _map.tb = {
             e = {
                 function()
                     require("neo-tree.command").execute({ source = "git_status", toggle = true })
-                end, "Git explorer" },
+                end,
+                "Git explorer",
+            },
             h = {
-                name = "Gitsigns"
-            }
+                name = "+Gitsigns"
+            },
         },
 
         p = {
             name = "+Plugins",
             l = { "<cmd>Lazy<cr>", "Lazy" },
             m = { "<cmd>Mason<cr>", "Mason" },
-            u = { "<cmd>UpdateAll<cr>", "Update all" }
+            u = { "<cmd>UpdateAll<cr>", "Update all" },
         },
 
         s = {
             name = "+Search",
             l = { "<cmd>Legendary<cr>", "Legendary" },
-            r = { function() require("spectre").open() end, "Replace in files" }
+            r = {
+                function()
+                    require("spectre").open()
+                end,
+                "Replace in files",
+            },
         },
-
-        w = {
-            name = "+Window",
-        },
-    }
+    },
 }
 
 _map.opts = {
-    ["leader"] = { prefix = "<leader>" }
+    ["leader"] = { prefix = "<leader>" },
 }
 
 vmap("n", "<leader>e", "<leader>fe", { desc = "Explorer root dir" })
@@ -85,9 +94,9 @@ if Util.has("neoscorll") then
         ["<C-f>"] = { "scroll", { "vim.api.nvim_win_get_height(0)", "true", "450" } },
         ["<C-y>"] = { "scroll", { "-0.10", "false", "100" } },
         ["<C-e>"] = { "scroll", { "0.10", "false", "100" } },
-        ["zt"]    = { "zt", { "250" } },
-        ["zz"]    = { "zz", { "250" } },
-        ["zb"]    = { "zb", { "250" } },
+        ["zt"] = { "zt", { "250" } },
+        ["zz"] = { "zz", { "250" } },
+        ["zb"] = { "zb", { "250" } },
     }
 
     require("neoscroll.config").set_mappings(_neoscorll_keymap)

@@ -38,8 +38,6 @@ else
     smap("n", "]b", "<cmd>bnext<cr>", { desc = "Next buffer" })
 end
 
--- windows
-
 -- Clear search with <esc>
 smap({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
 
