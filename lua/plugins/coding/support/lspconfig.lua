@@ -264,7 +264,6 @@ M = {
             if have_mason then
                 mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
             end
-            -- end of config
         end
 
     },

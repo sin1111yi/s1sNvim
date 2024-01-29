@@ -65,7 +65,6 @@ M = {
         "mhartington/formatter.nvim",
         event = "LazyFile",
         config = function()
-            Util.warn(_formatters.get_formatting_buffer().bufpath)
             require("formatter").setup({
                 logging = true,
                 log_level = vim.log.levels.WARN,
