@@ -1,5 +1,8 @@
 local M = {}
 
+local Util = require("core.util")
+local icons = Util.ui.icons
+
 M = {
     {
         "nvim-lualine/lualine.nvim",
@@ -15,13 +18,6 @@ M = {
             end
         end,
         opts = function()
-            -- PERF: we don't need this lualine require madness 🤷
-            local lualine_require = require("lualine_require")
-            lualine_require.require = require
-
-            local Util = require("core.util")
-            local icons = Util.ui.icons
-
             vim.o.laststatus = vim.g.lualine_laststatus
 
             return {
@@ -30,8 +26,8 @@ M = {
                     globalstatus = true,
                     disabled_filetypes = {
                         statusline = {
-                            "dashboard", 
-                            "alpha", 
+                            "dashboard",
+                            "alpha",
                             "starter" }
                     },
                 },
@@ -83,9 +79,9 @@ M = {
                         {
                             "diff",
                             symbols = {
-                                added = icons.git_status.added,
-                                modified = icons.git_status.modified,
-                                removed = icons.git_status.removed,
+                                added = icons.git_status.added .. " ",
+                                modified = icons.git_status.modified .. " ",
+                                removed = icons.git_status.removed .. " ",
                             },
                         },
                     },
