@@ -73,6 +73,20 @@ require("which-key").register({
         a = { "<cmd>qa<cr>", "Quit all" },
         q = { "<cmd>wqa<cr>", "Save & Quit all" },
     },
+
+    r = {
+        name = "+Built-in",
+        n = {
+            function()
+                if vim.o.relativenumber == true then
+                    vim.cmd("set norelativenumber")
+                else
+                    vim.cmd("set relativenumber")
+                end
+                Util.info("Toggle relativenumber")
+            end, "Toggle vim.o.relativenumber"
+        }
+    }
 }, { prefix = "<leader>" })
 
 require("core.plugins.keymaps")
