@@ -7,9 +7,21 @@ M = {
         event = { "LazyFile" },
         dependencies = {
             "petertriho/nvim-scrollbar",
-            config = function()
-                require("scrollbar").setup()
-            end
+            opts = {
+                excluded_buftypes = {
+                    "help",
+                    "nofile",
+                    "terminal",
+                    "prompt",
+                },
+                excluded_filetypes = {
+                    "neo-tree",
+                    "cmp_docs",
+                    "cmp_menu",
+                    "noice",
+                    "TelescopePrompt",
+                },
+            }
         },
         opts = {
             signs = {
@@ -55,10 +67,9 @@ M = {
                     map({ 'o', 'x' }, 'ghi', ':<C-U>Gitsigns select_hunk<CR>', "GitSigns Select Hunk")
                 end
             })
-            Util.on_load("gitsigns", function()
-                require("scrollbar").setup()
+            if Util.has("nvim-scrollbar") then
                 require("scrollbar.handlers.gitsigns").setup()
-            end)
+            end
         end
     }
 }

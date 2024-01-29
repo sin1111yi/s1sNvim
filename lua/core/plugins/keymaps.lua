@@ -86,7 +86,7 @@ vmap("n", "<leader>E", "<leader>fE", { desc = "Explorer cwd" })
 
 require("which-key").register(_map.tb["leader"], _map.opts["leader"])
 
-if Util.has("neoscorll") then
+if Util.has("neoscorll.nvim") then
     local _neoscorll_keymap = {
         ["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "250" } },
         ["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "250" } },

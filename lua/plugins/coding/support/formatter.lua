@@ -9,7 +9,7 @@ _formatters.get_executable = function(name)
     if vim.fn.executable(name) == 1 then
         return name
     else
-        if Util.has("mason") then
+        if Util.has("mason.nvim") then
             Util.warn(("%s is absent, trying to install is through 'MasonInstall %s'"):format(name, name))
         else
             Util.warn(("%s is absent, please make sure it has been installed!"):format(name))
