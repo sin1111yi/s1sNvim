@@ -58,6 +58,8 @@ M = {
             indent = { enable = true },
             ensure_installed = {
                 "bash",
+                "vim",
+                "regex",
                 "c",
                 "cpp",
                 "cmake",
@@ -76,6 +78,7 @@ M = {
                 "luadoc",
                 "make",
                 "markdown",
+                "markdown_inline",
                 "rust"
             },
             incremental_selection = {
