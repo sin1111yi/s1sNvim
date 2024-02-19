@@ -65,6 +65,8 @@ smap("n", "<leader><tab>]", "<cmd>tabnext<cr>", { desc = "Next Tab" })
 smap("n", "<leader><tab>d", "<cmd>tabclose<cr>", { desc = "Close Tab" })
 smap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", { desc = "Previous Tab" })
 
+smap("t", "<esc>", "<c-\\><c-n>", { desc = "Escape terminal insert" })
+
 require("which-key").register({
     q = {
         name = "+Quit",
@@ -84,8 +86,12 @@ require("which-key").register({
                     vim.cmd("set relativenumber")
                 end
                 Util.info("Toggle relativenumber")
-            end, "Toggle vim.o.relativenumber"
+            end, "Toggle relativenumber"
         }
+    },
+
+    w = {
+        name = "+Window"
     }
 }, { prefix = "<leader>" })
 

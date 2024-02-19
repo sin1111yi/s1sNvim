@@ -2,10 +2,10 @@ local M = {}
 
 M = {
     {
-        "numToStr/Comment.nvim",
+        "echasnovski/mini.comment",
         event = { "BufAdd", "BufEnter", "BufNew" },
-        config = function ()
-            require("Comment").setup()
+        config = function()
+            require("mini.comment").setup()
         end
     }
 
