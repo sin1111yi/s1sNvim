@@ -117,32 +117,31 @@ require("gitsigns").setup({
     on_attach = function()
         local gs = package.loaded.gitsigns
 
-        local map = require("core.util").better_nvim_keymap_set
         -- Navigation
-        map("n", "]h", function()
+        vmap("n", "]h", function()
             if vim.wo.diff then return "]c" end
             vim.schedule(function() gs.next_hunk() end)
             return "<Ignore>"
         end, { expr = true, desc = "Next hunk" })
 
-        map("n", "[h", function()
+        vmap("n", "[h", function()
             if vim.wo.diff then return "[c" end
             vim.schedule(function() gs.prev_hunk() end)
             return "<Ignore>"
         end, { expr = true, desc = "Prev hunk" })
 
         -- Actions
-        map({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage hunk")
-        map({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset hunk")
-        map("n", "<leader>ghS", gs.stage_buffer, "Stage buffer")
-        map("n", "<leader>ghu", gs.undo_stage_hunk, "Undo stage buffer")
-        map("n", "<leader>ghR", gs.reset_buffer, "Reset buffer")
-        map("n", "<leader>ghp", gs.preview_hunk, "Preview hunk")
-        map("n", "<leader>ghb", function() gs.blame_line { full = true } end, "Blame line")
-        map("n", "<leader>ght", gs.toggle_current_line_blame, "Toggle blame (This line)")
-        map("n", "<leader>ghf", gs.diffthis, "Diff This")
-        map("n", "<leader>ghF", function() gs.diffthis("~") end, "Diff This ~")
-        map("n", "<leader>ghd", gs.toggle_deleted, "Toggle deleted")
-        map({ "o", "x" }, "ghi", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+        vmap({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage hunk")
+        vmap({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset hunk")
+        vmap("n", "<leader>ghS", gs.stage_buffer, "Stage buffer")
+        vmap("n", "<leader>ghu", gs.undo_stage_hunk, "Undo stage buffer")
+        vmap("n", "<leader>ghR", gs.reset_buffer, "Reset buffer")
+        vmap("n", "<leader>ghp", gs.preview_hunk, "Preview hunk")
+        vmap("n", "<leader>ghb", function() gs.blame_line { full = true } end, "Blame line")
+        vmap("n", "<leader>ght", gs.toggle_current_line_blame, "Toggle blame (This line)")
+        vmap("n", "<leader>ghf", gs.diffthis, "Diff This")
+        vmap("n", "<leader>ghF", function() gs.diffthis("~") end, "Diff This ~")
+        vmap("n", "<leader>ghd", gs.toggle_deleted, "Toggle deleted")
+        vmap({ "o", "x" }, "ghi", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
     end
 })
