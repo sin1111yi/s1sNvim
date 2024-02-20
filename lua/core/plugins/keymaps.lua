@@ -65,14 +65,29 @@ _map.tb = {
         },
 
         s = {
-            name = "+Search",
-            l = { "<cmd>Legendary<cr>", "Legendary" },
+            name = "+Search & Session",
             r = {
                 function()
                     require("spectre").open()
                 end,
                 "Replace in files",
             },
+            s = {
+                function()
+                    require("persistence").load()
+                end,
+                "Restore Session"
+            },
+            l = {
+                function()
+                    require("persistence").load({ last = true })
+                end,
+                "Restore Last Session" },
+            d = {
+                function()
+                    require("persistence").stop()
+                end,
+                "Don't Save Current Session" },
         },
 
         x = {
