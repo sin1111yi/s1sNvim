@@ -44,6 +44,11 @@ M = {
                 config = function()
                     require("ultimate-autopair").setup({})
                 end
+            },
+
+            {
+                "RRethy/vim-illuminate",
+                event = { "LazyFile" },
             }
         },
         cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
