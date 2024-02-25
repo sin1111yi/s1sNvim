@@ -128,35 +128,44 @@ else
     smap("n", "<c-d>", "10j", { desc = "Scroll up" })
 end
 
-require("gitsigns").setup({
-    on_attach = function()
-        local gs = package.loaded.gitsigns
+if Util.has("gitsigns.nvim") then
+    require("gitsigns").setup({
+        on_attach = function()
+            local gs = package.loaded.gitsigns
 
-        -- Navigation
-        vmap("n", "]h", function()
-            if vim.wo.diff then return "]c" end
-            vim.schedule(function() gs.next_hunk() end)
-            return "<Ignore>"
-        end, { expr = true, desc = "Next hunk" })
+            -- Navigation
+            vmap("n", "]h", function()
+                if vim.wo.diff then return "]c" end
+                vim.schedule(function() gs.next_hunk() end)
+                return "<Ignore>"
+            end, { expr = true, desc = "Next hunk" })
 
-        vmap("n", "[h", function()
-            if vim.wo.diff then return "[c" end
-            vim.schedule(function() gs.prev_hunk() end)
-            return "<Ignore>"
-        end, { expr = true, desc = "Prev hunk" })
+            vmap("n", "[h", function()
+                if vim.wo.diff then return "[c" end
+                vim.schedule(function() gs.prev_hunk() end)
+                return "<Ignore>"
+            end, { expr = true, desc = "Prev hunk" })
 
-        -- Actions
-        vmap({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage hunk")
-        vmap({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset hunk")
-        vmap("n", "<leader>ghS", gs.stage_buffer, "Stage buffer")
-        vmap("n", "<leader>ghu", gs.undo_stage_hunk, "Undo stage buffer")
-        vmap("n", "<leader>ghR", gs.reset_buffer, "Reset buffer")
-        vmap("n", "<leader>ghp", gs.preview_hunk, "Preview hunk")
-        vmap("n", "<leader>ghb", function() gs.blame_line { full = true } end, "Blame line")
-        vmap("n", "<leader>ght", gs.toggle_current_line_blame, "Toggle blame (This line)")
-        vmap("n", "<leader>ghf", gs.diffthis, "Diff This")
-        vmap("n", "<leader>ghF", function() gs.diffthis("~") end, "Diff This ~")
-        vmap("n", "<leader>ghd", gs.toggle_deleted, "Toggle deleted")
-        vmap({ "o", "x" }, "ghi", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
-    end
-})
+            -- Actions
+            vmap({ "n", "v" }, "<leader>ghs", ":Gitsigns stage_hunk<CR>", "Stage hunk")
+            vmap({ "n", "v" }, "<leader>ghr", ":Gitsigns reset_hunk<CR>", "Reset hunk")
+            vmap("n", "<leader>ghS", gs.stage_buffer, "Stage buffer")
+            vmap("n", "<leader>ghu", gs.undo_stage_hunk, "Undo stage buffer")
+            vmap("n", "<leader>ghR", gs.reset_buffer, "Reset buffer")
+            vmap("n", "<leader>ghp", gs.preview_hunk, "Preview hunk")
+            vmap("n", "<leader>ghb", function() gs.blame_line { full = true } end, "Blame line")
+            vmap("n", "<leader>ght", gs.toggle_current_line_blame, "Toggle blame (This line)")
+            vmap("n", "<leader>ghf", gs.diffthis, "Diff This")
+            vmap("n", "<leader>ghF", function() gs.diffthis("~") end, "Diff This ~")
+            vmap("n", "<leader>ghd", gs.toggle_deleted, "Toggle deleted")
+            vmap({ "o", "x" }, "ghi", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+        end
+    })
+end
+
+if Util.has("glance.nvim") then
+    vmap("n", "gD", "<cmd>Glance definitions<cr>", "Browse definitions")
+    vmap("n", "gR", "<cmd>Glance references<cr>", "Browse references")
+    vmap("n", "gY", "<cmd>Glance type_definitions<cr>", "Browse type definitions")
+    vmap("n", "gM", "<cmd>Glance implementations<cr>", "Browse implementations")
+end
