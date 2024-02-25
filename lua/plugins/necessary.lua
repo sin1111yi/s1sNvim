@@ -5,16 +5,15 @@ M.plugins_table = {}
 ---@param opts PluginsLoadOpts
 M.setup = function(opts)
     if opts.load_modules ~= nil and next(opts.load_modules) ~= nil then
+        ---@param module string
+        ---@return boolean
+        local function mod_exist(module)
+            local mod_path = vim.fn.stdpath("config") .. "/lua/plugins/"
+            module = string.gsub(module, "%.", "/")
+            return vim.loop.fs_stat(mod_path .. module) ~= nil
+        end
+
         for k, v in pairs(opts.load_modules) do
-
-            ---@param module string
-            ---@return boolean
-            local function mod_exist(module)
-                local mod_path = vim.fn.stdpath("config") .. "/lua/plugins/"
-                module = string.gsub(module, "%.", "/")
-                return vim.loop.fs_stat(mod_path .. module) ~= nil
-            end
-
             if not mod_exist(k) then
                 vim.notify("Module \"" .. k .. "\" is not existed!\n")
             end
