@@ -47,6 +47,7 @@ M = {
             },
         },
         opts = function()
+            math.randomseed(os.time())
             local logo = logos[math.random(1, vim.tbl_count(logos))]
             logo = string.rep("\n", 8) .. logo .. "\n\n"
 
