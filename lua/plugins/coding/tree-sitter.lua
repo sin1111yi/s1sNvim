@@ -84,7 +84,8 @@ M = {
                 "make",
                 "markdown",
                 "markdown_inline",
-                "rust"
+                "rust",
+                "toml"
             },
             incremental_selection = {
                 enable = true,
