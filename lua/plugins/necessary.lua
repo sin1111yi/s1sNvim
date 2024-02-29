@@ -13,14 +13,32 @@ M.setup = function(opts)
             return vim.loop.fs_stat(mod_path .. module) ~= nil
         end
 
-        for k, v in pairs(opts.load_modules) do
-            if not mod_exist(k) then
-                vim.notify("Module \"" .. k .. "\" is not existed!\n")
-            end
+        for mod, load in pairs(opts.load_modules) do
+            local exist = mod_exist(mod)
 
-            if v then
+            if load and exist then
                 table.insert(M.plugins_table,
-                    { import = "plugins." .. k })
+                    { import = "plugins." .. mod })
+            elseif not exist then
+                vim.notify("Module \"" .. mod .. "\" is not existed!")
+            end
+        end
+    end
+
+    if opts.extra_modules ~= nil and next(opts.extra_modules) ~= nil then
+        ---@param module string
+        ---@return boolean
+        local function extra_module_exist(module)
+            local mod_path = vim.fn.stdpath("config") .. "/lua/plugins/extra/"
+            return vim.loop.fs_stat(mod_path .. module .. ".lua") ~= nil
+        end
+
+        for exmod, load in pairs(opts.extra_modules) do
+            local exist = extra_module_exist(exmod)
+            if load and exist then
+                table.insert(M.plugins_table, require("plugins.extra." .. exmod))
+            elseif not exist then
+                vim.notify("Extra module \"" .. exmod .. "\" is not existed!")
             end
         end
     end

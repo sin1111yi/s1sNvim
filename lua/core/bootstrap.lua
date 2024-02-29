@@ -43,8 +43,6 @@ local pluginsConf = {
         ["ui"] = true,
         ["coding"] = true,
         ["coding.support"] = true,
-
-        ["extra"] = true,
         ["custom"] = false,
     },
 
@@ -53,6 +51,12 @@ local pluginsConf = {
         -- for example, uncomment this line to let lazy ignore neodev
         -- "folke/neodev.nvim",
     },
+
+    ---@type table<string, boolean>
+    extra_modules = {
+        ["markdown"] = true,
+        ["tree-sitter-extensions"] = true,
+    }
 }
 
 local opts = {
