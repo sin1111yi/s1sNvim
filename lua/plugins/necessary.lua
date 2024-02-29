@@ -27,7 +27,7 @@ M.setup = function(opts)
 
     if opts.disbaled_plugins ~= nil and next(opts.disbaled_plugins) ~= nil then
         for _, p in ipairs(opts.disbaled_plugins) do
-            table.insert(M.plugins_table, { p, cond = false })
+            table.insert(M.plugins_table, { p, enabled = false })
         end
     end
 
