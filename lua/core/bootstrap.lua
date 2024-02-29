@@ -16,7 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 local Util = require("core.util")
 
 ---@param name "autocmds" | "options" | "keymaps"
-local load = function(name)
+M.load = function(name)
     local function _load(mod)
         if require("lazy.core.cache").find(mod)[1] then
             Util.try(function()
@@ -44,7 +44,7 @@ local pluginsConf = {
         ["coding"] = true,
         ["coding.support"] = true,
 
-        ["extra"] = false,
+        ["extra"] = true,
         ["custom"] = false,
     },
 
@@ -89,16 +89,31 @@ local create_usr_cmds = function()
     end, { bang = true, nargs = 0, desc = "Update all" })
 end
 
+---@param buf? number
+---@return string[]?
+function M.get_kind_filter(buf)
+    buf = (buf == nil or buf == 0) and vim.api.nvim_get_current_buf() or buf
+    local ft = vim.bo[buf].filetype
+    if M.kind_filter == false then
+        return
+    end
+    if M.kind_filter[ft] == false then
+        return
+    end
+    ---@diagnostic disable-next-line: return-type-mismatch
+    return type(M.kind_filter) == "table" and type(M.kind_filter.default) == "table" and M.kind_filter.default or nil
+end
+
 M.setup = function()
-    load("options")
+    M.load("options")
     Util.lazy_notify()
     Util.format.setup()
     Util.plugin.setup()
 
     require("lazy").setup(require("plugins.necessary").setup(pluginsConf), opts)
 
-    load("keymaps")
-    load("autocmds")
+    M.load("keymaps")
+    M.load("autocmds")
 
     create_usr_cmds()
 
