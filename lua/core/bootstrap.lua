@@ -56,6 +56,7 @@ local pluginsConf = {
     extra_modules = {
         ["markdown"] = true,
         ["tree-sitter-extensions"] = true,
+        ["navic"] = true,
     }
 }
 
