@@ -48,8 +48,8 @@ In `core`, you can see 4 files `bootstrap.lua`, `options.lua`, `keymaps.lua`, `a
 
 In `plugins`, there are several folders which contains different `.lua` files.
 
-- Add or modify plugins and their options in `plugins/custom`. You can easily do that by follow the same method with LazyVim. See [here](https://www.lazyvim.org/configuration/plugins). 
-- You can edit `plugins/custom/custom.lua` in the way thet you edit `LazyVim/starter`, see [here](https://github.com/LazyVim/starter/blob/main/lua/plugins/example.lua).
+- Add or modify plugins and their options in `plugins/custom`. You can easily do that by following the same method with LazyVim. See [here](https://www.lazyvim.org/configuration/plugins). 
+- You can edit `plugins/custom/custom.lua` in the way that you edit `LazyVim/starter`, see [here](https://github.com/LazyVim/starter/blob/main/lua/plugins/example.lua).
 
 If you want to disable modules or plugins provided by s1sNvim, check `bootstrap.lua`. Here's the code, and each folder in `plugins` is a module.
  
@@ -63,8 +63,6 @@ local pluginsConf = {
         ["ui"] = true,
         ["coding"] = true,
         ["coding.support"] = true,
-
-        ["extra"] = false,
         ["custom"] = false,
     },
 
@@ -73,9 +71,16 @@ local pluginsConf = {
         -- for example, uncomment this line to let lazy ignore neodev
         -- "folke/neodev.nvim",
     },
+
+    ---@type table<string, boolean>
+    extra_modules = {
+        ["markdown"] = true,
+        ["tree-sitter-extensions"] = true,
+    }
+}
 }
 ```
-For example, if you set `pluginsConf.load_modules["coding.support"]` to false, then all the `.lua` files in `plugins/coding/support` won't be loaded by lazy. If you want to disable a single plugin, just follow the comment in the above code.
+For example, if you set `pluginsConf.load_modules["coding.support"]` to false, then all the `.lua` files in `plugins/coding/support` won't be loaded by lazy. If you want to disable a single plugin, just follow the comment in the above code. If you want to load extra modules like `markdown`, just add it in `extra_modules` in the way showed in above code.
 
 ### 🦾 Plugins
 
