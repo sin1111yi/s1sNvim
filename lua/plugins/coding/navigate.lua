@@ -8,10 +8,17 @@ M = {
         "stevearc/aerial.nvim",
         event = { "LazyFile" },
         opts = {
+            show_guides = true,
+            guides = {
+                mid_item   = "├╴",
+                last_item  = "└╴",
+                nested_top = "│ ",
+                whitespace = "  ",
+            },
             layout = {
                 max_width = { 40, 0.3 },
-                width = 40,
-                min_width = 10,
+                width = nil,
+                min_width = 20,
                 default_direction = "prefer_right",
                 placement = "edge",
                 resize_to_content = true,
@@ -20,7 +27,6 @@ M = {
         },
         config = function()
             require("aerial").setup()
-
             Util.on_load("telescope.nvim", function()
                 require("telescope").load_extension("aerial")
             end)
@@ -160,6 +166,29 @@ M = {
                 },
             })
         end
+    },
+
+    -- a statusline/winbar to show code context using LSP
+    {
+        "SmiteshP/nvim-navic",
+        event = { "BufAdd", "BufEnter", "BufNew" },
+        init = function()
+            vim.g.navic_silence = true
+            Util.lsp.on_attach(function(client, buffer)
+                if client.supports_method("textDocument/documentSymbol") then
+                    require("nvim-navic").attach(client, buffer)
+                end
+            end)
+        end,
+        opts = function()
+            return {
+                separator = " ",
+                highlight = true,
+                depth_limit = 5,
+                icons = Util.ui.icons.kinds,
+                lazy_update_context = true,
+            }
+        end,
     }
 }
 

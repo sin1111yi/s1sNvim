@@ -26,6 +26,8 @@ _map.tb = {
         c = {
             name = "+Code",
             f = { "<cmd>FormatWrite<cr>", "Format buffer" },
+            d = { "<cmd>AerialToggle<cr>", "Toggle code outline" },
+            g = { "<cmd>AerialNavToggle<cr>", "Toggle code navigate" }
         },
 
         f = {
