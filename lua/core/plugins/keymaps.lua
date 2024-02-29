@@ -166,7 +166,7 @@ if Util.has("gitsigns.nvim") then
 end
 
 if Util.has("glance.nvim") then
-    vmap("n", "gD", "<cmd>Glance definitions<cr>", "Browse definitions")
+    vmap("n", "gS", "<cmd>Glance definitions<cr>", "Browse definitions")
     vmap("n", "gR", "<cmd>Glance references<cr>", "Browse references")
     vmap("n", "gY", "<cmd>Glance type_definitions<cr>", "Browse type definitions")
     vmap("n", "gM", "<cmd>Glance implementations<cr>", "Browse implementations")
