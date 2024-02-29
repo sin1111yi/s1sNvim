@@ -9,7 +9,7 @@ M = {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        event = { "VeryLazy" },
+        event = "VeryLazy",
         dependencies = {
             {
                 "nvim-treesitter/nvim-treesitter-textobjects",
@@ -38,18 +38,6 @@ M = {
                 end,
             },
 
-            {
-                "altermo/ultimate-autopair.nvim",
-                event = { "InsertEnter", "CmdlineEnter" },
-                config = function()
-                    require("ultimate-autopair").setup({})
-                end
-            },
-
-            {
-                "RRethy/vim-illuminate",
-                event = { "LazyFile" },
-            }
         },
         cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
         keys = {
@@ -119,6 +107,19 @@ M = {
         enabled = true,
         opts = { mode = "cursor" },
     },
+
+    {
+        "altermo/ultimate-autopair.nvim",
+        event = { "InsertEnter", "CmdlineEnter" },
+        config = function()
+            require("ultimate-autopair").setup({})
+        end
+    },
+
+    {
+        "RRethy/vim-illuminate",
+        event = { "WinNew" },
+    }
 }
 
 return M
