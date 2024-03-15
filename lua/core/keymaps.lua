@@ -90,6 +90,11 @@ require("which-key").register({
         }
     },
 
+    t = {
+        name = "+Terminal",
+        t = { "<cmd>split | terminal<cr>", "Open terminal" }
+    },
+
     w = {
         name = "+Window"
     }

@@ -12,8 +12,8 @@ M = {
     },
 
     {
-        "farmergreg/vim-lastplace",
-        event = { "BufAdd", "BufEnter", "BufNew" }
+        "mg979/vim-visual-multi",
+        event = { "WinNew" }
     }
 }
 

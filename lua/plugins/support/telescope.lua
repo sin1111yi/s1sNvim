@@ -23,7 +23,6 @@ M = {
                         "_darcs",
                         ".hg",
                         ".bzr",
-                        ".svn",
                         "Makefile",
                         "CMakeLists.txt",
                         "init.lua",
