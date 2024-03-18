@@ -23,8 +23,7 @@
 
 ## 🚀 Installation
 
-- Back up your own configs and datas, then clone this repo, lazy.nvim will download all the plugins for you.
-- Config the option `core.sparseCheckout` with `true` of your git
+- Just back up your own configs and datas, then clone this repo, lazy.nvim will download all the plugins for you.
 
 ```bash
 cp -r ~/.config/nvim ~/.config/nvim.bak

@@ -13,22 +13,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-if true then
-    local dependencies_path = vim.fn.stdpath("config") .. "/dependencies"
-
-    local lazyvim_module_path = vim.fn.stdpath("config") .. "/lua/lazyvim"
-    if not vim.loop.fs_stat(lazyvim_module_path) then
-        vim.fn.system({ "git", "config", "--global", "core.sparseCheckout", "true" })
-        vim.fn.system({ "git", "submodule", "update" })
-        vim.fn.system({
-            "ln",
-            "-sf",
-            dependencies_path .. "/lazyvim/lua/lazyvim",
-            lazyvim_module_path
-        })
-    end
-end
-
 local Util = require("core.util")
 
 ---@param name "autocmds" | "options" | "keymaps"
@@ -106,10 +90,10 @@ local create_usr_cmds = function()
         vim.cmd("checkhealth")
     end, { desc = "Load all plugins and run :checkhealth" })
 
-    vim.api.nvim_create_user_command("UpdateLspAndTS", function()
-        vim.cmd("MasonUpdate")
+    vim.api.nvim_create_user_command("UpdateAll", function()
         vim.cmd("TSUpdate all")
-    end, { bang = true, nargs = 0, desc = "Update tree-sitter and lsp(mason)" })
+        vim.cmd("MasonUpdate")
+    end, { bang = true, nargs = 0, desc = "Update all" })
 end
 
 ---@param buf? number

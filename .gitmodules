@@ -1,3 +1,0 @@
-[submodule "dependencies/lazyvim"]
-	path = dependencies/lazyvim
-	url = https://github.com/LazyVim/LazyVim
