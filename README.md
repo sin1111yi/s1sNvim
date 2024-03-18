@@ -28,9 +28,15 @@
 
 ```bash
 cp -r ~/.config/nvim ~/.config/nvim.bak
-git clone --branch ver.dev https://github.com/sin1111yi/s1sNvim ~/.config/nvim
+git clone --branch ver.release https://github.com/sin1111yi/s1sNvim ~/.config/nvim
 
 git config --global core.sparseCheckout true
+```
+
+- If your want to use the lastest but unstable version, clone branch `ver.dev` instead of `ver.release`
+
+```bash
+git clone --branch ver.dev https://github.com/sin1111yi/s1sNvim ~/.config/nvim
 ```
 
 ## 📖 Introduce
