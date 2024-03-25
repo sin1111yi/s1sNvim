@@ -12,10 +12,10 @@ smap("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
 smap("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
 
 -- Resize window using <ctrl> arrow keys
-smap("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
-smap("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
-smap("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
-smap("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
+smap("n", "<A-Up>", "<cmd>resize +2<cr>", { desc = "Increase window height" })
+smap("n", "<A-Down>", "<cmd>resize -2<cr>", { desc = "Decrease window height" })
+smap("n", "<A-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease window width" })
+smap("n", "<A-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase window width" })
 
 -- Move Lines
 smap("n", "<A-j>", "<cmd>m .+1<cr>==", { desc = "Move down" })
