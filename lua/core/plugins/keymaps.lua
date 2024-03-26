@@ -64,6 +64,7 @@ _map.tb = {
             l = { "<cmd>Lazy<cr>", "Lazy" },
             m = { "<cmd>Mason<cr>", "Mason" },
             u = { "<cmd>UpdateAll<cr>", "Update all" },
+            d = { "<cmd>Dashboard<cr>", "Show dashboard" }
         },
 
         s = {

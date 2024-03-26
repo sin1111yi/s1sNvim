@@ -1,5 +1,7 @@
 local M = {}
 
+local configpath = vim.fn.stdpath("config")
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -12,6 +14,15 @@ if not vim.loop.fs_stat(lazypath) then
     })
 end
 vim.opt.rtp:prepend(lazypath)
+
+local lazyvimpath = configpath .. "/dependencies/LazyVim"
+if not vim.loop.fs_stat(lazyvimpath) then
+    vim.fn.system({
+        "bash",
+        configpath .. "/sync_lazyvim_utils.sh",
+        configpath
+    })
+end
 
 local Util = require("core.util")
 
@@ -90,10 +101,19 @@ local create_usr_cmds = function()
         vim.cmd("checkhealth")
     end, { desc = "Load all plugins and run :checkhealth" })
 
-    vim.api.nvim_create_user_command("UpdateAll", function()
+    vim.api.nvim_create_user_command("UpdateCodingSupport", function()
         vim.cmd("TSUpdate all")
         vim.cmd("MasonUpdate")
-    end, { bang = true, nargs = 0, desc = "Update all" })
+    end, { desc = "Update tree-sitters and lsps, formatters, etc installed by mason" })
+
+    vim.api.nvim_create_user_command("UpdateLazyVimUtils", function()
+        vim.fn.system({
+            "bash",
+            configpath .. "/sync_lazyvim_utils.sh",
+            configpath
+        })
+        vim.notify("LazyVim utils has been updated.")
+    end, { desc = "Update LazyVim utils through script" })
 end
 
 ---@param buf? number
@@ -121,6 +141,8 @@ M.setup = function()
 
     M.load("keymaps")
     M.load("autocmds")
+
+    require("core.plugins.excmd").setup()
 
     create_usr_cmds()
 
