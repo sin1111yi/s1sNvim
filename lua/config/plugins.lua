@@ -30,8 +30,11 @@ vim.pack.add({
   -- File explorer
   gh('nvim-tree/nvim-tree.lua'),
 
-  -- Session persistence
-  gh('folke/persistence.nvim'),
+  -- snacks.nvim (picker + utility modules, folke)
+  gh('folke/snacks.nvim'),
+
+  -- Startup dashboard (replaces snacks dashboard, no lazy dep)
+  gh('echasnovski/mini.starter'),
 
   -- LSP infrastructure
   gh('neovim/nvim-lspconfig'),

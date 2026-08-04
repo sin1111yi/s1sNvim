@@ -47,6 +47,18 @@ opt.completeopt = { 'menu', 'menuone', 'noselect' }
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- When netrw is disabled, `nvim <dir>` no longer auto-cd's into the target
+-- directory.  Do it ourselves on VimEnter if argv[0] is a directory.
+vim.api.nvim_create_autocmd('VimEnter', {
+  once = true,
+  callback = function()
+    local dir = vim.fn.argv(0)
+    if dir and dir ~= '' and vim.fn.isdirectory(dir) == 1 then
+      vim.cmd('cd ' .. vim.fn.fnameescape(dir))
+    end
+  end,
+})
+
 vim.api.nvim_create_autocmd('BufReadPost', {
   pattern = '*',
   once = true,

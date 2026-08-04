@@ -1,49 +1,101 @@
 -- plugins/custom/plugin-keymaps.lua — Centralized plugin keybindings
 -- Loaded on UIEnter (once), after which-key so wk is available.
 -- ALL keybindings are declared in this file. Mechanisms live in
--- plugins/custom/utils/ (buffer-picker: picker fn, cmp: mapping builder,
--- lsp: LspAttach applier).
+-- plugins/custom/utils/ (lsp: LspAttach applier, cmp: mapping builder,
+-- snacks-picker: picker entry points, tree-root: nvim-tree root helper).
 
 local wk = require('which-key')
 
 --------------------------------------------------------------------
--- <Leader> mappings (which-key popup)
+-- Window group: <leader>w
 --------------------------------------------------------------------
 wk.add({
-  -- Buffer group
+  { '<leader>w', group = 'window' },
+  { '<leader>wh', '<C-w>h', desc = 'Window left' },
+  { '<leader>wj', '<C-w>j', desc = 'Window down' },
+  { '<leader>wk', '<C-w>k', desc = 'Window up' },
+  { '<leader>wl', '<C-w>l', desc = 'Window right' },
+  { '<leader>ws', ':split<CR>', desc = 'Split horizontal' },
+  { '<leader>wv', ':vsplit<CR>', desc = 'Split vertical' },
+  { '<leader>wc', ':close<CR>', desc = 'Close window' },
+  { '<leader>wq', ':quit<CR>', desc = 'Quit window' },
+  { '<leader>wo', ':only<CR>', desc = 'Only this window' },
+  { '<leader>w=', '<C-w>=', desc = 'Equalize windows' },
+  { '<leader>w+', '<C-w>+', desc = 'Increase height' },
+  { '<leader>w-', '<C-w>-', desc = 'Decrease height' },
+  { '<leader>w>', '<C-w>>', desc = 'Increase width' },
+  { '<leader>w<', '<C-w><', desc = 'Decrease width' },
+})
+
+--------------------------------------------------------------------
+-- Buffer group: <leader>b (+ Tab cycles buffers)
+--------------------------------------------------------------------
+vim.keymap.set('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>', { desc = 'Previous buffer' })
+
+wk.add({
   { '<leader>b', group = 'buffer' },
   { '<leader>bd', ':bdelete<CR>', desc = 'Delete buffer' },
-  { '<leader>bn', ':bnext<CR>', desc = 'Next buffer' },
-  { '<leader>bp', ':bprevious<CR>', desc = 'Previous buffer' },
-  { '<leader>bl', require('plugins.custom.utils.buffer-picker').picker, desc = 'Buffer picker' },
+  { '<leader>bl', require('plugins.custom.utils.snacks-picker').buffers, desc = 'Buffer picker' },
+})
 
-  -- Tab group
+--------------------------------------------------------------------
+-- Find group: <leader>f (snacks picker)
+--------------------------------------------------------------------
+wk.add({
+  { '<leader>f', group = 'find' },
+  { '<leader>ff', require('plugins.custom.utils.snacks-picker').files, desc = 'Find files' },
+  { '<leader>fb', require('plugins.custom.utils.snacks-picker').buffers, desc = 'Find buffers' },
+  { '<leader>fg', require('plugins.custom.utils.snacks-picker').grep, desc = 'Grep files' },
+})
+
+--------------------------------------------------------------------
+-- File explorer group: <leader>e (nvim-tree)
+--------------------------------------------------------------------
+wk.add({
+  { '<leader>e', '<cmd>NvimTreeToggle<CR>', desc = 'Toggle file explorer' },
+  { '<leader>er', require('plugins.custom.utils.tree-root').root_to_cwd, desc = 'Tree root to cwd' },
+})
+
+--------------------------------------------------------------------
+-- Tab group: <leader>t
+--------------------------------------------------------------------
+wk.add({
   { '<leader>t', group = 'tab' },
   { '<leader>tn', ':tabnew<CR>', desc = 'New tab' },
   { '<leader>tc', ':tabclose<CR>', desc = 'Close tab' },
   { '<leader>to', ':tabonly<CR>', desc = 'Close other tabs' },
+})
 
-  -- Quickfix group
+--------------------------------------------------------------------
+-- Quickfix / location groups: <leader>c / <leader>l
+--------------------------------------------------------------------
+wk.add({
   { '<leader>c', group = 'quickfix' },
   { '<leader>co', ':copen<CR>', desc = 'Open quickfix list' },
   { '<leader>cc', ':cclose<CR>', desc = 'Close quickfix list' },
 
-  -- Location group
   { '<leader>l', group = 'location' },
   { '<leader>lo', ':lopen<CR>', desc = 'Open location list' },
   { '<leader>lc', ':lclose<CR>', desc = 'Close location list' },
-
-  -- Single actions
-  { '<leader>w', ':write<CR>', desc = 'Save file' },
-  { '<leader>q', ':quit<CR>', desc = 'Quit' },
 })
 
 --------------------------------------------------------------------
--- NvimTree
+-- Quit group: <leader>q
 --------------------------------------------------------------------
 wk.add({
-  { '<leader>m', '<cmd>NvimTreeToggle<CR>', desc = 'Toggle file explorer' },
-  { '<leader>mr', require('plugins.custom.utils.tree-root').root_to_cwd, desc = 'Tree root to cwd' },
+  { '<leader>q', ':quit<CR>', desc = 'Quit' },
+  { '<leader>qq', ':wqa<CR>', desc = 'Save all and quit' },
+})
+
+--------------------------------------------------------------------
+-- Diagnostics group: <leader>d (global, LSP-indepejdent)
+--------------------------------------------------------------------
+wk.add({
+  { '<leader>d', group = 'diagnostic' },
+  { '<leader>de', vim.diagnostic.open_float, desc = 'Show diagnostic' },
+  { '<leader>dn', vim.diagnostic.goto_next, desc = 'Next diagnostic' },
+  { '<leader>dp', vim.diagnostic.goto_prev, desc = 'Previous diagnostic' },
 })
 
 --------------------------------------------------------------------
@@ -51,30 +103,20 @@ wk.add({
 -- Neovim 0.11+ built-in defaults already provide:
 --   K = hover, grn = rename, grr = references, gri = implementation,
 --   grt = type definition, gra = code action, CTRL-S = signature help,
---   gO = document symbols, CTRL-] = go-to-definition (via tagfunc)
--- We only set extras (gd/gD/gi/C-k) + <Leader> mappings for which-key.
+--   gO = document symbols, [d / ]d = diagnostics
+-- We only set the traditional extras (gd/gD/gi).
 --------------------------------------------------------------------
 require('plugins.custom.utils.lsp').setup({
   { 'n', 'gd', vim.lsp.buf.definition, 'Go to definition' },
   { 'n', 'gD', vim.lsp.buf.declaration, 'Go to declaration' },
   { 'n', 'gi', vim.lsp.buf.implementation, 'Go to implementation' },
-  { 'n', '<C-k>', vim.lsp.buf.signature_help, 'Signature help' },
-  { 'n', '<leader>rn', vim.lsp.buf.rename, 'Rename symbol' },
-  { 'n', '<leader>ca', vim.lsp.buf.code_action, 'Code action' },
-  { 'n', '<leader>D', vim.lsp.buf.type_definition, 'Type definition' },
-  { 'n', '<leader>e', vim.diagnostic.open_float, 'Show diagnostic' },
 })
 
 --------------------------------------------------------------------
--- nvim-cmp insert-mode mappings (built by utils/cmp.lua at setup time;
--- values are thunks receiving the cmp module, so cmp is not loaded early)
+-- nvim-cmp insert-mode mappings (built by utils/cmp.lua; minimal set,
+-- other defaults come from cmp.mapping.preset.insert)
 --------------------------------------------------------------------
 local cmp_map = {
-  ['<C-b>'] = function(cmp) return cmp.mapping.scroll_docs(-4) end,
-  ['<C-f>'] = function(cmp) return cmp.mapping.scroll_docs(4) end,
-  ['<C-Space>'] = function(cmp) return cmp.mapping.complete() end,
-  ['<C-e>'] = function(cmp) return cmp.mapping.abort() end,
-  ['<CR>'] = function(cmp) return cmp.mapping.confirm({ select = true }) end,
   ['<Tab>'] = function(cmp)
     return cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -97,6 +139,7 @@ local cmp_map = {
       end
     end, { 'i', 's' })
   end,
+  ['<CR>'] = function(cmp) return cmp.mapping.confirm({ select = true }) end,
 }
 
 return { cmp_map = cmp_map }
