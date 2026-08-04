@@ -16,9 +16,9 @@ return U.try_load('nvim-tree', function()
       return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
     end
 
-    -- Navigation
-    vim.keymap.set('n', 'j', api.node.navigate.sibling.next, opts('Next'))
-    vim.keymap.set('n', 'k', api.node.navigate.sibling.prev, opts('Prev'))
+    -- Navigation (j/k move line-wise like arrow keys, crossing levels)
+    vim.keymap.set('n', 'j', '<Down>', opts('Down'))
+    vim.keymap.set('n', 'k', '<Up>', opts('Up'))
     vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Collapse directory'))
     vim.keymap.set('n', 'l', api.node.open.edit, opts('Expand / open'))
     vim.keymap.set('n', '<CR>', api.node.open.edit, opts('Open'))

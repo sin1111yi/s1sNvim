@@ -58,13 +58,24 @@ wk.add({
 })
 
 --------------------------------------------------------------------
--- Tab group: <leader>t
+-- Extra group: <leader>x (enhancement tools)
+-- xg/xl: lazygit. Enhancement features live here.
 --------------------------------------------------------------------
 wk.add({
-  { '<leader>t', group = 'tab' },
-  { '<leader>tn', ':tabnew<CR>', desc = 'New tab' },
-  { '<leader>tc', ':tabclose<CR>', desc = 'Close tab' },
-  { '<leader>to', ':tabonly<CR>', desc = 'Close other tabs' },
+  { '<leader>x', group = 'extra' },
+  { '<leader>xg', function() require('snacks.lazygit').open() end, desc = 'Open lazygit' },
+  { '<leader>xl', function() require('snacks.lazygit').log() end, desc = 'Git log' },
+})
+
+--------------------------------------------------------------------
+-- Uncommon group: <leader>u (rarely used operations)
+-- ut*: tab page operations (kept out of frequently-used groups)
+--------------------------------------------------------------------
+wk.add({
+  { '<leader>u', group = 'uncommon' },
+  { '<leader>utn', ':tabnew<CR>', desc = 'New tab' },
+  { '<leader>utc', ':tabclose<CR>', desc = 'Close tab' },
+  { '<leader>uto', ':tabonly<CR>', desc = 'Close other tabs' },
 })
 
 --------------------------------------------------------------------
