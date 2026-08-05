@@ -20,4 +20,18 @@ function M.root_to_cwd()
   end
 end
 
+-- Prompt for a directory, cd to it and open the tree there.
+function M.open_dir()
+  local path = vim.fn.input({ prompt = 'Open directory: ', default = '~/', completion = 'dir' })
+  if path == '' then return end
+  path = vim.fn.expand(path)
+  if vim.fn.isdirectory(path) ~= 1 then
+    vim.notify('Not a directory: ' .. path, vim.log.levels.WARN)
+    return
+  end
+  vim.cmd('cd ' .. vim.fn.fnameescape(path))
+  vim.cmd('NvimTreeOpen')
+  vim.cmd('wincmd p')
+end
+
 return M

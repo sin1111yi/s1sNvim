@@ -61,8 +61,10 @@ return U.try_load('nvim-tree', function()
   vim.api.nvim_set_hl(0, 'NvimTreeHiddenFileHL', { link = 'Comment' })
   vim.api.nvim_set_hl(0, 'NvimTreeHiddenFolderHL', { link = 'Comment' })
 
-  -- Auto-open on startup (this file loads at UIEnter, UI is already ready),
-  -- then return focus to the edit window
-  vim.cmd('NvimTreeOpen')
-  vim.cmd('wincmd p')
+  -- Auto-open on startup only when a file/dir was given (argc > 0);
+  -- bare `nvim` stays on an empty buffer without the tree.
+  if vim.fn.argc() > 0 then
+    vim.cmd('NvimTreeOpen')
+    vim.cmd('wincmd p')
+  end
 end)

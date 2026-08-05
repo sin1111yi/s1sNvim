@@ -33,8 +33,14 @@ vim.pack.add({
   -- snacks.nvim (picker + utility modules, folke)
   gh('folke/snacks.nvim'),
 
-  -- Startup dashboard (replaces snacks dashboard, no lazy dep)
-  gh('echasnovski/mini.starter'),
+  -- Surround text objects (ys/ds/cs style)
+  gh('echasnovski/mini.surround'),
+
+  -- Code formatting
+  gh('stevearc/conform.nvim'),
+
+  -- Flash jump navigation
+  gh('folke/flash.nvim'),
 
   -- LSP infrastructure
   gh('neovim/nvim-lspconfig'),

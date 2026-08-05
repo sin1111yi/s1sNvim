@@ -33,9 +33,16 @@ wk.add({
 vim.keymap.set('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>', { desc = 'Previous buffer' })
 
+-- Flash jump (g prefix: gs/gS, replaces native gs=sleep)
+vim.keymap.set('n', 'gs', function() require('flash').jump() end, { desc = 'Flash jump' })
+vim.keymap.set('n', 'gS', function() require('flash').treesitter() end, { desc = 'Flash treesitter scope' })
+
 wk.add({
   { '<leader>b', group = 'buffer' },
-  { '<leader>bd', ':bdelete<CR>', desc = 'Delete buffer' },
+  { '<leader>bd', function() require('snacks.bufdelete').delete() end, desc = 'Delete buffer' },
+  { '<leader>bn', '<cmd>bnext<CR>', desc = 'Next buffer' },
+  { '<leader>bp', '<cmd>bprevious<CR>', desc = 'Previous buffer' },
+  { '<leader>bo', '<cmd>BufferLineCloseOthers<CR>', desc = 'Close other buffers' },
   { '<leader>bl', require('plugins.custom.utils.snacks-picker').buffers, desc = 'Buffer picker' },
 })
 
@@ -54,6 +61,7 @@ wk.add({
 --------------------------------------------------------------------
 wk.add({
   { '<leader>e', '<cmd>NvimTreeToggle<CR>', desc = 'Toggle file explorer' },
+  { '<leader>ed', require('plugins.custom.utils.tree-root').open_dir, desc = 'Open directory' },
   { '<leader>er', require('plugins.custom.utils.tree-root').root_to_cwd, desc = 'Tree root to cwd' },
 })
 
@@ -65,6 +73,16 @@ wk.add({
   { '<leader>x', group = 'extra' },
   { '<leader>xg', function() require('snacks.lazygit').open() end, desc = 'Open lazygit' },
   { '<leader>xl', function() require('snacks.lazygit').log() end, desc = 'Git log' },
+  { '<leader>xf', function() require('conform').format() end, desc = 'Format file' },
+})
+
+--------------------------------------------------------------------
+-- Relative number group: <leader>r (toggle)
+--------------------------------------------------------------------
+wk.add({
+  { '<leader>r', group = 'relative' },
+  { '<leader>rn', ':set relativenumber!<CR>', desc = 'Toggle relative number' },
+  { '<leader>rR', ':luafile $MYVIMRC<CR>', desc = 'Reload config' },
 })
 
 --------------------------------------------------------------------
