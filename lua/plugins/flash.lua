@@ -5,5 +5,12 @@
 
 local U = require('config.util')
 return U.try_load('flash', function(flash)
-  flash.setup({})
+  flash.setup({
+    modes = {
+      char = {
+        -- show jump labels on f/F/t/T (default false: incremental only)
+        jump_labels = true,
+      },
+    },
+  })
 end)

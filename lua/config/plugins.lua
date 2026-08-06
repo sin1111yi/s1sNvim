@@ -39,6 +39,12 @@ vim.pack.add({
   -- Code formatting
   gh('stevearc/conform.nvim'),
 
+  -- Diagnostics/quickfix/location list in a window (folke)
+  gh('folke/trouble.nvim'),
+
+  -- Terminal toggle (horizontal/vertical/float)
+  gh('akinsho/toggleterm.nvim'),
+
   -- Flash jump navigation
   gh('folke/flash.nvim'),
 

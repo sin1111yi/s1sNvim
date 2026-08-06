@@ -51,6 +51,12 @@ on('UIEnter', 'MiniIcons', function() require('plugins.mini-icons') end)
 -- Conform (formatting) — UIEnter
 on('UIEnter', 'Conform', function() require('plugins.conform') end)
 
+-- Trouble (diagnostics list) — UIEnter
+on('UIEnter', 'Trouble', function() require('plugins.trouble') end)
+
+-- Toggleterm (terminal) — UIEnter
+on('UIEnter', 'Toggleterm', function() require('plugins.toggleterm') end)
+
 -- Mini.surround — UIEnter
 on('UIEnter', 'MiniSurround', function() require('plugins.mini-surround') end)
 

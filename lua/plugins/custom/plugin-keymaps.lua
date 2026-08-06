@@ -33,9 +33,8 @@ wk.add({
 vim.keymap.set('n', '<Tab>', '<cmd>BufferLineCycleNext<CR>', { desc = 'Next buffer' })
 vim.keymap.set('n', '<S-Tab>', '<cmd>BufferLineCyclePrev<CR>', { desc = 'Previous buffer' })
 
--- Flash jump (g prefix: gs/gS, replaces native gs=sleep)
-vim.keymap.set('n', 'gs', function() require('flash').jump() end, { desc = 'Flash jump' })
-vim.keymap.set('n', 'gS', function() require('flash').treesitter() end, { desc = 'Flash treesitter scope' })
+-- Flash jump: f/F/t/T are enhanced by flash's char plugin automatically
+-- (type a char, labels appear on every match). No extra keymaps needed.
 
 wk.add({
   { '<leader>b', group = 'buffer' },
@@ -74,15 +73,27 @@ wk.add({
   { '<leader>xg', function() require('snacks.lazygit').open() end, desc = 'Open lazygit' },
   { '<leader>xl', function() require('snacks.lazygit').log() end, desc = 'Git log' },
   { '<leader>xf', function() require('conform').format() end, desc = 'Format file' },
+  { '<leader>xx', function() require('trouble').toggle() end, desc = 'Diagnostics' },
+  { '<leader>xq', function() require('trouble').toggle('quickfix') end, desc = 'Quickfix list' },
+  { '<leader>xL', function() require('trouble').toggle('loclist') end, desc = 'Location list' },
 })
 
 --------------------------------------------------------------------
--- Relative number group: <leader>r (toggle)
+-- Terminal group: <leader>t (toggleterm)
 --------------------------------------------------------------------
 wk.add({
-  { '<leader>r', group = 'relative' },
+  { '<leader>t', group = 'terminal' },
+  { '<leader>tt', '<cmd>ToggleTerm<CR>', desc = 'Toggle terminal' },
+  { '<leader>tv', '<cmd>ToggleTerm direction=vertical<CR>', desc = 'Vertical terminal' },
+  { '<leader>tf', '<cmd>ToggleTerm direction=float<CR>', desc = 'Float terminal' },
+})
+
+--------------------------------------------------------------------
+-- Settings group: <leader>r (rn toggle relative number, rR reload config)
+--------------------------------------------------------------------
+wk.add({
+  { '<leader>r', group = 'settings' },
   { '<leader>rn', ':set relativenumber!<CR>', desc = 'Toggle relative number' },
-  { '<leader>rR', ':luafile $MYVIMRC<CR>', desc = 'Reload config' },
 })
 
 --------------------------------------------------------------------
