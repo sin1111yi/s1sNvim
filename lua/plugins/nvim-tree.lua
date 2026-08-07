@@ -80,6 +80,15 @@ return U.try_load('nvim-tree', function()
       if not has_edit then
         vim.cmd('vsplit')
         vim.cmd('enew')
+        -- vsplit halves the windows; restore the tree to its configured
+        -- width (view.width = 30 → 30 columns) instead of leaving 50/50
+        for _, w in ipairs(vim.api.nvim_list_wins()) do
+          if vim.bo[vim.api.nvim_win_get_buf(w)].filetype == 'NvimTree' then
+            vim.api.nvim_set_current_win(w)
+            vim.cmd('vertical resize 30')
+            break
+          end
+        end
       end
     end
     -- focus the edit window, not the tree
