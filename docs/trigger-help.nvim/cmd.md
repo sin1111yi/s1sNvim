@@ -18,11 +18,43 @@
 
 ## 替换
 
-    :s/foo/bar/     当前行第一个
-    :s/foo/bar/g    当前行全部
-    :%s/foo/bar/g   整个文件
-    :%s/foo/bar/gc  逐个确认
-    :'<,'>s/foo/bar/g  选中区域（可视模式自动带）
+    :s/foo/bar/         当前行第一个
+    :s/foo/bar/g        当前行全部
+    :%s/foo/bar/g       整个文件
+    :%s/foo/bar/gc      逐个确认
+    :5,10s/foo/bar/g    指定行范围
+    :'<,'>s/foo/bar/g   选中区域（可视模式自动带）
+
+### 标志
+
+    g    一行内全部（默认只替换每行第一个）
+    c    每个匹配确认（y=是 n=否 a=全部 q=退出 l=本次并结束）
+    i    忽略大小写        I   严格大小写
+    e    无匹配不报错
+
+### 特殊字符
+
+    \1 \2...   正则分组引用（\(foo\)bar → \1）
+    &          整个匹配本身
+    \r         换行（:s 里 \n 是空字符）
+    \t         Tab
+
+### 分组与大小写
+
+    :%s/\(foo\)\(bar\)/\2\1/   交换分组
+    :%s/foo/\U&/               转大写
+    :%s/foo/\L&/               转小写
+    \u \U \l \L \e             局部/整体大小写控制
+
+### 分隔符可换
+
+    :s#foo#bar#     / 冲突时换 # 或 @
+
+### 跨文件替换
+
+    :bufdo %s/foo/bar/gc | update   所有 buffer
+    :argdo %s/foo/bar/gc | update   参数列表文件
+    :cfdo %s/foo/bar/gc | update    quickfix 列表文件（先 :grep）
 
 ## 目录
 
