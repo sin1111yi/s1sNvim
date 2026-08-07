@@ -60,14 +60,5 @@ vim.api.nvim_create_autocmd('User', {
         vim.notify('Config updated from GitHub — restart nvim to apply', vim.log.levels.INFO)
       end
     end)
-    -- Ensure treesitter parsers after every lazy update: install is
-    -- idempotent (present parsers skip fast), so this just fills in any
-    -- missing parsers — no manual :TSInstall / :Lazy build needed.
-    vim.schedule(function()
-      local ok, nt = pcall(require, 'nvim-treesitter')
-      if ok and nt and nt.install then
-        pcall(nt.install, require('config.treesitter-langs'))
-      end
-    end)
   end,
 })

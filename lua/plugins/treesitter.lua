@@ -17,5 +17,19 @@ return {
   end,
   config = function()
     require('nvim-treesitter').setup()
+    -- Treesitter owns its parser maintenance: after every lazy update
+    -- (User LazyDone) ensure the curated parser set. Install is
+    -- idempotent (present parsers skip fast), so this just fills gaps.
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'LazyDone',
+      callback = function()
+        vim.schedule(function()
+          local ok, nt = pcall(require, 'nvim-treesitter')
+          if ok and nt and nt.install then
+            pcall(nt.install, require('config.treesitter-langs'))
+          end
+        end)
+      end,
+    })
   end,
 }
