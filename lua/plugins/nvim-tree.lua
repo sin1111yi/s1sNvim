@@ -90,6 +90,13 @@ return {
     -- it is loaded by the time this VeryLazy config runs.
     if require('wokamark').should_open_tree() then
       vim.cmd('NvimTreeOpen')
+      -- A tree restored from a wokamark session can come up empty (buffer
+      -- restored, explorer not re-rendered) — refresh forces the render.
+      vim.schedule(function()
+        if vim.fn.exists(':NvimTreeRefresh') == 2 then
+          pcall(vim.cmd, 'NvimTreeRefresh')
+        end
+      end)
       -- Focus the edit window (native buffer), not the tree.
       for _, w in ipairs(vim.api.nvim_list_wins()) do
         if vim.bo[vim.api.nvim_win_get_buf(w)].filetype ~= 'NvimTree' then
