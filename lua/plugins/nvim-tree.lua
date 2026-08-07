@@ -87,13 +87,13 @@ return {
 
     -- Auto-open on startup only when a file/dir was given (argc > 0);
     -- bare `nvim` stays on an empty buffer without the tree.
-    -- Deferred: wokamark's VimEnter auto-restore (scheduled) must settle
-    -- first; when it restored a workspace it sets g:wokamark_restored and
-    -- its session layout wins — skip the auto-open entirely.
-    -- With hijacking disabled (see setup), NvimTreeOpen opens the tree in
-    -- its own left window; the native startup buffer (greeting) stays as
-    -- the edit side on the right.
-    if vim.fn.argc() > 0 and not vim.g.wokamark_restored then
+    -- Always open the tree: wokamark's restore may have brought a session
+    -- layout WITHOUT a tree (its open_tree_if_available runs before this
+    -- plugin loads — :NvimTreeOpen doesn't exist yet), so we add the tree
+    -- here. If the session already had one, NvimTreeOpen just focuses it.
+    -- With hijacking disabled (see setup), the tree lands in its own left
+    -- window; the native startup buffer / session buffers stay on the right.
+    if vim.fn.argc() > 0 then
       vim.cmd('NvimTreeOpen')
       -- Focus the edit window (native buffer), not the tree.
       for _, w in ipairs(vim.api.nvim_list_wins()) do
