@@ -1,2 +1,4 @@
-# Plugin lockfile — tracked in git (ADR-002 D-007: reproducible snapshots).
-# lazy-lock.json is committed; nvim-pack-lock.json (vim.pack era) is retired.
+# Plugin lockfile — NOT tracked (2026-08: stop tracking lazy-lock.json).
+# lazy-lock.json is generated locally by :Lazy update/sync and stays per
+# machine; nvim-pack-lock.json (vim.pack era) is retired.
+lazy-lock.json
