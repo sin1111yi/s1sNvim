@@ -11,7 +11,7 @@
 
 return {
   'nvim-treesitter/nvim-treesitter',
-  lazy = false,
+  event = { 'BufEnter' }, -- lazy-load on entering a buffer (user preference)
   build = function()
     require('nvim-treesitter').install(require('config.treesitter-langs'))
   end,
