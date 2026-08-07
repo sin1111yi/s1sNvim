@@ -74,15 +74,18 @@ on('BufReadPost', 'GitsignsComment', function()
   require('plugins.comment')
 end)
 
+-- Local plugin: trigger-help (command-triggered help panel)
+-- packadd BEFORE wokamark setup: wokamark registers its cheatsheet via
+-- require('trigger_help').register_doc, so the module must be loadable
+-- at setup time (opt/ plugins are not on 'runtimepath' until packadd).
+vim.cmd('packadd trigger-help.nvim')
+
 -- Local plugin: wokamark (per-directory workspace sessions)
 -- packadd name must match the opt/ directory name exactly (wokamark.nvim).
 vim.cmd('packadd wokamark.nvim')
 -- Configuration (defaults already on; call setup to tweak, e.g.
 -- require('wokamark').setup({ auto_mark = false }) to disable auto-marking)
 require('wokamark').setup({ auto_mark = true })
-
--- Local plugin: trigger-help (event-triggered help float)
-vim.cmd('packadd trigger-help.nvim')
 
 -- nvim-cmp — InsertEnter
 on('InsertEnter', 'Cmp', function() require('plugins.cmp') end)
