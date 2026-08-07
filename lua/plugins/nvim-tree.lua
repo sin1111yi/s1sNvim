@@ -95,7 +95,11 @@ return {
           end
         end
         if not has_edit then
-          vim.cmd('vsplit')
+          -- Empty edit buffer to the RIGHT of the tree (vscode style).
+          -- Plain `vsplit` splits LEFT of the current window — if focus is
+          -- still in the tree (VeryLazy open path), the empty buffer would
+          -- land left of the tree and the layout looks inverted.
+          vim.cmd('rightbelow vsplit')
           vim.cmd('enew')
           -- vsplit halves the windows; restore the tree to its configured
           -- width (view.width = 30 → 30 columns) instead of leaving 50/50
