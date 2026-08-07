@@ -33,12 +33,14 @@ require('lazy').setup({
   change_detection = { notify = false },
 })
 
--- Config auto-update: after a lazy update/sync/install completes
--- (User LazyDone), pull the config repo from GitHub — the config lives
--- in ~/.config/nvim (s1sNvim.git) alongside the plugins. Only pull when
--- the working tree is clean (never clobber uncommitted local edits).
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'LazyDone',
+-- Config auto-update: pull the config repo from GitHub on every startup.
+-- NOTE: User LazyDone fires INSIDE lazy.setup() (lazy/init.lua:115), so an
+-- autocmd registered after setup() never sees it — use UIEnter instead,
+-- which reliably runs once after startup completes (covers :Lazy update,
+-- which also ends in a normal startup/UIEnter path).
+-- Only pull when the working tree is clean (never clobber local edits).
+vim.api.nvim_create_autocmd('UIEnter', {
+  once = true,
   callback = function()
     local cfg = vim.fn.stdpath('config')
     -- bail out silently when not a git checkout (e.g. dev install)
