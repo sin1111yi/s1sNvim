@@ -63,6 +63,9 @@ on('UIEnter', 'MiniSurround', function() require('plugins.mini-surround') end)
 -- Flash (jump navigation) — UIEnter
 on('UIEnter', 'Flash', function() require('plugins.flash') end)
 
+-- Trigger-help (event-triggered help float) — UIEnter
+on('UIEnter', 'TriggerHelp', function() require('plugins.trigger-help') end)
+
 -- Gitsigns + Comment — BufReadPost
 on('BufReadPost', 'GitsignsComment', function()
   require('plugins.gitsigns')
@@ -72,6 +75,9 @@ end)
 -- Local plugin: workmark (per-directory workspace sessions)
 -- packadd name must match the opt/ directory name exactly (workmark.nvim).
 vim.cmd('packadd workmark.nvim')
+
+-- Local plugin: trigger-help (event-triggered help float)
+vim.cmd('packadd trigger-help.nvim')
 
 -- nvim-cmp — InsertEnter
 on('InsertEnter', 'Cmp', function() require('plugins.cmp') end)

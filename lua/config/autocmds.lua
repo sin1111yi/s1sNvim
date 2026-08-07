@@ -72,6 +72,3 @@ end
 au('FocusLost', { group = gen, pattern = '*', callback = autosave })
 au('BufLeave', { group = gen, pattern = '*', callback = autosave })
 au('InsertLeave', { group = gen, pattern = '*', callback = autosave })
-
--- Key help overlay: per-command help in top-right, closes on Enter/Esc
-require('plugins.custom.utils.key-help')
