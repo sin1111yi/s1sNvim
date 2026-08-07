@@ -24,7 +24,7 @@ require('lazy').setup({
     { import = 'plugins' },
   },
   dev = {
-    path = '~/projects',
+    path = '~/Development',
     patterns = { 'github.com/sin1111yi/' },
     fallback = true,
   },
