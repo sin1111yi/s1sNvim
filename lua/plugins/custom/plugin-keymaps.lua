@@ -94,7 +94,9 @@ wk.add({
       -- Update config: open a terminal showing git pull in real time,
       -- then restart nvim automatically when done.
       local cfg = vim.fn.stdpath('config')
-      local Terminal = require('toggleterm').Terminal
+      -- Terminal class lives on toggleterm.terminal (M.Terminal);
+      -- the top-level toggleterm module does not export it.
+      local Terminal = require('toggleterm.terminal').Terminal
       local term = Terminal:new({
         direction = 'horizontal',
         size = 12,
