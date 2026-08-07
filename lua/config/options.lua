@@ -1,7 +1,13 @@
--- config/options.lua — General editor options
--- All settings use vim.opt (Lua API for :set)
+-- config/options.lua — General editor options + startup-critical globals
+-- Runs FIRST in init.lua (before lazy bootstrap): leaders and netrw
+-- disable must exist before lazy expands <leader> in specs and before
+-- nvim 0.12 auto-packadds netrw on directory starts.
 
 local opt = vim.opt
+
+-- Leaders (must precede lazy bootstrap — lazy expands <leader> in specs)
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
 
 -- Line numbers
 opt.number = true          -- Show absolute line number for current line
@@ -42,8 +48,10 @@ opt.swapfile = false
 -- Completion
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
--- Netrw (built-in file explorer) — disabled at startup so `nvim .` doesn't
--- open it before nvim-tree (lazy-loaded) takes over. Also lazy init via autocmd.
+-- Netrw (built-in file explorer) — disabled at startup (options runs
+-- before lazy bootstrap) so nvim 0.12's auto-packadd of the netrw opt
+-- package on `nvim <dir>` hits netrwPlugin.vim's guard and skips loading
+-- (otherwise its VimEnter hook E117s netrw#LocalBrowseCheck).
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
