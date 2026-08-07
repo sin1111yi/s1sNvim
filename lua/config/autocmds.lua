@@ -1,5 +1,5 @@
 -- config/autocmds.lua — Built-in general autocmds
--- Plugin lazy loading is handled by plugins/custom/utils/loader.lua
+-- Plugin lazy loading is handled by lazy.nvim (see lua/config/lazy.lua)
 
 local au = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup

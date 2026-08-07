@@ -1,8 +1,13 @@
--- plugins/catppuccin.lua — Colorscheme
--- Loaded on UIEnter (once)
+-- plugins/catppuccin.lua — Colorscheme (lazy spec)
+-- VeryLazy (equivalent to old UIEnter). setup + colorscheme application
+-- happen in config (plugin is guaranteed loaded by then — replaces
+-- util.set_colorscheme's UIEnter retry logic).
 
-local U = require('config.util')
-U.try_load('catppuccin', function(cp) cp.setup({}) end)
-U.set_colorscheme('catppuccin-mocha')
-
-return true
+return {
+  'catppuccin/nvim',
+  event = 'VeryLazy',
+  config = function()
+    require('catppuccin').setup({})
+    vim.cmd.colorscheme('catppuccin-mocha')
+  end,
+}

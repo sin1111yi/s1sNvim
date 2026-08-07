@@ -1,12 +1,17 @@
--- plugins/treesitter.lua — Treesitter syntax highlighting
--- Loaded on first BufReadPost (once)
+-- plugins/treesitter.lua — Treesitter syntax highlighting (lazy spec)
+-- Loaded on first BufReadPost/BufNewFile (equivalent to old once).
+-- build runs :TSUpdate on first install so parsers are fetched.
 
-local U = require('config.util')
-return U.try_load('nvim-treesitter.configs', function(ts)
-  ts.setup({
-    auto_install = true,
-    highlight = { enable = true },
-    indent = { enable = true },
-    incremental_selection = { enable = true },
-  })
-end)
+return {
+  'nvim-treesitter/nvim-treesitter',
+  event = { 'BufReadPost', 'BufNewFile' },
+  build = ':TSUpdate',
+  config = function()
+    require('nvim-treesitter.configs').setup({
+      auto_install = true,
+      highlight = { enable = true },
+      indent = { enable = true },
+      incremental_selection = { enable = true },
+    })
+  end,
+}

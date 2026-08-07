@@ -1,23 +1,17 @@
 -- init.lua — Neovim entry point
--- Built-in plugin manager: vim.pack (Neovim 0.12+)
--- Modular config under lua/config/
--- Plugins are loaded lazily by event-driven autocmds in custom/utils/loader.lua
+-- Plugin manager: lazy.nvim (ADR-002). Bootstrap must run FIRST so specs
+-- are parsed and eager plugins (wokamark/trigger-help) load before
+-- VimEnter. Core config (options/keymaps/autocmds) has no plugin
+-- dependencies and runs after.
 
 vim.loader.enable()
 
--- Plugin declarations must run first. vim.pack.add() parses specs and
--- prepares for install; plugins are NOT loaded until required by loader.
-require('config.plugins')
-
--- Shared helpers (try_load, set_colorscheme)
-require('config.util')
+-- Lazy plugin manager bootstrap (installs lazy.nvim on first run)
+require('config.lazy')
 
 -- Core config — no plugin dependencies, safe to run immediately.
 require('config.options')
 require('config.keymaps')
-
--- Plugin lazy loader (registers event-driven autocmds before UIEnter)
-require('config.loader')
 
 -- Built-in general autocmds (edit behaviour, auto-save, etc.)
 require('config.autocmds')
