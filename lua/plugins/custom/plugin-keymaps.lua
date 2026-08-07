@@ -94,7 +94,7 @@ wk.add({
       -- Update config: open a terminal showing git pull in real time,
       -- then restart nvim automatically when done.
       local cfg = vim.fn.stdpath('config')
-      local Terminal = require('toggleterm.terminal')
+      local Terminal = require('toggleterm').Terminal
       local term = Terminal:new({
         direction = 'horizontal',
         size = 12,
