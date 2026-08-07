@@ -6,7 +6,6 @@
 return {
   'folke/flash.nvim',
   event = 'VeryLazy',
-  commit = 'b6346946d10d07998efee029fb0f7a593806d0cd', -- migration pin
   config = function()
     require('flash').setup({
       modes = {

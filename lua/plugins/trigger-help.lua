@@ -7,7 +7,6 @@
 
 return {
   'sin1111yi/trigger-help.nvim',
-  commit = 'c4505de965822eedeffaeae78bddf27f11b9a5bb', -- GitHub HEAD (migration pin)
   config = function()
     local help_dir = vim.fn.stdpath('config') .. '/docs/trigger-help.nvim'
     require('trigger_help').setup({

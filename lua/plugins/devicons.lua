@@ -5,5 +5,4 @@
 return {
   'nvim-tree/nvim-web-devicons',
   event = 'VeryLazy',
-  commit = 'dad71387de386a946b123079d0e53f23028f3abd', -- migration pin
 }

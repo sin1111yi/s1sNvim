@@ -7,7 +7,6 @@
 return {
   'stevearc/conform.nvim',
   event = 'VeryLazy',
-  commit = '619363c30309d29ffa631e67c8183f2a72caa373', -- migration pin
   config = function()
     require('conform').setup({
       formatters_by_ft = {

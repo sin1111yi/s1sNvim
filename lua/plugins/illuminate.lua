@@ -5,7 +5,6 @@
 return {
   'RRethy/vim-illuminate',
   event = 'VeryLazy',
-  commit = '91313e598ca62e110bc71535c49069b66b9883c9', -- migration pin
   config = function()
     require('illuminate').configure({
       delay = 120,          -- ms after cursor stops before highlighting

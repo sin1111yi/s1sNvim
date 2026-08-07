@@ -6,7 +6,6 @@
 return {
   'nvim-lualine/lualine.nvim',
   event = 'VeryLazy',
-  commit = '221ce6b2d999187044529f49da6554a92f740a96', -- migration pin
   config = function()
     require('lualine').setup({
       options = {

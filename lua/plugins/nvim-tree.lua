@@ -8,7 +8,6 @@
 return {
   'nvim-tree/nvim-tree.lua',
   event = 'VeryLazy',
-  commit = 'b2aadda94b107480c48e548d6db51c6840b7b33c', -- migration pin
   config = function()
     -- Disable built-in netrw explorer (required before nvim-tree loads)
     vim.g.loaded_netrw = 1

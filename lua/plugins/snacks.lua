@@ -7,7 +7,6 @@
 return {
   'folke/snacks.nvim',
   event = 'VeryLazy',
-  commit = '882c996cf28183f4d63640de0b4c02ec886d01f2', -- migration pin
   config = function()
     require('snacks').setup({
       picker = { enabled = true },        -- fuzzy finder: files/buffers/grep

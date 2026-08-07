@@ -8,7 +8,6 @@
 return {
   'neovim/nvim-lspconfig',
   event = { 'BufReadPre', 'BufNewFile' },
-  commit = 'd6ac7a0d46555d44bf21f4f9c65f5201f818b475', -- migration pin
   dependencies = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',

@@ -6,7 +6,6 @@
 return {
   'folke/trouble.nvim',
   event = 'VeryLazy',
-  commit = 'bd67efe408d4816e25e8491cc5ad4088e708a69a', -- migration pin
   config = function()
     require('trouble').setup({})
   end,

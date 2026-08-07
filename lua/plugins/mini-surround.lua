@@ -8,7 +8,6 @@
 return {
   'echasnovski/mini.surround',
   event = 'VeryLazy',
-  commit = '8d5d0c5aa92449368ac251e85451d79d8f69d296', -- migration pin
   config = function()
     require('mini.surround').setup({
       mappings = {

@@ -6,7 +6,6 @@ return {
   'nvim-treesitter/nvim-treesitter',
   event = { 'BufReadPost', 'BufNewFile' },
   build = ':TSUpdate',
-  commit = '4916d6592ede8c07973490d9322f187e07dfefac', -- migration pin
   config = function()
     require('nvim-treesitter.configs').setup({
       auto_install = true,

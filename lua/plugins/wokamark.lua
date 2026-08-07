@@ -8,7 +8,6 @@
 
 return {
   'sin1111yi/wokamark.nvim',
-  commit = 'ba8413784267fc19431f93972b74ba5ce032b7b2', -- GitHub HEAD (migration pin)
   dependencies = { 'sin1111yi/trigger-help.nvim' },
   config = function()
     require('wokamark').setup({ auto_mark = true })

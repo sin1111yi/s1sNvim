@@ -6,7 +6,6 @@
 return {
   'echasnovski/mini.pairs',
   event = 'VeryLazy',
-  commit = 'b1c5a726921b7a8c9321e9a7a208aa0571de5810', -- migration pin
   config = function()
     require('mini.pairs').setup()
   end,

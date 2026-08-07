@@ -4,7 +4,6 @@
 return {
   'stevearc/dressing.nvim',
   event = 'VeryLazy',
-  commit = '2d7c2db2507fa3c4956142ee607431ddb2828639', -- migration pin
   config = function()
     require('dressing').setup({
       input = {

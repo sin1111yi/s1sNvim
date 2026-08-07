@@ -5,7 +5,6 @@
 return {
   'akinsho/toggleterm.nvim',
   cmd = 'ToggleTerm',
-  commit = '9a88eae817ef395952e08650b3283726786fb5fb', -- migration pin
   config = function()
     require('toggleterm').setup({
       size = 12,

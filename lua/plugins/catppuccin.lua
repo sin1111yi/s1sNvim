@@ -6,7 +6,6 @@
 return {
   'catppuccin/nvim',
   event = 'VeryLazy',
-  commit = '05e8787020dcfdb937bf2ff23855ea2415b4e072', -- migration pin
   config = function()
     require('catppuccin').setup({})
     vim.cmd.colorscheme('catppuccin-mocha')

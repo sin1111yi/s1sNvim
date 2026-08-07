@@ -9,7 +9,6 @@ return {
   {
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
-    commit = '2ffe79f1f021def8dd1fcd81deb16f1bb0d989f3', -- migration pin
     dependencies = {
       'L3MON4D3/LuaSnip',
       'hrsh7th/cmp-buffer',
@@ -35,9 +34,5 @@ return {
       })
     end,
   },
-  { 'L3MON4D3/LuaSnip', commit = '0abc8f390b278c3b4aabc4c004ac8a088b65cf24' }, -- migration pin
-  { 'hrsh7th/cmp-buffer', commit = 'b74fab3656eea9de20a9b8116afa3cfc4ec09657' }, -- migration pin
-  { 'hrsh7th/cmp-path', commit = 'c642487086dbd9a93160e1679a1327be111cbc25' }, -- migration pin
   -- cmp-nvim-lsp: declared here (no own trigger), pulled in by lspconfig deps
-  { 'hrsh7th/cmp-nvim-lsp', commit = 'cbc7b02bb99fae35cb42f514762b89b5126651ef' }, -- migration pin
 }

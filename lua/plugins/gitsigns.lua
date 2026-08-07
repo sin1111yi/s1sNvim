@@ -4,7 +4,6 @@
 return {
   'lewis6991/gitsigns.nvim',
   event = { 'BufReadPost', 'BufNewFile' },
-  commit = 'eb60cc7b94c46005237fd34170d76f3a089a90aa', -- migration pin
   config = function()
     require('gitsigns').setup({})
 
