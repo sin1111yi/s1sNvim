@@ -12,5 +12,18 @@ return {
   build = ':TSUpdate',
   config = function()
     require('nvim-treesitter').setup()
+    -- Highlighting is native (vim.treesitter.start); the buffer that
+    -- TRIGGERED this lazy load missed the BufReadPost auto-start (its
+    -- event already fired while treesitter was still loading). Re-apply
+    -- to every loaded file buffer.
+    vim.schedule(function()
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(buf)
+          and vim.bo[buf].filetype ~= ''
+          and vim.bo[buf].buftype == '' then
+          pcall(vim.treesitter.start, buf)
+        end
+      end
+    end)
   end,
 }
