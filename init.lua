@@ -15,9 +15,3 @@ require('config.keymaps')
 
 -- Built-in general autocmds (edit behaviour, auto-save, etc.)
 require('config.autocmds')
-
--- (Migration in progress — vim.pack declarations/util/loader are retired
---  in Phase 3 of ADR-002; do not re-enable.)
--- require('config.plugins')
--- require('config.util')
--- require('config.loader')
