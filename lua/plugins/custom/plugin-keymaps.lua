@@ -61,7 +61,7 @@ wk.add({
 wk.add({
   { '<leader>e', '<cmd>NvimTreeToggle<CR>', desc = 'Toggle file explorer' },
   { '<leader>ed', require('plugins.custom.tree-root').open_dir, desc = 'Open directory' },
-  { '<leader>er', require('plugins.custom.tree-root').root_to_cwd, desc = 'Tree root to cwd' },
+  { '<leader>er', require('plugins.custom.tree-root').root_to_initial, desc = 'Tree root to initial' },
 })
 
 --------------------------------------------------------------------

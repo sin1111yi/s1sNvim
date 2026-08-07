@@ -15,6 +15,8 @@ return {
 
     local function on_attach(bufnr)
       local api = require('nvim-tree.api')
+      -- Capture the tree's initial root on first attach (startup dir)
+      require('plugins.custom.tree-root').capture_initial_root()
       local function opts(desc)
         return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
       end
