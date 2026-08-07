@@ -123,6 +123,11 @@ return {
       local ename = vim.api.nvim_buf_get_name(eb)
       if ename ~= '' and vim.fn.isdirectory(ename) == 1 and vim.bo[eb].modified == false then
         vim.cmd('enew')
+        -- enew creates a NEW buffer; delete the leftover dir-arg buffer so
+        -- it doesn't linger in the buffer list next to the No Name one.
+        if vim.api.nvim_buf_is_valid(eb) and vim.bo[eb].modified == false then
+          pcall(vim.api.nvim_buf_delete, eb, { force = true })
+        end
       end
     end
   end,
