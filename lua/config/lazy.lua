@@ -32,3 +32,33 @@ require('lazy').setup({
   checker = { enabled = false },
   change_detection = { notify = false },
 })
+
+-- Config auto-update: after a lazy update/sync/install completes
+-- (User LazyDone), pull the config repo from GitHub — the config lives
+-- in ~/.config/nvim (s1sNvim.git) alongside the plugins. Only pull when
+-- the working tree is clean (never clobber uncommitted local edits).
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'LazyDone',
+  callback = function()
+    local cfg = vim.fn.stdpath('config')
+    -- bail out silently when not a git checkout (e.g. dev install)
+    if vim.fn.isdirectory(cfg .. '/.git') ~= 1 and vim.fn.filereadable(cfg .. '/.git') ~= 1 then
+      return
+    end
+    local dirty = vim.fn.system({ 'git', '-C', cfg, 'status', '--porcelain' }):gsub('%s+', '')
+    if dirty ~= '' then
+      vim.notify('Config repo has local changes — skipping auto-pull', vim.log.levels.WARN)
+      return
+    end
+    vim.schedule(function()
+      local out = vim.fn.system({ 'git', '-C', cfg, 'pull', '--ff-only', 'origin', 'main' })
+      if vim.v.shell_error ~= 0 then
+        vim.notify('Config auto-pull failed: ' .. out, vim.log.levels.ERROR)
+      elseif out:match('Already up to date') then
+        -- silent: nothing new
+      else
+        vim.notify('Config updated from GitHub — restart nvim to apply', vim.log.levels.INFO)
+      end
+    end)
+  end,
+})
