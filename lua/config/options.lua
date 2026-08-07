@@ -57,9 +57,13 @@ vim.g.loaded_netrwPlugin = 1
 
 -- When netrw is disabled, `nvim <dir>` no longer auto-cd's into the target
 -- directory.  Do it ourselves on VimEnter if argv[0] is a directory.
+-- Also capture whether the session was started WITH file/dir args: a
+-- wokamark session restore later sources `%argdel`, which zeroes argc —
+-- nvim-tree's open decision must use this startup record, not live argc.
 vim.api.nvim_create_autocmd('VimEnter', {
   once = true,
   callback = function()
+    vim.g.startup_argc = vim.fn.argc() > 0
     local dir = vim.fn.argv(0)
     if dir and dir ~= '' and vim.fn.isdirectory(dir) == 1 then
       vim.cmd('cd ' .. vim.fn.fnameescape(dir))
