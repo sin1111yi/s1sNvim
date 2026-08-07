@@ -12,6 +12,18 @@ return {
   end,
   config = function()
     require('nvim-treesitter').setup()
+    -- Highlighting is native (vim.treesitter.start); buffers opened by a
+    -- wokamark session restore may have missed the trigger while this
+    -- plugin was still loading — apply it to every loaded file buffer.
+    vim.schedule(function()
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(buf)
+          and vim.bo[buf].filetype ~= ''
+          and vim.bo[buf].buftype == '' then
+          pcall(vim.treesitter.start, buf)
+        end
+      end
+    end)
     -- Ensure the parser set after every lazy update (idempotent).
     vim.api.nvim_create_autocmd('User', {
       pattern = 'LazyDone',

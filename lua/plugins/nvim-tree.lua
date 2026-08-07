@@ -75,8 +75,11 @@ return {
     vim.api.nvim_set_hl(0, 'NvimTreeHiddenFolderHL', { link = 'Comment' })
 
     -- Tree open/close is decided by wokamark (should_open_tree); this
-    -- config only executes the open when asked.
-    if require('wokamark').should_open_tree() then
+    -- config only executes the open when asked. Also open when a tree
+    -- buffer was restored by a wokamark session but has no window yet
+    -- (bare `nvim` startup with a restored workspace).
+    local has_tree_buf = vim.fn.bufexists('NvimTree_1') == 1
+    if require('wokamark').should_open_tree() or has_tree_buf then
       -- Remove uninitialized tree buffers restored from a session
       -- (name NvimTree_%d but ft not NvimTree) so the real tree builds
       -- fresh instead of being shadowed.
