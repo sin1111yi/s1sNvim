@@ -6,6 +6,10 @@
 return {
   'nvim-lualine/lualine.nvim',
   event = 'VeryLazy',
+  -- catppuccin must apply its colorscheme first: theme='auto' reads the
+  -- active colorscheme at setup time, and VeryLazy parallel loading does
+  -- not guarantee catppuccin wins the race on its own.
+  dependencies = { 'catppuccin/nvim' },
   config = function()
     require('lualine').setup({
       options = {
