@@ -85,15 +85,10 @@ return {
     vim.api.nvim_set_hl(0, 'NvimTreeHiddenFileHL', { link = 'Comment' })
     vim.api.nvim_set_hl(0, 'NvimTreeHiddenFolderHL', { link = 'Comment' })
 
-    -- Auto-open on startup only when a file/dir was given (argc > 0);
-    -- bare `nvim` stays on an empty buffer without the tree.
-    -- Always open the tree: wokamark's restore may have brought a session
-    -- layout WITHOUT a tree (its open_tree_if_available runs before this
-    -- plugin loads — :NvimTreeOpen doesn't exist yet), so we add the tree
-    -- here. If the session already had one, NvimTreeOpen just focuses it.
-    -- With hijacking disabled (see setup), the tree lands in its own left
-    -- window; the native startup buffer / session buffers stay on the right.
-    if vim.fn.argc() > 0 then
+    -- Tree open/close is owned by wokamark (single owner of startup
+    -- layout): nvim-tree never decides for itself. wokamark is eager, so
+    -- it is loaded by the time this VeryLazy config runs.
+    if require('wokamark').should_open_tree() then
       vim.cmd('NvimTreeOpen')
       -- Focus the edit window (native buffer), not the tree.
       for _, w in ipairs(vim.api.nvim_list_wins()) do
