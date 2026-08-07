@@ -12,11 +12,21 @@ return {
   end,
   config = function()
     require('nvim-treesitter').setup()
-    -- Highlighting is native (vim.treesitter.start). Buffers opened by a
-    -- wokamark session restore may miss the trigger while this plugin was
-    -- loading AND may not have their filetype set yet when the lazy-load
-    -- config runs — the FileType event fires once detection completes, so
-    -- start TS from there (idempotent for already-highlighted buffers).
+    -- Highlighting is native (vim.treesitter.start). Session-restored
+    -- buffers can have an EMPTY filetype (restore runs before detection
+    -- in some startup paths): re-run detection, then the FileType hook
+    -- below starts TS. Normal buffers are untouched (ft already set).
+    vim.schedule(function()
+      for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if vim.api.nvim_buf_is_loaded(buf)
+          and vim.bo[buf].buftype == ''
+          and vim.bo[buf].filetype == ''
+          and vim.api.nvim_buf_get_name(buf) ~= '' then
+          pcall(vim.api.nvim_buf_call, buf, function() vim.cmd('filetype detect') end)
+        end
+      end
+    end)
+    -- Start TS whenever a filetype is detected (idempotent).
     vim.api.nvim_create_autocmd('FileType', {
       callback = function(args)
         vim.schedule(function()
