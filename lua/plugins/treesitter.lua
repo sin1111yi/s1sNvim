@@ -6,22 +6,14 @@
 --   • parser install/update is automated via build (lazy runs it on
 --     install/update; TSUpdate alone only UPDATES installed parsers)
 --   • setup() is optional (defaults are fine)
+-- The parser list lives in config/treesitter-langs.lua (shared with the
+-- LazyDone hook in config/lazy.lua).
 
 return {
   'nvim-treesitter/nvim-treesitter',
   lazy = false,
   build = function()
-    -- Install a curated parser set. Install is idempotent (already
-    -- installed parsers are skipped quickly), so build can safely run on
-    -- every lazy install/update.
-    local langs = {
-      'lua', 'vim', 'vimdoc', -- this config itself
-      'rust', 'c', 'cpp', 'python', 'go', -- dev languages
-      'bash', 'json', 'toml', 'yaml', 'markdown', -- config/data
-      'html', 'css', 'javascript', 'typescript', -- web
-      'make', 'cmake', -- build tooling
-    }
-    require('nvim-treesitter').install(langs)
+    require('nvim-treesitter').install(require('config.treesitter-langs'))
   end,
   config = function()
     require('nvim-treesitter').setup()
