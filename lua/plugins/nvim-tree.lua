@@ -101,6 +101,16 @@ return {
         end
       end
       vim.cmd('NvimTreeOpen')
+      -- Force the tree root to the CURRENT directory: a wokamark session
+      -- restore (e.g. ancestor match on `nvim .` → home) can leave the
+      -- explorer rooted elsewhere. cwd is always the right root here
+      -- (options.lua VimEnter already cd'd into the opened dir).
+      vim.schedule(function()
+        local ok, api = pcall(require, 'nvim-tree.api')
+        if ok then
+          pcall(api.tree.change_root, vim.fn.getcwd())
+        end
+      end)
       -- A tree restored from a wokamark session can come up empty (buffer
       -- restored, explorer not re-rendered) — refresh forces the render.
       vim.schedule(function()
