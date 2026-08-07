@@ -12,6 +12,14 @@ vim.loader.enable()
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Disable netrw BEFORE anything can load it: nvim 0.12 auto-packadds the
+-- netrw opt package for directory starts (`nvim <dir>`), whose VimEnter
+-- hook would call netrw#LocalBrowseCheck() and E117 once autoload is
+-- blocked. Setting these here (pre-bootstrap) lets netrwPlugin.vim's own
+-- guard skip loading entirely.
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Lazy plugin manager bootstrap (installs lazy.nvim on first run)
 require('config.lazy')
 
