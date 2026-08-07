@@ -106,7 +106,7 @@ wk.add({
       })
       term:toggle()
       term:send('git -C ' .. vim.fn.fnameescape(cfg)
-        .. ' pull --ff-only origin main && echo "=== update done, restarting ===" && sleep 1\r')
+        .. ' pull --ff-only origin main && echo "=== update done, restarting ===" && sleep 1 && exit\r')
     end, desc = 'Update config (git pull + restart)' },
 })
 
