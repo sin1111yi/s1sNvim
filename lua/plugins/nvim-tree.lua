@@ -81,38 +81,19 @@ return {
     -- Auto-open on startup only when a file/dir was given (argc > 0);
     -- bare `nvim` stays on an empty buffer without the tree.
     if vim.fn.argc() > 0 then
-      vim.cmd('NvimTreeOpen')
-      -- vscode-style: when nvim was opened on a directory, make sure there is
-      -- an empty edit buffer to the right of the tree (netrw is disabled, so
-      -- the dir arg alone leaves only the tree window). g:opened_with_dir is
-      -- set at VimEnter before plugins rewrite argv.
-      if vim.g.opened_with_dir then
-        local has_edit = false
-        for _, w in ipairs(vim.api.nvim_list_wins()) do
-          if vim.bo[vim.api.nvim_win_get_buf(w)].filetype ~= 'NvimTree' then
-            has_edit = true
-            break
-          end
-        end
-        if not has_edit then
-          -- Empty edit buffer to the RIGHT of the tree (vscode style).
-          -- Plain `vsplit` splits LEFT of the current window — if focus is
-          -- still in the tree (VeryLazy open path), the empty buffer would
-          -- land left of the tree and the layout looks inverted.
-          vim.cmd('rightbelow vsplit')
-          vim.cmd('enew')
-          -- vsplit halves the windows; restore the tree to its configured
-          -- width (view.width = 30 → 30 columns) instead of leaving 50/50
-          for _, w in ipairs(vim.api.nvim_list_wins()) do
-            if vim.bo[vim.api.nvim_win_get_buf(w)].filetype == 'NvimTree' then
-              vim.api.nvim_set_current_win(w)
-              vim.cmd('vertical resize 30')
-              break
-            end
-          end
-        end
+      -- Directory start, tree not already restored by wokamark: keep the
+      -- NATIVE startup buffer (greeting) as the edit side — split first,
+      -- the tree replaces the LEFT window, the original buffer stays on
+      -- the right. (No manual `enew` — the greeting is the buffer nvim
+      -- already created for the directory arg.)
+      if vim.g.opened_with_dir and vim.bo[vim.api.nvim_win_get_buf(0)].filetype ~= 'NvimTree' then
+        vim.cmd('rightbelow vsplit')
+        vim.cmd('wincmd h')
       end
-      -- focus the edit window, not the tree
+      vim.cmd('NvimTreeOpen')
+      -- If wokamark restored a marked workspace, its session brought the
+      -- layout — focus its edit window; otherwise focus the native buffer.
+      -- Focus the edit window, not the tree.
       for _, w in ipairs(vim.api.nvim_list_wins()) do
         if vim.bo[vim.api.nvim_win_get_buf(w)].filetype ~= 'NvimTree' then
           vim.api.nvim_set_current_win(w)
