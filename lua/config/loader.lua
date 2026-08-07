@@ -58,6 +58,8 @@ on('UIEnter', 'Trouble', function() require('plugins.trouble') end)
 on('UIEnter', 'Toggleterm', function() require('plugins.toggleterm') end)
 
 -- Mini.surround — UIEnter
+on('UIEnter', 'Illuminate', function() require('plugins.illuminate') end)
+on('UIEnter', 'MiniPairs', function() require('plugins.mini-pairs') end)
 on('UIEnter', 'MiniSurround', function() require('plugins.mini-surround') end)
 
 -- Flash (jump navigation) — UIEnter

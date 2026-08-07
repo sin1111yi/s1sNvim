@@ -88,6 +88,7 @@ wk.add({
       if #vim.fn.getloclist(0) > 0 then require('trouble').toggle('loclist')
       else vim.notify('Location list is empty', vim.log.levels.INFO) end
     end, desc = 'Location list' },
+  { '<leader>xh', ':TriggerHelp<CR>', desc = 'Trigger help' },
 })
 
 --------------------------------------------------------------------
@@ -126,17 +127,6 @@ wk.add({
   { '<leader>utc', ':tabclose<CR>', desc = 'Close tab' },
   { '<leader>uto', ':tabonly<CR>', desc = 'Close other tabs' },
 })
-
---------------------------------------------------------------------
--- Quickfix / location groups: <leader>c / <leader>l
--- (removed: covered by trouble <leader>xq / <leader>xL)
---------------------------------------------------------------------
-
---------------------------------------------------------------------
--- Diagnostics group: <leader>d
--- (removed: covered by trouble <leader>xx; single-diagnostic jumps
--- still available via :lua vim.diagnostic.goto_next())
---------------------------------------------------------------------
 
 --------------------------------------------------------------------
 -- Quit group: <leader>q

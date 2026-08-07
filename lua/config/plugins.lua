@@ -39,7 +39,10 @@ vim.pack.add({
   -- snacks.nvim (picker + utility modules, folke)
   gh('folke/snacks.nvim'),
 
+  gh('RRethy/vim-illuminate'),
+
   -- Surround text objects (ys/ds/cs style)
+  gh('echasnovski/mini.pairs'),
   gh('echasnovski/mini.surround'),
 
   -- Code formatting
