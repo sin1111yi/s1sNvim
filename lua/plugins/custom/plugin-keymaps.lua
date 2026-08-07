@@ -100,7 +100,9 @@ wk.add({
         size = 12,
         on_exit = function()
           vim.schedule(function()
-            vim.cmd('cq') -- quit; relaunch nvim to apply the new config
+            -- exit 42 = "config updated, relaunch": the nvim wrapper
+            -- (scripts/nvim) detects it and reopens with the new config
+            vim.cmd('cq 42')
           end)
         end,
       })
