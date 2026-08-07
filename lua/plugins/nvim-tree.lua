@@ -125,9 +125,13 @@ return {
         vim.cmd('enew')
         -- enew creates a NEW buffer; delete the leftover dir-arg buffer so
         -- it doesn't linger in the buffer list next to the No Name one.
-        if vim.api.nvim_buf_is_valid(eb) and vim.bo[eb].modified == false then
-          pcall(vim.api.nvim_buf_delete, eb, { force = true })
-        end
+        -- Deferred: deleting mid-config triggers lazy.nvim's buffer-event
+        -- handler with a stale id; schedule lets the event loop settle.
+        vim.schedule(function()
+          if vim.api.nvim_buf_is_valid(eb) and vim.bo[eb].modified == false then
+            pcall(vim.api.nvim_buf_delete, eb, { force = true })
+          end
+        end)
       end
     end
   end,
