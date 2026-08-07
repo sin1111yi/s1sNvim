@@ -92,7 +92,7 @@ wk.add({
   { '<leader>xz', ':Lazy<CR>', desc = 'Open Lazy (plugin manager)' },
   { '<leader>xu', function()
       -- Update config: open a terminal showing git pull in real time,
-      -- then restart nvim automatically when done.
+      -- then notify when done (user restarts nvim manually).
       local cfg = vim.fn.stdpath('config')
       -- Terminal class lives on toggleterm.terminal (M.Terminal);
       -- the top-level toggleterm module does not export it.
@@ -100,16 +100,20 @@ wk.add({
       local term = Terminal:new({
         direction = 'horizontal',
         size = 12,
-        on_exit = function()
+        on_exit = function(_, _, code)
           vim.schedule(function()
-            vim.notify('Config updated — restart nvim to apply', vim.log.levels.INFO)
+            if code == 0 then
+              vim.notify('Config updated — restart nvim to apply', vim.log.levels.INFO)
+            else
+              vim.notify('Config pull failed (exit ' .. tostring(code) .. ')', vim.log.levels.ERROR)
+            end
           end)
         end,
       })
       term:toggle()
-      term:send('git -C ' .. vim.fn.fnameescape(cfg)
-        .. ' pull --ff-only origin main && echo "=== update done, restarting ===" && sleep 1 && exit\r')
-    end, desc = 'Update config (git pull + restart)' },
+      -- plain pull; shell exits so on_exit fires (no echo/sleep noise)
+      term:send('git -C ' .. vim.fn.fnameescape(cfg) .. ' pull --ff-only origin main && exit\r')
+    end, desc = 'Update config (git pull + notify)' },
 })
 
 --------------------------------------------------------------------
