@@ -17,10 +17,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  -- Phase 1 (bootstrap): empty spec — lua/plugins/*.lua are still vim.pack
-  -- era try_load wrappers and must not be parsed as lazy specs yet.
-  -- Phase 2 switches to { import = 'plugins' } once all files are spec'd.
-  spec = {},
+  -- One spec file per plugin under lua/plugins/ (import scans top level
+  -- only; lua/plugins/custom/ is NOT imported — required explicitly by
+  -- config functions, ADR D-001).
+  spec = {
+    { import = 'plugins' },
+  },
   dev = {
     path = '~/projects',
     patterns = { 'github.com/sin1111yi/' },

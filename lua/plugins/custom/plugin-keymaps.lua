@@ -1,7 +1,7 @@
 -- plugins/custom/plugin-keymaps.lua — Centralized plugin keybindings
 -- Loaded on UIEnter (once), after which-key so wk is available.
 -- ALL keybindings are declared in this file. Mechanisms live in
--- plugins/custom/utils/ (lsp: LspAttach applier, cmp: mapping builder,
+-- plugins/custom/ (lsp: LspAttach applier, cmp: mapping builder,
 -- snacks-picker: picker entry points, tree-root: nvim-tree root helper).
 
 local wk = require('which-key')
@@ -42,7 +42,7 @@ wk.add({
   { '<leader>bn', '<cmd>bnext<CR>', desc = 'Next buffer' },
   { '<leader>bp', '<cmd>bprevious<CR>', desc = 'Previous buffer' },
   { '<leader>bo', '<cmd>BufferLineCloseOthers<CR>', desc = 'Close other buffers' },
-  { '<leader>bl', require('plugins.custom.utils.snacks-picker').buffers, desc = 'Buffer picker' },
+  { '<leader>bl', require('plugins.custom.snacks-picker').buffers, desc = 'Buffer picker' },
 })
 
 --------------------------------------------------------------------
@@ -50,9 +50,9 @@ wk.add({
 --------------------------------------------------------------------
 wk.add({
   { '<leader>f', group = 'find' },
-  { '<leader>ff', require('plugins.custom.utils.snacks-picker').files, desc = 'Find files' },
-  { '<leader>fb', require('plugins.custom.utils.snacks-picker').buffers, desc = 'Find buffers' },
-  { '<leader>fg', require('plugins.custom.utils.snacks-picker').grep, desc = 'Grep files' },
+  { '<leader>ff', require('plugins.custom.snacks-picker').files, desc = 'Find files' },
+  { '<leader>fb', require('plugins.custom.snacks-picker').buffers, desc = 'Find buffers' },
+  { '<leader>fg', require('plugins.custom.snacks-picker').grep, desc = 'Grep files' },
 })
 
 --------------------------------------------------------------------
@@ -60,8 +60,8 @@ wk.add({
 --------------------------------------------------------------------
 wk.add({
   { '<leader>e', '<cmd>NvimTreeToggle<CR>', desc = 'Toggle file explorer' },
-  { '<leader>ed', require('plugins.custom.utils.tree-root').open_dir, desc = 'Open directory' },
-  { '<leader>er', require('plugins.custom.utils.tree-root').root_to_cwd, desc = 'Tree root to cwd' },
+  { '<leader>ed', require('plugins.custom.tree-root').open_dir, desc = 'Open directory' },
+  { '<leader>er', require('plugins.custom.tree-root').root_to_cwd, desc = 'Tree root to cwd' },
 })
 
 --------------------------------------------------------------------
@@ -144,7 +144,7 @@ wk.add({
 --   gO = document symbols, [d / ]d = diagnostics
 -- We only set the traditional extras (gd/gD/gi).
 --------------------------------------------------------------------
-require('plugins.custom.utils.lsp').setup({
+require('plugins.custom.lsp').setup({
   { 'n', 'gd', vim.lsp.buf.definition, 'Go to definition' },
   { 'n', 'gD', vim.lsp.buf.declaration, 'Go to declaration' },
   { 'n', 'gi', vim.lsp.buf.implementation, 'Go to implementation' },

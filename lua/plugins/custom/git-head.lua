@@ -1,4 +1,4 @@
--- plugins/custom/utils/git-head.lua — Git branch + status icon for bufferline offset
+-- plugins/custom/git-head.lua — Git branch + status icon for bufferline offset
 -- Module-level cache, refreshed by gitsigns.lua on GitSignsUpdate (and when
 -- the async ahead/behind fetch completes). The bufferline offset text reads
 -- this cache instead of vim.b directly, so it works regardless of which

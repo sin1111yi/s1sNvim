@@ -1,4 +1,4 @@
--- plugins/custom/utils/tree-root.lua — nvim-tree root helpers
+-- plugins/custom/tree-root.lua — nvim-tree root helpers
 -- Used by the <leader>mr mapping: point the tree root at the current
 -- working directory (handy after the tree drifted elsewhere).
 

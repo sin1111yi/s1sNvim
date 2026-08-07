@@ -1,4 +1,4 @@
--- plugins/custom/utils/snacks-picker.lua — snacks picker entry points
+-- plugins/custom/snacks-picker.lua — snacks picker entry points
 -- Thin wrappers so plugin-keymaps.lua only declares the mappings.
 
 local M = {}
