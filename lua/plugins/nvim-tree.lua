@@ -89,6 +89,17 @@ return {
     -- layout): nvim-tree never decides for itself. wokamark is eager, so
     -- it is loaded by the time this VeryLazy config runs.
     if require('wokamark').should_open_tree() then
+      -- Wipe zombie tree buffers restored from a wokamark session:
+      -- mksession stored the tree window's buffer (`edit NvimTree_1`),
+      -- which comes back UNINITIALIZED (name NvimTree_1, ft not NvimTree)
+      -- and would shadow the real tree. Delete them so NvimTreeOpen
+      -- builds a fresh explorer.
+      for _, b in ipairs(vim.api.nvim_list_bufs()) do
+        local name = vim.api.nvim_buf_get_name(b)
+        if vim.bo[b].filetype ~= 'NvimTree' and name:match('NvimTree_%d+$') and vim.api.nvim_buf_is_loaded(b) then
+          pcall(vim.api.nvim_buf_delete, b, { force = true })
+        end
+      end
       vim.cmd('NvimTreeOpen')
       -- A tree restored from a wokamark session can come up empty (buffer
       -- restored, explorer not re-rendered) — refresh forces the render.
