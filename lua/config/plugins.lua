@@ -5,7 +5,12 @@
 
 local gh = function(x) return 'https://github.com/' .. x end
 
+-- Local plugins dir: $NVIM_LOCAL_PLUGINS or ~/projects (not hardcoded)
+local local_plugins = vim.env.NVIM_LOCAL_PLUGINS or vim.fn.expand('~/projects')
+
 vim.pack.add({
+  -- Local plugins (installed from local dir via git clone)
+  local_plugins .. '/workmark.nvim',
   -- Colorscheme
   gh('catppuccin/nvim'),
 
