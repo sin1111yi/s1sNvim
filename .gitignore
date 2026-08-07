@@ -1,2 +1,6 @@
 # Plugin lockfile — plugin versions are not tracked (managed locally by vim.pack)
 nvim-pack-lock.json
+
+# Plugin install locations — both vim.pack (pack/core) and manual local
+# plugins (pack/local) live here; sources are ~/projects repos
+pack/
