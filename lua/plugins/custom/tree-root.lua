@@ -18,15 +18,14 @@ function M.tree_is_open()
 end
 
 -- Capture the tree's initial root on first use (called from nvim-tree's
--- on_attach): prefer the startup directory argument, else the boot cwd.
+-- on_attach). getcwd() is correct here: options.lua's VimEnter handler
+-- already cd'd into the startup directory argument (nvim <dir>), so the
+-- cwd at first tree attach IS the project the tree started on. Do NOT
+-- read argv(0) at this point — plugins (nvim-tree) rewrite it after
+-- VimEnter (the opened_with_dir lesson).
 function M.capture_initial_root()
   if initial_root then return initial_root end
-  local argv0 = vim.fn.argv(0)
-  if argv0 ~= '' and vim.fn.isdirectory(argv0) == 1 then
-    initial_root = vim.fn.fnamemodify(vim.fn.expand(argv0), ':p')
-  else
-    initial_root = vim.fn.getcwd()
-  end
+  initial_root = vim.fn.getcwd()
   return initial_root
 end
 
