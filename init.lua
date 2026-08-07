@@ -6,6 +6,12 @@
 
 vim.loader.enable()
 
+-- Leaders MUST be set before lazy bootstrap: lazy expands <leader>/<localleader>
+-- in specs at setup time (defaulting to '\' when unset), so defining them here
+-- keeps every mapping consistent.
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 -- Lazy plugin manager bootstrap (installs lazy.nvim on first run)
 require('config.lazy')
 

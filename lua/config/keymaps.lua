@@ -1,8 +1,6 @@
 -- config/keymaps.lua — Key mappings (non-Leader)
 -- <Leader>-prefixed mappings live in plugins/custom/plugin-keymaps.lua.
-
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+-- Leader definitions live in init.lua (must precede lazy bootstrap).
 
 local keymap = vim.keymap.set
 local opts = { noremap = true, silent = true }
