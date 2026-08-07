@@ -70,6 +70,10 @@ vim.api.nvim_create_autocmd('VimEnter', {
       -- remember we were opened on a directory (argv may be rewritten by
       -- plugins later, so capture it here at startup)
       vim.g.opened_with_dir = true
+      -- absolute startup dir: a wokamark session restore can `cd` elsewhere
+      -- (ancestor match on home) — nvim-tree must root back to THIS dir,
+      -- not getcwd() which the session may have changed.
+      vim.g.startup_dir = vim.fn.fnamemodify(vim.fn.expand(dir), ':p')
     end
   end,
 })
