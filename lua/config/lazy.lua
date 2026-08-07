@@ -33,34 +33,6 @@ require('lazy').setup({
   change_detection = { notify = false },
 })
 
--- Config auto-update: pull the config repo from GitHub on every startup.
--- NOTE: User LazyDone fires INSIDE lazy.setup() (lazy/init.lua:115), so an
--- autocmd registered after setup() never sees it — use UIEnter instead,
--- which reliably runs once after startup completes (covers :Lazy update,
--- which also ends in a normal startup/UIEnter path).
--- Only pull when the working tree is clean (never clobber local edits).
-vim.api.nvim_create_autocmd('UIEnter', {
-  once = true,
-  callback = function()
-    local cfg = vim.fn.stdpath('config')
-    -- bail out silently when not a git checkout (e.g. dev install)
-    if vim.fn.isdirectory(cfg .. '/.git') ~= 1 and vim.fn.filereadable(cfg .. '/.git') ~= 1 then
-      return
-    end
-    local dirty = vim.fn.system({ 'git', '-C', cfg, 'status', '--porcelain' }):gsub('%s+', '')
-    if dirty ~= '' then
-      vim.notify('Config repo has local changes — skipping auto-pull', vim.log.levels.WARN)
-      return
-    end
-    vim.schedule(function()
-      local out = vim.fn.system({ 'git', '-C', cfg, 'pull', '--ff-only', 'origin', 'main' })
-      if vim.v.shell_error ~= 0 then
-        vim.notify('Config auto-pull failed: ' .. out, vim.log.levels.ERROR)
-      elseif out:match('Already up to date') then
-        -- silent: nothing new
-      else
-        vim.notify('Config updated from GitHub — restart nvim to apply', vim.log.levels.INFO)
-      end
-    end)
-  end,
-})
+-- Config updates are MANUAL: <leader>xu opens a terminal, runs
+-- git pull with live output, then restarts nvim. No startup auto-pull
+-- (avoids network + surprise reloads on every boot).
