@@ -11,7 +11,7 @@
 
 return {
   'nvim-treesitter/nvim-treesitter',
-  event = { 'BufEnter' }, -- lazy-load on entering a buffer (user preference)
+  event = { 'BufEnter', 'BufReadPost', 'BufNewFile', 'BufNew' }, -- any buffer-open path loads treesitter
   build = function()
     require('nvim-treesitter').install(require('config.treesitter-langs'))
   end,
