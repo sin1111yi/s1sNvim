@@ -115,6 +115,15 @@ return {
           break
         end
       end
+      -- The dir-arg buffer (`nvim <dir>` creates a buffer named after the
+      -- directory) is an empty shell — replace it with a clean No Name
+      -- buffer so the edit side doesn't show a confusing directory title.
+      -- Session-restored file buffers are untouched (their name is a file).
+      local eb = vim.api.nvim_get_current_buf()
+      local ename = vim.api.nvim_buf_get_name(eb)
+      if ename ~= '' and vim.fn.isdirectory(ename) == 1 and vim.bo[eb].modified == false then
+        vim.cmd('enew')
+      end
     end
   end,
 }
