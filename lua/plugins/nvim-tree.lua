@@ -115,23 +115,32 @@ return {
           break
         end
       end
-      -- The dir-arg buffer (`nvim <dir>` creates a buffer named after the
-      -- directory) is an empty shell — replace it with a clean No Name
-      -- buffer so the edit side doesn't show a confusing directory title.
-      -- Session-restored file buffers are untouched (their name is a file).
-      local eb = vim.api.nvim_get_current_buf()
-      local ename = vim.api.nvim_buf_get_name(eb)
-      if ename ~= '' and vim.fn.isdirectory(ename) == 1 and vim.bo[eb].modified == false then
-        vim.cmd('enew')
-        -- enew creates a NEW buffer; delete the leftover dir-arg buffer so
-        -- it doesn't linger in the buffer list next to the No Name one.
-        -- Deferred: deleting mid-config triggers lazy.nvim's buffer-event
-        -- handler with a stale id; schedule lets the event loop settle.
-        vim.schedule(function()
-          if vim.api.nvim_buf_is_valid(eb) and vim.bo[eb].modified == false then
-            pcall(vim.api.nvim_buf_delete, eb, { force = true })
+      -- Clean up dir-arg buffers (the `nvim <dir>` buffer named after the
+      -- directory, and any restored copy from a wokamark session): it is
+      -- an empty shell. Replace displayed ones with a clean No Name buffer,
+      -- delete hidden ones. Session-restored FILE buffers are untouched
+      -- (their name is a file, not a directory).
+      for _, b in ipairs(vim.api.nvim_list_bufs()) do
+        local n = vim.api.nvim_buf_get_name(b)
+        if n ~= '' and vim.fn.isdirectory(n) == 1 and vim.bo[b].modified == false then
+          local shown = false
+          for _, w in ipairs(vim.api.nvim_list_wins()) do
+            if vim.api.nvim_win_get_buf(w) == b then
+              shown = true
+              vim.api.nvim_set_current_win(w)
+              vim.cmd('enew')
+              break
+            end
           end
-        end)
+          -- Deferred delete: removing mid-config triggers lazy.nvim's
+          -- buffer-event handler with a stale id; schedule settles the loop.
+          local bb = b
+          vim.schedule(function()
+            if vim.api.nvim_buf_is_valid(bb) and vim.bo[bb].modified == false then
+              pcall(vim.api.nvim_buf_delete, bb, { force = true })
+            end
+          end)
+        end
       end
     end
   end,
