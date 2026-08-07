@@ -74,9 +74,12 @@ on('BufReadPost', 'GitsignsComment', function()
   require('plugins.comment')
 end)
 
--- Local plugin: workmark (per-directory workspace sessions)
--- packadd name must match the opt/ directory name exactly (workmark.nvim).
-vim.cmd('packadd workmark.nvim')
+-- Local plugin: wokamark (per-directory workspace sessions)
+-- packadd name must match the opt/ directory name exactly (wokamark.nvim).
+vim.cmd('packadd wokamark.nvim')
+-- Configuration (defaults already on; call setup to tweak, e.g.
+-- require('wokamark').setup({ auto_mark = false }) to disable auto-marking)
+require('wokamark').setup({ auto_mark = true })
 
 -- Local plugin: trigger-help (event-triggered help float)
 vim.cmd('packadd trigger-help.nvim')
