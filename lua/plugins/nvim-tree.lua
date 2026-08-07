@@ -65,6 +65,29 @@ return U.try_load('nvim-tree', function()
   -- bare `nvim` stays on an empty buffer without the tree.
   if vim.fn.argc() > 0 then
     vim.cmd('NvimTreeOpen')
-    vim.cmd('wincmd p')
+    -- vscode-style: when nvim was opened on a directory, make sure there is
+    -- an empty edit buffer to the right of the tree (netrw is disabled, so
+    -- the dir arg alone leaves only the tree window). g:opened_with_dir is
+    -- set at VimEnter before plugins rewrite argv.
+    if vim.g.opened_with_dir then
+      local has_edit = false
+      for _, w in ipairs(vim.api.nvim_list_wins()) do
+        if vim.bo[vim.api.nvim_win_get_buf(w)].filetype ~= 'NvimTree' then
+          has_edit = true
+          break
+        end
+      end
+      if not has_edit then
+        vim.cmd('vsplit')
+        vim.cmd('enew')
+      end
+    end
+    -- focus the edit window, not the tree
+    for _, w in ipairs(vim.api.nvim_list_wins()) do
+      if vim.bo[vim.api.nvim_win_get_buf(w)].filetype ~= 'NvimTree' then
+        vim.api.nvim_set_current_win(w)
+        break
+      end
+    end
   end
 end)

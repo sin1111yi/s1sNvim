@@ -73,9 +73,21 @@ wk.add({
   { '<leader>xg', function() require('snacks.lazygit').open() end, desc = 'Open lazygit' },
   { '<leader>xl', function() require('snacks.lazygit').log() end, desc = 'Git log' },
   { '<leader>xf', function() require('conform').format() end, desc = 'Format file' },
-  { '<leader>xx', function() require('trouble').toggle() end, desc = 'Diagnostics' },
-  { '<leader>xq', function() require('trouble').toggle('quickfix') end, desc = 'Quickfix list' },
-  { '<leader>xL', function() require('trouble').toggle('loclist') end, desc = 'Location list' },
+  { '<leader>xx', function()
+      local total = 0
+      local counts = vim.diagnostic.count()
+      for _, n in pairs(counts) do total = total + n end
+      if total > 0 then require('trouble').toggle('diagnostics')
+      else vim.notify('No diagnostics', vim.log.levels.INFO) end
+    end, desc = 'Diagnostics' },
+  { '<leader>xq', function()
+      if #vim.fn.getqflist() > 0 then require('trouble').toggle('quickfix')
+      else vim.notify('Quickfix is empty', vim.log.levels.INFO) end
+    end, desc = 'Quickfix list' },
+  { '<leader>xL', function()
+      if #vim.fn.getloclist(0) > 0 then require('trouble').toggle('loclist')
+      else vim.notify('Location list is empty', vim.log.levels.INFO) end
+    end, desc = 'Location list' },
 })
 
 --------------------------------------------------------------------
@@ -94,6 +106,14 @@ wk.add({
 wk.add({
   { '<leader>r', group = 'settings' },
   { '<leader>rn', ':set relativenumber!<CR>', desc = 'Toggle relative number' },
+  { '<leader>rw', ':set wrap!<CR>', desc = 'Toggle wrap' },
+  { '<leader>rh', ':set hlsearch!<CR>', desc = 'Toggle search highlight' },
+  { '<leader>rc', ':set list!<CR>', desc = 'Toggle invisible chars' },
+  { '<leader>rs', ':set ignorecase!<CR>', desc = 'Toggle case-sensitive search' },
+  { '<leader>rk', function()
+      if vim.o.colorcolumn == '' then vim.o.colorcolumn = '80'
+      else vim.o.colorcolumn = '' end
+    end, desc = 'Toggle color column' },
 })
 
 --------------------------------------------------------------------
@@ -109,16 +129,14 @@ wk.add({
 
 --------------------------------------------------------------------
 -- Quickfix / location groups: <leader>c / <leader>l
+-- (removed: covered by trouble <leader>xq / <leader>xL)
 --------------------------------------------------------------------
-wk.add({
-  { '<leader>c', group = 'quickfix' },
-  { '<leader>co', ':copen<CR>', desc = 'Open quickfix list' },
-  { '<leader>cc', ':cclose<CR>', desc = 'Close quickfix list' },
 
-  { '<leader>l', group = 'location' },
-  { '<leader>lo', ':lopen<CR>', desc = 'Open location list' },
-  { '<leader>lc', ':lclose<CR>', desc = 'Close location list' },
-})
+--------------------------------------------------------------------
+-- Diagnostics group: <leader>d
+-- (removed: covered by trouble <leader>xx; single-diagnostic jumps
+-- still available via :lua vim.diagnostic.goto_next())
+--------------------------------------------------------------------
 
 --------------------------------------------------------------------
 -- Quit group: <leader>q
@@ -126,16 +144,6 @@ wk.add({
 wk.add({
   { '<leader>q', ':quit<CR>', desc = 'Quit' },
   { '<leader>qq', ':wqa<CR>', desc = 'Save all and quit' },
-})
-
---------------------------------------------------------------------
--- Diagnostics group: <leader>d (global, LSP-indepejdent)
---------------------------------------------------------------------
-wk.add({
-  { '<leader>d', group = 'diagnostic' },
-  { '<leader>de', vim.diagnostic.open_float, desc = 'Show diagnostic' },
-  { '<leader>dn', vim.diagnostic.goto_next, desc = 'Next diagnostic' },
-  { '<leader>dp', vim.diagnostic.goto_prev, desc = 'Previous diagnostic' },
 })
 
 --------------------------------------------------------------------

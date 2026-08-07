@@ -25,7 +25,7 @@ opt.termguicolors = true    -- 24-bit RGB color support
 opt.background = 'dark'
 opt.cursorline = true       -- Highlight current line
 opt.signcolumn = 'yes'      -- Always show sign column
-opt.colorcolumn = '100'     -- Highlight long lines
+-- (no colorcolumn by default; toggle with <leader>rk → 80)
 
 -- Splits
 opt.splitright = true       -- Vertical split opens to the right
@@ -55,6 +55,9 @@ vim.api.nvim_create_autocmd('VimEnter', {
     local dir = vim.fn.argv(0)
     if dir and dir ~= '' and vim.fn.isdirectory(dir) == 1 then
       vim.cmd('cd ' .. vim.fn.fnameescape(dir))
+      -- remember we were opened on a directory (argv may be rewritten by
+      -- plugins later, so capture it here at startup)
+      vim.g.opened_with_dir = true
     end
   end,
 })

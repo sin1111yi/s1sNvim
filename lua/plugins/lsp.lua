@@ -35,7 +35,8 @@ vim.lsp.config('rust_analyzer', {
   settings = {
     ['rust-analyzer'] = {
       cargo = { allFeatures = true, buildScripts = { enable = true } },
-      checkOnSave = { command = 'clippy' },
+      checkOnSave = true, -- newer rust-analyzer: boolean; command moved to check
+      check = { command = 'clippy' },
       procMacro = { enable = true },
       inlayHints = {
         enable = true, typeHints = true, parameterHints = true,
