@@ -23,7 +23,19 @@ return {
       vim.keymap.set('n', 'j', '<Down>', opts('Down'))
       vim.keymap.set('n', 'k', '<Up>', opts('Up'))
       vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Collapse directory'))
-      vim.keymap.set('n', 'l', api.node.open.edit, opts('Expand / open'))
+      -- l: expand directories, open files. The default open.edit would
+      -- change_dir('..') on the path/.. node at the top (confusing — it
+      -- silently moves the tree up); ignore l there instead. To point the
+      -- root back at the cwd after any drift, use <leader>mr.
+      vim.keymap.set('n', 'l', function()
+        local node = api.tree.get_node_under_cursor()
+        if not node or node.name == '..' then return end
+        if node.type == 'directory' then
+          pcall(function() node:expand_or_collapse(false) end)
+        else
+          api.node.open.edit(node)
+        end
+      end, opts('Expand / open'))
       vim.keymap.set('n', '<CR>', api.node.open.edit, opts('Open'))
 
       -- Fold / unfold (collapse / expand current directory)
