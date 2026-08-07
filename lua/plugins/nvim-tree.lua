@@ -144,60 +144,14 @@ return {
       end
     end
 
-    -- Keep the tree+edit split alive: when an edit window is closed
-    -- (:q) and no other non-tree window remains, reopen an edit window
-    -- showing another loaded buffer (or a No Name buffer). Closing the
-    -- TREE itself is left alone (its window close is the user's choice).
-    vim.api.nvim_create_autocmd('WinClosed', {
-      callback = function()
-        vim.schedule(function()
-          local tree_open = false
-          for _, w in ipairs(vim.api.nvim_list_wins()) do
-            if vim.bo[vim.api.nvim_win_get_buf(w)].filetype == 'NvimTree' then
-              tree_open = true
-            elseif vim.api.nvim_win_is_valid(w) then
-              return -- another edit window still exists; layout is fine
-            end
-          end
-          if not tree_open then return end
-          -- tree is the only window left: reopen an edit side. rightbelow
-          -- vsplit from the tree would copy the TREE buffer into the new
-          -- window — always switch it to another buffer (or No Name).
-          vim.cmd('rightbelow vsplit')
-          local switched = false
-          -- show another loaded non-tree buffer if any (user expectation:
-          -- 'if there are other buffers, show them'), else No Name
-          for _, b in ipairs(vim.api.nvim_list_bufs()) do
-            if vim.api.nvim_buf_is_loaded(b)
-              and vim.bo[b].buftype == ''
-              and vim.bo[b].filetype ~= 'NvimTree'
-              and vim.api.nvim_buf_get_name(b) ~= '' then
-              vim.api.nvim_set_current_buf(b)
-              switched = true
-              break
-            end
-          end
-          if not switched then
-            vim.cmd('enew')
-          end
-          -- vsplit halves the windows: restore the tree to its configured
-          -- width (view.width = 30 → 30 columns) instead of leaving 50/50
-          for _, w in ipairs(vim.api.nvim_list_wins()) do
-            if vim.bo[vim.api.nvim_win_get_buf(w)].filetype == 'NvimTree' then
-              vim.api.nvim_set_current_win(w)
-              vim.cmd('vertical resize 30')
-              break
-            end
-          end
-          -- focus the edit window, not the tree
-          for _, w in ipairs(vim.api.nvim_list_wins()) do
-            if vim.bo[vim.api.nvim_win_get_buf(w)].filetype ~= 'NvimTree' then
-              vim.api.nvim_set_current_win(w)
-              break
-            end
-          end
-        end)
-      end,
-    })
+    -- Edit-window q closes the CURRENT BUFFER, not the window: the window
+    -- stays and shows the next buffer (or a No Name buffer), so the
+    -- tree+edit split is preserved. Tree q (buffer-local, from on_attach)
+    -- still closes the tree; help/terminal/quickfix keep the default q.
+    vim.keymap.set('n', 'q', function()
+      local buf = vim.api.nvim_get_current_buf()
+      if vim.bo[buf].buftype ~= '' then return end -- default q elsewhere
+      vim.cmd('bdelete ' .. buf)
+    end, { desc = 'Close current buffer (window stays)' })
   end,
 }
