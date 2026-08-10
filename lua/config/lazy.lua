@@ -44,6 +44,9 @@ require('lazy').setup({
     fallback = true,
   },
   install = { colorscheme = { 'catppuccin-mocha' } },
+  -- Git ops (install/update) timeout in seconds; slow networks / Windows
+  -- need more headroom than the 60s default.
+  git = { timeout = 300 },
   checker = { enabled = false },
   change_detection = { notify = false },
 })
