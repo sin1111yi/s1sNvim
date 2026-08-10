@@ -2,10 +2,24 @@
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.uv.fs_stat(lazypath) then
-  vim.fn.system({
+  local ret = vim.fn.system({
     'git', 'clone', '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git', '--branch=stable', lazypath,
   })
+  -- Retry with a plain clone (older git / no partial-clone support), then
+  -- surface a clear error if it still failed (missing git, no network...).
+  if not vim.uv.fs_stat(lazypath) then
+    ret = vim.fn.system({
+      'git', 'clone',
+      'https://github.com/folke/lazy.nvim.git', '--branch=stable', lazypath,
+    })
+  end
+  if not vim.uv.fs_stat(lazypath) then
+    vim.notify(
+      'lazy.nvim bootstrap failed (is git installed and in PATH?):\n' .. ret,
+      vim.log.levels.ERROR
+    )
+  end
 end
 vim.opt.rtp:prepend(lazypath)
 
