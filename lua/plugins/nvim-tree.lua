@@ -90,18 +90,17 @@ return {
         end
       end
       vim.cmd('NvimTreeOpen')
-      -- Restore cwd and tree root to the startup directory (a session
-      -- restore may have cd'd elsewhere).
-      local root = vim.g.startup_dir or vim.fn.getcwd()
+      -- Root at the startup dir when a session restore may have drifted;
+      -- bare startup (no startup_dir) leaves the restored root alone.
+      -- Synchronous: a scheduled change_root could fire while the user is
+      -- switching windows and visibly yank the tree elsewhere.
       if vim.g.startup_dir then
         pcall(vim.cmd, 'cd ' .. vim.fn.fnameescape(vim.g.startup_dir))
-      end
-      vim.schedule(function()
         local ok, api = pcall(require, 'nvim-tree.api')
         if ok then
-          pcall(api.tree.change_root, root)
+          pcall(api.tree.change_root, vim.g.startup_dir)
         end
-      end)
+      end
       -- Re-render a session-restored tree that may be empty
       vim.schedule(function()
         if vim.fn.exists(':NvimTreeRefresh') == 2 then
