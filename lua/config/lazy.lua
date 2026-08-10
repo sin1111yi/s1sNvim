@@ -2,19 +2,24 @@
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 local stat = vim.uv or vim.loop -- vim.loop is the pre-0.10 name
-if not stat.fs_stat(lazypath) then
+-- Check the CORE MODULE, not just the dir: a half-cloned dir (interrupted
+-- install) would pass a dir-exists check and then fail require('lazy').
+local function lazy_installed()
+  return stat.fs_stat(lazypath .. '/lua/lazy/init.lua') ~= nil
+end
+if not lazy_installed() then
   local ret = vim.fn.system({
     'git', 'clone', '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git', '--branch=stable', lazypath,
   })
   -- Retry with a plain clone (older git / no partial-clone support)
-  if vim.v.shell_error ~= 0 or not stat.fs_stat(lazypath) then
+  if vim.v.shell_error ~= 0 or not lazy_installed() then
     ret = vim.fn.system({
       'git', 'clone',
       'https://github.com/folke/lazy.nvim.git', '--branch=stable', lazypath,
     })
   end
-  if vim.v.shell_error ~= 0 or not stat.fs_stat(lazypath) then
+  if vim.v.shell_error ~= 0 or not lazy_installed() then
     vim.api.nvim_echo({
       { 'Failed to clone lazy.nvim:\n', 'ErrorMsg' },
       { ret, 'WarningMsg' },
