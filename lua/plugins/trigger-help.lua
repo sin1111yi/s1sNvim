@@ -14,7 +14,6 @@ return {
         search = help_dir .. '/search.md',
         reverse = help_dir .. '/reverse.md',
         cmd = help_dir .. '/cmd.md',
-        s1sNvim = help_dir .. '/s1sNvim.md',
       },
       height = 40,         -- 面板高度（窗口高度百分比）
       position = 'bottom', -- 'bottom' | 'top'
