@@ -14,6 +14,16 @@ return {
     'hrsh7th/cmp-nvim-lsp',
   },
   config = function()
+    -- Load the plugin body: registers server default configs. We use
+    -- vim.lsp.config() / vim.lsp.enable() for setup, but require('lspconfig')
+    -- must stay (see :help lspconfig-nvim-0.11 migration notes).
+    --
+    -- NOTE: :LspInfo/:LspStart/:LspLog do NOT exist on Nvim 0.12+ — the
+    -- builtin :lsp command group (:lsp restart/:lsp stop/:lsp enable)
+    -- replaces them, and nvim-lspconfig skips defining its own when
+    -- :lsp is present. Use `:checkhealth vim.lsp` for status instead.
+    require('lspconfig')
+
     -- LSP keymaps are registered centrally in plugins/custom/plugin-keymaps.lua
     -- (applied via plugins/custom/lsp.lua on LspAttach).
 

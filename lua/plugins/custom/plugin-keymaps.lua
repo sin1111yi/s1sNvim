@@ -203,6 +203,9 @@ local cmp_map = {
     end, { 'i', 's' })
   end,
   ['<CR>'] = function(cmp) return cmp.mapping.confirm({ select = true }) end,
+  -- Scroll the LSP docs floating window (cmp preset has no scroll keys)
+  ['<C-d>'] = function(cmp) return cmp.mapping.scroll_docs(-4) end,
+  ['<C-f>'] = function(cmp) return cmp.mapping.scroll_docs(4) end,
 }
 
 return { cmp_map = cmp_map }
