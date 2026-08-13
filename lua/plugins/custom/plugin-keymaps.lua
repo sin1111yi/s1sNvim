@@ -89,6 +89,7 @@ wk.add({
       else vim.notify('Location list is empty', vim.log.levels.INFO) end
     end, desc = 'Location list' },
   { '<leader>xh', ':TriggerHelp<CR>', desc = 'Trigger help' },
+  { '<leader>xm', ':WokaMarkManage<CR>', desc = 'Wokamark manage' },
   { '<leader>xz', ':Lazy<CR>', desc = 'Open Lazy (plugin manager)' },
   { '<leader>xu', function()
       -- Update config: open a terminal showing git pull in real time,
