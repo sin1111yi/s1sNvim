@@ -7,7 +7,10 @@
 
 return {
   'neovim/nvim-lspconfig',
-  event = { 'BufReadPre', 'BufNewFile' },
+  -- BufEnter in addition to BufReadPre/BufNewFile: some open paths
+  -- (session restore, Windows drag-open) may not fire BufReadPre while
+  -- the lazy listener is arming; BufEnter fires on every buffer entry.
+  event = { 'BufReadPre', 'BufNewFile', 'BufEnter' },
   dependencies = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
