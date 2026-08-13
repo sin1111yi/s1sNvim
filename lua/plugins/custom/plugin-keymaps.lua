@@ -65,6 +65,52 @@ wk.add({
 })
 
 --------------------------------------------------------------------
+-- Code group: <leader>c (code actions — LSP-driven editing/diagnostics)
+-- cf/cd/cq/cL migrated from x group; cr/ca/cs/cS need an LSP client.
+--------------------------------------------------------------------
+-- LSP check helper: notify when no LSP is attached to the buffer.
+local function lsp_ok()
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
+  if #clients == 0 then
+    vim.notify('No LSP attached to this buffer', vim.log.levels.INFO)
+    return false
+  end
+  return true
+end
+
+wk.add({
+  { '<leader>c', group = 'code' },
+  { '<leader>cf', function() require('conform').format() end, desc = 'Format file' },
+  { '<leader>cd', function()
+      local total = 0
+      local counts = vim.diagnostic.count()
+      for _, n in pairs(counts) do total = total + n end
+      if total > 0 then require('trouble').toggle('diagnostics')
+      else vim.notify('No diagnostics', vim.log.levels.INFO) end
+    end, desc = 'Diagnostics' },
+  { '<leader>cq', function()
+      if #vim.fn.getqflist() > 0 then require('trouble').toggle('quickfix')
+      else vim.notify('Quickfix is empty', vim.log.levels.INFO) end
+    end, desc = 'Quickfix list' },
+  { '<leader>cL', function()
+      if #vim.fn.getloclist(0) > 0 then require('trouble').toggle('loclist')
+      else vim.notify('Location list is empty', vim.log.levels.INFO) end
+    end, desc = 'Location list' },
+  { '<leader>cr', function()
+      if lsp_ok() then vim.lsp.buf.rename() end
+    end, desc = 'Rename symbol' },
+  { '<leader>ca', function()
+      if lsp_ok() then vim.lsp.buf.code_action() end
+    end, desc = 'Code action' },
+  { '<leader>cs', function()
+      if lsp_ok() then vim.lsp.buf.document_symbol() end
+    end, desc = 'Document symbols' },
+  { '<leader>cS', function()
+      if lsp_ok() then vim.lsp.buf.workspace_symbol() end
+    end, desc = 'Workspace symbols' },
+})
+
+--------------------------------------------------------------------
 -- Extra group: <leader>x (enhancement tools)
 -- xg/xl: lazygit. Enhancement features live here.
 --------------------------------------------------------------------
@@ -72,22 +118,6 @@ wk.add({
   { '<leader>x', group = 'extra' },
   { '<leader>xg', function() require('snacks.lazygit').open() end, desc = 'Open lazygit' },
   { '<leader>xl', function() require('snacks.lazygit').log() end, desc = 'Git log' },
-  { '<leader>xf', function() require('conform').format() end, desc = 'Format file' },
-  { '<leader>xx', function()
-      local total = 0
-      local counts = vim.diagnostic.count()
-      for _, n in pairs(counts) do total = total + n end
-      if total > 0 then require('trouble').toggle('diagnostics')
-      else vim.notify('No diagnostics', vim.log.levels.INFO) end
-    end, desc = 'Diagnostics' },
-  { '<leader>xq', function()
-      if #vim.fn.getqflist() > 0 then require('trouble').toggle('quickfix')
-      else vim.notify('Quickfix is empty', vim.log.levels.INFO) end
-    end, desc = 'Quickfix list' },
-  { '<leader>xL', function()
-      if #vim.fn.getloclist(0) > 0 then require('trouble').toggle('loclist')
-      else vim.notify('Location list is empty', vim.log.levels.INFO) end
-    end, desc = 'Location list' },
   { '<leader>xh', ':TriggerHelp<CR>', desc = 'Trigger help' },
   { '<leader>xm', ':WokaMarkManage<CR>', desc = 'Wokamark manage' },
   { '<leader>xz', ':Lazy<CR>', desc = 'Open Lazy (plugin manager)' },
